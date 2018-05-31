@@ -16,6 +16,8 @@
         android:id="@+id/fragment1_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Call ImageView" />
+        android:text="Call ImageView"
+        />
+    //android:onClick="ToInterest"
 
 </FrameLayout>

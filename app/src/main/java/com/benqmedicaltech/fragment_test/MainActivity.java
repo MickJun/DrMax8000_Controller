@@ -39,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.center, fragment2, "fragment2");
                 break;
 
+            case R.id.Button3:
+                Fragment1 fragment3 = new Fragment1();
+                transaction.replace(R.id.center, fragment3, "fragment1");
+                break;
+
         }
+
 //呼叫commit讓變更生效。
         transaction.commit();
     }
