@@ -2,7 +2,6 @@ package com.benqmedicaltech.fragment_test;
 
 
 import android.os.Bundle;
-//import android.app.Fragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,30 +12,32 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment2 extends Fragment {
+public class Fragment3 extends Fragment {
 
     private TextView tv;
     private String name;
-//    public Fragment2() {
+
+//    public Fragment3() {
 //        // Required empty public constructor
 //    }
-    public Fragment2(String fName) {
+    public Fragment3(String fName) {
         // Required empty public constructor
         this.name = fName;
     }
-
 
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {
 //        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_fragment2, container, false);
+//        return inflater.inflate(R.layout.fragment_fragment3, container, false);
 //    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
-        tv = (TextView) view.findViewById(R.id.fragment2_text);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment3,container,false);
+        tv = (TextView) view.findViewById(R.id.fragment3_text);
         tv.setText(name);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
