@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        else if(v == foot3){
 //            initFragment3();
 //        }
+        TextView textView1 = (TextView) findViewById(R.id.fragment1_text);
         TextView textView2 = (TextView) findViewById(R.id.fragment2_text);
         TextView textView3 = (TextView) findViewById(R.id.fragment3_text);
         switch (v.getId()) {
@@ -138,6 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.Button3:
                 initFragment3();
+                break;
+            case R.id.fragment1_button1:
+                textView2.setText("fragment2_button1");
+                break;
+            case R.id.fragment1_button2:
+                textView1.setText("fragment2_button2");
                 break;
             case R.id.fragment2_button1:
                 textView2.setText("fragment2_button1");

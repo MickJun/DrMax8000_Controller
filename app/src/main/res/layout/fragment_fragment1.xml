@@ -7,25 +7,46 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/fragment1_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="111" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/fragment1_button1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SCAN" />
+
+            <Button
+                android:id="@+id/fragment1_button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CONNECT" />
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/fragment1_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="FRAGMENT1"
             android:textSize="50dp" />
+
+        <ListView
+            android:id="@+id/fragment1_List"
+            android:layout_width="match_parent"
+            android:layout_height="407dp" />
+
+
     </LinearLayout>
-
-    //android:onClick="ToInterest"
-
 </FrameLayout>

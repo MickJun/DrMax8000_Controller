@@ -18,29 +18,33 @@
 
             <Button
                 android:id="@+id/fragment2_button1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:onClick="onClick"
                 android:text="1" />
 
             <Button
                 android:id="@+id/fragment2_button2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:onClick="onClick"
                 android:text="2" />
 
             <Button
                 android:id="@+id/fragment2_button3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:onClick="onClick"
                 android:text="3" />
 
             <Button
                 android:id="@+id/fragment2_button4"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:onClick="onClick"
                 android:text="4" />
 
