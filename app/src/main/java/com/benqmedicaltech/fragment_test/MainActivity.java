@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Toast 快顯功能 第三個參數 Toast.LENGTH_SHORT 2秒  LENGTH_LONG 5秒
-            //Toast.makeText(ScanPage.this, "點選第 " + (position + 1) + " 個 \n內容：" + BT_Addrlist.get(position).toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "點選第 " + (position + 1) + " 個 \n內容：" + BT_Addrlist.get(position).toString(), Toast.LENGTH_SHORT).show();
 
             mBluetoothAdapter.cancelDiscovery();
 
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void BT_Scan(View v){
 
         //Bluetooth
+
         Fragment1_TextView.setText("藍芽沒開拉，幹！");
         if (mBluetoothAdapter == null) {
             Fragment1_TextView.setText("您的裝置沒有支援藍芽");
@@ -290,6 +291,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView textView1 = (TextView) findViewById(R.id.fragment1_text);
         TextView textView2 = (TextView) findViewById(R.id.fragment2_text);
         TextView textView3 = (TextView) findViewById(R.id.fragment3_text);
+        Fragment1_ListView = (ListView) findViewById(R.id.fragment1_List);
+        Fragment1_TextView = (TextView) findViewById(R.id.fragment1_text);
         switch (v.getId()) {
             case R.id.Button1:
                 initFragment1();
