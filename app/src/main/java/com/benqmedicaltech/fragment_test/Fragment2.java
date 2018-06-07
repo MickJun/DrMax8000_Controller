@@ -37,17 +37,15 @@ public class Fragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
-        tv = (TextView) view.findViewById(R.id.fragment2_text);
-        tv.setText(name);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText("我变了-" + name);
-            }
-        });
-
+//        tv = (TextView) view.findViewById(R.id.fragment2_text);
+//        tv.setText(name);
+//        tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tv.setText("我变了-" + name);
+//            }
+//        });
         ((MainActivity)this.getActivity()).Get_Fragment2(view);
-
         return view;
     }
 
