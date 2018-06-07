@@ -45,6 +45,7 @@ public class Fragment3 extends Fragment {
                 tv.setText("我变了-" + name);
             }
         });
+        ((MainActivity)this.getActivity()).Get_Fragment3(view);
         return view;
     }
 

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -44,6 +45,9 @@ public class Fragment2 extends Fragment {
                 tv.setText("我变了-" + name);
             }
         });
+
+        ((MainActivity)this.getActivity()).Get_Fragment2(view);
+
         return view;
     }
 
