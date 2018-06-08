@@ -553,13 +553,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 读取数据
      */
-    private byte Table_Data[] = new byte[30];
-    private int Table_Data_Point = 0;
 
+    public byte[] Table_Data = new byte[1024];
+    public int Table_Data_Point = 0;
     private class readThread extends Thread {
+
         public void run() {
-            //TextView mytextviewX = (TextView) findViewById(R.id.textView234);
             int bytes;
+
             InputStream is = null;
             try {
                 is = BTSocket.getInputStream();
@@ -574,14 +575,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         byte[] buf_data = new byte[bytes];
                         for (int i = 0; i < bytes; i++) {
                             buf_data[i] = buffer[i];
-//                            Table_Data[Table_Data_Point] = buf_data[i];
-//                            if(Table_Data_Point < 30)Table_Data_Point ++;
+                            Table_Data[Table_Data_Point] = buf_data[i];
+                            if(Table_Data_Point < 100)Table_Data_Point ++;
                         }
-//                        if(Table_Data_Point >= 24)
-//                        {
-//                            Fragment1_TextView.setText("Read Final");
-//                            Table_Data_Point = 0;
-//                        }
+                        if(f2 != null && View_Fragment2 != null)f2.Show_text("OK",textView2);
+                        //if(textView2 != null)textView2.setText("Read Final");
                         //M_T = M_T + new String(buf_data);
                         //mytextviewX.setText(s.toString());
                         //show("客户端:读取数据了" + s);
@@ -616,13 +614,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+
     private Runnable runnable = new Runnable() {
         public void run() {
             //update
-            sendMessage();
-            if(mDelayTime > 0){
-                handler.postDelayed(this,mDelayTime);
+            if(SW_Output != 0x00){
+                sendMessage();
+                if(mDelayTime > 0){
+                    handler.postDelayed(this,mDelayTime);
+                }
             }
+//            else{
+//                if(Table_Data_Point >= 24){
+//                    if(f2 != null && View_Fragment2 != null)textView2.setText("OK");
+//                    Table_Data_Point = 0;
+//                }
+//                handler.postDelayed(this,1000);
+//            }
         }
     };
 
@@ -725,7 +734,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Function_Code();
             Checksum_Code();
             Output_Mix();
-            mDelayTime = 90;
+            //mDelayTime = 90;
             handler.postDelayed(runnable,90);
 
         }
@@ -740,30 +749,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.fragment2_button2:
                         textView2.setText("fragment2_button2");
+                        Table_Command_Send_Start(Trend);
                         break;
                     case R.id.fragment2_button3:
                         textView2.setText("fragment2_button3");
+                        Table_Command_Send_Start(Back_Up);
                         break;
                     case R.id.fragment2_button4:
                         textView2.setText("fragment2_button4");
+                        Table_Command_Send_Start(Back_Down);
                         break;
                     case R.id.fragment3_button1:
                         textView3.setText("fragment3_button1");
+                        Table_Command_Send_Start(Table_Up);
                         break;
                     case R.id.fragment3_button2:
                         textView3.setText("fragment3_button2");
+                        Table_Command_Send_Start(Table_Down);
                         break;
                     case R.id.fragment3_button3:
                         textView3.setText("fragment3_button3");
+                        Table_Command_Send_Start(Lock);
                         break;
                     case R.id.fragment3_button4:
                         textView3.setText("fragment3_button4");
+                        Table_Command_Send_Start(Level);
                         break;
                 }
             }
             if(event.getAction() == MotionEvent.ACTION_UP){
                 Log.d("test", "cansal button ---> cancel");
-                mDelayTime = 0;
+                SW_Output = 0x00;
             }
             return false;
         }
@@ -782,6 +798,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F1_Button2.setOnTouchListener(b);
 
         textView1 = (TextView) v.findViewById(R.id.fragment1_text);
+        textView1.setTextSize(30);
         Fragment1_ListView = (ListView) v.findViewById(R.id.fragment1_List);
         Fragment1_TextView = (TextView) v.findViewById(R.id.fragment1_text);
 
@@ -790,38 +807,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         View_Fragment2 = v;
         textView2 = (TextView) v.findViewById(R.id.fragment2_text);
+        textView2.setTextSize(30);
 
         F2_Button1 = (Button)v.findViewById(R.id.fragment2_button1);
         F2_Button1.setOnClickListener(b);
         F2_Button1.setOnTouchListener(b);
+        F2_Button1.setText("Rev.Trend");
         F2_Button2 = (Button)v.findViewById(R.id.fragment2_button2);
         F2_Button2.setOnClickListener(b);
         F2_Button2.setOnTouchListener(b);
+        F2_Button2.setText("Trend");
         F2_Button3 = (Button)v.findViewById(R.id.fragment2_button3);
         F2_Button3.setOnClickListener(b);
         F2_Button3.setOnTouchListener(b);
+        F2_Button3.setText("BackUp");
         F2_Button4 = (Button)v.findViewById(R.id.fragment2_button4);
         F2_Button4.setOnClickListener(b);
         F2_Button4.setOnTouchListener(b);
+        F2_Button4.setText("BackDown");
 
     }
     public void Get_Fragment3(View v)
     {
         View_Fragment3 = v;
         textView3 = (TextView) v.findViewById(R.id.fragment3_text);
+        textView3.setTextSize(30);
 
         F3_Button1 = (Button)v.findViewById(R.id.fragment3_button1);
         F3_Button1.setOnClickListener(b);
         F3_Button1.setOnTouchListener(b);
+        F3_Button1.setText("TableUp");
         F3_Button2 = (Button)v.findViewById(R.id.fragment3_button2);
         F3_Button2.setOnClickListener(b);
         F3_Button2.setOnTouchListener(b);
+        F3_Button2.setText("TableDown");
         F3_Button3 = (Button)v.findViewById(R.id.fragment3_button3);
         F3_Button3.setOnClickListener(b);
         F3_Button3.setOnTouchListener(b);
+        F3_Button3.setText("Lock");
         F3_Button4 = (Button)v.findViewById(R.id.fragment3_button4);
         F3_Button4.setOnClickListener(b);
         F3_Button4.setOnTouchListener(b);
+        F3_Button4.setText("Level");
 
     }
 

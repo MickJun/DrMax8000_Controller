@@ -3,6 +3,7 @@ package com.benqmedicaltech.fragment_test;
 
 import android.os.Bundle;
 //import android.app.Fragment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,17 @@ public class Fragment2 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_fragment2, container, false);
 //    }
 
+    private Status_Thread mStatus_Thread = new Status_Thread();
+    View MyView;
+    public String MyString = "first";
+    private Handler handler = new Handler();
+    int mDelayTime = 1000;
+    public TextView myTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
+        MyView = view;
 //        tv = (TextView) view.findViewById(R.id.fragment2_text);
 //        tv.setText(name);
 //        tv.setOnClickListener(new View.OnClickListener() {
@@ -45,8 +54,18 @@ public class Fragment2 extends Fragment {
 //                tv.setText("我变了-" + name);
 //            }
 //        });
+        myTextView = view.findViewById(R.id.fragment1_text);
+        handler.postDelayed(this.runnable,mDelayTime);
         ((MainActivity)this.getActivity()).Get_Fragment2(view);
         return view;
+    }
+
+    public void Show_text(String Temp, TextView mtv ){
+        MyString = Temp;
+        myTextView =mtv;
+//        TextView myTextView = v.findViewById(R.id.fragment1_text);
+//        myTextView.setText(MyString);
+        //mStatus_Thread.start();
     }
 
     @Override
@@ -58,5 +77,19 @@ public class Fragment2 extends Fragment {
             //Fragment显示时调用
         }
     }
+
+    private class Status_Thread extends Thread {
+        public void run() {
+            //update
+        }
+    }
+
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            //update
+            if(myTextView != null)myTextView.setText(MyString);
+            handler.postDelayed(this,mDelayTime);
+        }
+    };
 
 }
