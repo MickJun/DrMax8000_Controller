@@ -556,6 +556,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public byte[] Table_Data = new byte[1024];
     public int Table_Data_Point = 0;
+    public int Table_Data_Start = 0;
+
     private class readThread extends Thread {
 
         public void run() {
@@ -575,10 +577,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         byte[] buf_data = new byte[bytes];
                         for (int i = 0; i < bytes; i++) {
                             buf_data[i] = buffer[i];
-                            Table_Data[Table_Data_Point] = buf_data[i];
-                            if(Table_Data_Point < 100)Table_Data_Point ++;
+                            if(buf_data[i] == 85 && Table_Data_Start == 0)
+                            {
+                                Table_Data_Start = 1;
+                                Table_Data_Point = 0;
+                            }
+                            if(Table_Data_Start == 1) {
+                                Table_Data[Table_Data_Point] = buf_data[i];
+                                if (Table_Data_Point < 1000) {
+                                    Table_Data_Point++;
+                                }
+                                else{
+                                    Table_Data_Point = 0;
+                                    Table_Data_Start = 0;
+                                }
+                            }
+                            if(buf_data[i] == -6 && Table_Data_Point > 24){
+                                Table_Data_Start = 2;
+                                i = bytes;
+                            }
                         }
-                        if(f2 != null && View_Fragment2 != null)f2.Show_text("OK",textView2);
+
+//                        for (int i = 0; i <= buff.Length - 1; i++) {
+//
+//                            if (RX_Satrt_Flag == 1) {
+//                                s += buff[i].ToString("X2");
+//                                Table_Buffer_counter = Table_Buffer_counter + 1;
+//                                if (Table_Buffer_counter == 24) i = (buff.Length - 1);
+//                            }
+//                            if (buff[i].ToString("X2") == "FA" && RX_Satrt_Flag == 0) {
+//                                RX_Satrt_Flag = 1;
+//                                Table_Buffer_counter = 0;
+//                            }
+//                            if (Table_Buffer_counter > 23) {
+//                                RX_data_flag = 1;
+//                            }
+//                        }
+
+                        if(f2 != null && View_Fragment2 != null && Table_Data_Start == 2) {
+                            f2.Show_text(Table_Data,textView2);
+                            Table_Data_Start = 0;
+                        }
                         //if(textView2 != null)textView2.setText("Read Final");
                         //M_T = M_T + new String(buf_data);
                         //mytextviewX.setText(s.toString());
@@ -734,8 +773,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Function_Code();
             Checksum_Code();
             Output_Mix();
-            //mDelayTime = 90;
-            handler.postDelayed(runnable,90);
+            mDelayTime = 90;
+            handler.postDelayed(runnable,mDelayTime);
 
         }
 
@@ -780,6 +819,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(event.getAction() == MotionEvent.ACTION_UP){
                 Log.d("test", "cansal button ---> cancel");
                 SW_Output = 0x00;
+                //mDelayTime = 0;
             }
             return false;
         }
