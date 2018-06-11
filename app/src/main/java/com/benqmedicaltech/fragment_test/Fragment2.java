@@ -192,7 +192,6 @@ public class Fragment2 extends Fragment {
 //                tv.setText("我变了-" + name);
 //            }
 //        });
-        myTextView = view.findViewById(R.id.fragment1_text);
         handler.postDelayed(this.runnable,mDelayTime);
         ((MainActivity)this.getActivity()).Get_Fragment2(view);
         return view;

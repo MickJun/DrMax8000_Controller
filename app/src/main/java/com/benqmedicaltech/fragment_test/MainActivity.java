@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{    //
 
 
 
@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         mBluetoothAdapter.startDiscovery();
 
+        BT_Devicelist.clear();
+        BT_Addrlist.clear();
         if (pairedDevices.size() > 0) {
             // There are paired devices. Get the name and address of each paired device.
             for (BluetoothDevice device : pairedDevices) {
@@ -152,7 +154,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
             Fragment1_ListView.setAdapter(adapter);
             Fragment1_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
-            Fragment1_TextView.setText("pair bluetooth is over");
+            //Fragment1_TextView.setText("pair bluetooth is over");
+            Fragment1_TextView.setText(BT_Devicelist.get(0).toString());
+            F1_Button2.setEnabled(true);
         }
 
         // Register for broadcasts when a device is discovered.
@@ -175,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             BTSocket.connect();
             readThread mreadThread = new readThread();
             mreadThread.start();
+            F1_Button2.setText("DISCONNECT");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,6 +254,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         foot3.setOnClickListener(b);
 
         //第一次初始化首页默认显示第一个fragment
+        //initFragment3();
+        //initFragment2();
         initFragment1();
 
     }
@@ -613,9 +620,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                                RX_data_flag = 1;
 //                            }
 //                        }
-
-                        if(f2 != null && View_Fragment2 != null && Table_Data_Start == 2) {
-                            f2.Show_text(Table_Data,textView2);
+                        if(Table_Data_Start == 2){
+                            if(f2 != null && View_Fragment2 != null) {
+                                f2.Show_text(Table_Data,textView2);
+                            }
+                            if(f3 != null && View_Fragment3 != null) {
+                                f3.Show_text(Table_Data,textView3);
+                            }
                             Table_Data_Start = 0;
                         }
                         //if(textView2 != null)textView2.setText("Read Final");
@@ -674,73 +685,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+
     @Override
     public void onClick(View v) {
-//        if(v == foot1){
-//            initFragment1();
-//        }else if(v == foot2){
-//            initFragment2();
-//        }
-//        else if(v == foot3){
-//            initFragment3();
-//        }
-//        TextView textView1 = (TextView) findViewById(R.id.fragment1_text);
-//        TextView textView2 = (TextView) findViewById(R.id.fragment2_text);
-//        TextView textView3 = (TextView) findViewById(R.id.fragment3_text);
-//        Fragment1_ListView = (ListView) findViewById(R.id.fragment1_List);
-//        Fragment1_TextView = (TextView) findViewById(R.id.fragment1_text);
-//
-//        switch (v.getId()) {
-//            case R.id.Button1:
-//                initFragment1();
-//                break;
-//            case R.id.Button2:
-//                initFragment2();
-//                break;
-//            case R.id.Button3:
-//                initFragment3();
-//                break;
-//            case R.id.fragment1_button1:
-//                textView1.setText("fragment1_button1");
-//                BT_Scan();
-//                break;
-//            case R.id.fragment1_button2:
-//                textView1.setText("fragment1_button2");
-//                BT_Connecnting();
-//                break;
-//            case R.id.fragment2_button1:
-//                textView2.setText("fragment2_button1");
-//                SW_Output =0x01;
-//                Output_First_Set();
-//                Function_Code();
-//                Checksum_Code();
-//                Output_Mix();
-//                sendMessage();
-//                break;
-//            case R.id.fragment2_button2:
-//                textView2.setText("fragment2_button2");
-//                break;
-//            case R.id.fragment2_button3:
-//                textView2.setText("fragment2_button3");
-//                break;
-//            case R.id.fragment2_button4:
-//                textView2.setText("fragment2_button4");
-//                break;
-//            case R.id.fragment3_button1:
-//                textView3.setText("fragment3_button1");
-//                break;
-//            case R.id.fragment3_button2:
-//                textView3.setText("fragment3_button2");
-//                break;
-//            case R.id.fragment3_button3:
-//                textView3.setText("fragment3_button3");
-//                break;
-//            case R.id.fragment3_button4:
-//                textView3.setText("fragment3_button4");
-//                break;
-//        }
 
     }
+
 
     class ButtonListener implements View.OnClickListener, View.OnTouchListener {
 
@@ -756,12 +706,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     initFragment3();
                     break;
                 case R.id.fragment1_button1:
-                    textView1.setText("fragment1_button1");
+                    //textView1.setText("fragment1_button1");
                     BT_Scan();
                     break;
                 case R.id.fragment1_button2:
-                    textView1.setText("fragment1_button2");
-                    BT_Connecnting();
+                    //textView1.setText("fragment1_button2");
+                    if(BTSocket != null && BTSocket.isConnected() )
+                    {
+                        try {
+                            BTSocket.close();
+                            F1_Button2.setText("CONNECT");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        BT_Connecnting();
+                    }
                     break;
             }
         }
@@ -778,6 +739,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        @Override
         public boolean onTouch(View v, MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 Log.d("test", "cansal button ---> down");
@@ -836,9 +798,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F1_Button2 = (Button)v.findViewById(R.id.fragment1_button2);
         F1_Button2.setOnClickListener(b);
         F1_Button2.setOnTouchListener(b);
+        F1_Button2.setEnabled(false);
 
         textView1 = (TextView) v.findViewById(R.id.fragment1_text);
-        textView1.setTextSize(30);
+        textView1.setTextSize(20);
         Fragment1_ListView = (ListView) v.findViewById(R.id.fragment1_List);
         Fragment1_TextView = (TextView) v.findViewById(R.id.fragment1_text);
 
@@ -847,7 +810,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         View_Fragment2 = v;
         textView2 = (TextView) v.findViewById(R.id.fragment2_text);
-        textView2.setTextSize(30);
+        textView2.setTextSize(20);
 
         F2_Button1 = (Button)v.findViewById(R.id.fragment2_button1);
         F2_Button1.setOnClickListener(b);
@@ -871,7 +834,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         View_Fragment3 = v;
         textView3 = (TextView) v.findViewById(R.id.fragment3_text);
-        textView3.setTextSize(30);
+        textView3.setTextSize(20);
 
         F3_Button1 = (Button)v.findViewById(R.id.fragment3_button1);
         F3_Button1.setOnClickListener(b);
