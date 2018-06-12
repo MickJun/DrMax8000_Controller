@@ -27,7 +27,7 @@ public class Fragment3 extends Fragment {
     }
 
 
-    public String MyString = "first";
+    public String MyString = "Loading...";
     private Handler handler = new Handler();
     int mDelayTime = 1000;
     public TextView myTextView;
@@ -151,6 +151,14 @@ public class Fragment3 extends Fragment {
                 {
                     MyString = MyString + "_UnLock";
                 }
+            }
+            if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
+            {
+                MyString = MyString + "_Reverse";
+            }
+            else
+            {
+                MyString = MyString + "_Normal";
             }
         }
 

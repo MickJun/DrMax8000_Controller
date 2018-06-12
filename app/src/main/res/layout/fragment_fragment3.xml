@@ -10,9 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/fragment3_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FRAGMENT3"
+            android:textSize="50dp" />
+
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="175dp"
             android:orientation="vertical">
 
             <Button
@@ -57,13 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
-        <TextView
-            android:id="@+id/fragment3_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="FRAGMENT3"
-            android:textSize="50dp" />
     </TableLayout>
 
 </FrameLayout>

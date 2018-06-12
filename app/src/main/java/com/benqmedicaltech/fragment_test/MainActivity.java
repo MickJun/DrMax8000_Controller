@@ -142,13 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (BluetoothDevice device : pairedDevices) {
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
-                //string mUUID = device.getUuids()[0].getUuid(); // UUID
-                //tex.setText(tex.getText() + "\n" + deviceName + deviceHardwareAddress);
                 BT_Devicelist.add(deviceName); //this adds an element to the list.
                 BT_Addrlist.add(deviceHardwareAddress);
-
-                //muuid =  device.getUuids();
-                //BT_UUIDlist.add(muuid[0].toString());
             }
             //android.R.layout.simple_list_item_1 為內建樣式，還有其他樣式可自行研究
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
@@ -179,7 +174,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             BTSocket.connect();
             readThread mreadThread = new readThread();
             mreadThread.start();
-            F1_Button2.setText("DISCONNECT");
+            if(BTSocket.isConnected()){
+                F1_Button2.setText("DISCONNECT");
+                foot2.setEnabled(true);
+                foot3.setEnabled(true);
+                initFragment2();
+                mDelayTime = 90;
+                SW_Output = 0;
+                handler.postDelayed(runnable,mDelayTime);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -203,10 +206,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button F1_Button1;
     private Button F1_Button2;
+
+
     private Button F2_Button1;
     private Button F2_Button2;
     private Button F2_Button3;
     private Button F2_Button4;
+    private Button F2_Button5;
+    private Button F2_Button6;
+    private Button F2_Button7;
+    private Button F2_Button8;
+    private Button F2_Button9;
+    private Button F2_Button10;
+    private Button F2_Button11;
+    private Button F2_Button12;
+    private Button F2_Button13;
+    private Button F2_Button14;
+    private Button F2_Button15;
+    private Button F2_Button16;
+    private Button F2_Button17;
+    private Button F2_Button18;
+    private Button F2_Button19;
+    private Button F2_Button20;
+
+
+
     private Button F3_Button1;
     private Button F3_Button2;
     private Button F3_Button3;
@@ -221,14 +245,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Handler handler = new Handler();
     int mDelayTime = 0;
+    int LastDelayTime = 0;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         // Don't forget to unregister the ACTION_FOUND receiver.
-        unregisterReceiver(mReceiver);
-        if(BTSocket.isConnected())
+        if(mReceiver != null)unregisterReceiver(mReceiver);
+        if(handler != null)handler.removeMessages(0);
+        if(BTSocket != null && BTSocket.isConnected())
         {
             try {
                 BTSocket.close();
@@ -252,7 +278,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         foot1.setOnClickListener(b);
         foot2.setOnClickListener(b);
         foot3.setOnClickListener(b);
-
+        foot1.setText("LINK");
+        foot2.setText("Function");
+        foot3.setText("Data");
+        foot2.setEnabled(false);
+        foot3.setEnabled(false);
         //第一次初始化首页默认显示第一个fragment
         //initFragment3();
         //initFragment2();
@@ -363,6 +393,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //byte Config_650NS = 0x1c;           //#define	Config_MOT1600_650	28
     //byte Unlock_Stop = 0x1e;            //#define	Unlock_Stop			30          //650NS  進入腳踏模式=馬達無動作
     //byte Lock_Run = 0x1f;               //#define	Lock_Run			31          //650NS  取消腳踏模式=馬達有動作
+        byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
+        byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
     byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
     byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
     //byte Config_Mode = 0x37;
@@ -670,11 +702,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             //update
             if(SW_Output != 0x00){
+                LastDelayTime = 0;
                 sendMessage();
-                if(mDelayTime > 0){
-                    handler.postDelayed(this,mDelayTime);
-                }
             }
+            else
+            {
+                if(LastDelayTime < 50)LastDelayTime++;
+            }
+
+            if(LastDelayTime == 50 && f2!=null)
+            {
+                F2_Button1.setEnabled(false);
+                F2_Button2.setEnabled(false);
+                F2_Button3.setEnabled(false);
+                F2_Button4.setEnabled(false);
+                F2_Button5.setEnabled(false);
+                F2_Button6.setEnabled(false);
+                F2_Button7.setEnabled(false);
+                F2_Button8.setEnabled(false);
+                F2_Button9.setEnabled(false);
+                F2_Button10.setEnabled(false);
+                F2_Button11.setEnabled(false);
+                F2_Button12.setEnabled(false);
+                F2_Button13.setEnabled(false);
+                F2_Button14.setEnabled(false);
+                F2_Button15.setEnabled(false);
+                F2_Button16.setEnabled(false);
+                F2_Button17.setEnabled(false);
+                F2_Button18.setEnabled(false);
+                F2_Button19.setEnabled(false);
+                LastDelayTime = 100;
+                //mDelayTime = 0;
+            }
+            if(mDelayTime > 0){
+                handler.postDelayed(this,mDelayTime);
+            }
+
 //            else{
 //                if(Table_Data_Point >= 24){
 //                    if(f2 != null && View_Fragment2 != null)textView2.setText("OK");
@@ -716,6 +779,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             BTSocket.close();
                             F1_Button2.setText("CONNECT");
+                            foot2.setEnabled(false);
+                            foot3.setEnabled(false);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -734,8 +799,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Function_Code();
             Checksum_Code();
             Output_Mix();
-            mDelayTime = 90;
-            handler.postDelayed(runnable,mDelayTime);
+//            mDelayTime = 90;
+//            handler.postDelayed(runnable,mDelayTime);
 
         }
 
@@ -745,21 +810,111 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("test", "cansal button ---> down");
                 switch (v.getId()) {
                     case R.id.fragment2_button1:
-                        textView2.setText("fragment2_button1");
+                        textView2.setText("Rev_Trend");
                         Table_Command_Send_Start(Rev_Trend);
                         break;
                     case R.id.fragment2_button2:
-                        textView2.setText("fragment2_button2");
+                        textView2.setText("Trend");
                         Table_Command_Send_Start(Trend);
                         break;
                     case R.id.fragment2_button3:
-                        textView2.setText("fragment2_button3");
-                        Table_Command_Send_Start(Back_Up);
+                        textView2.setText("Tilt_L");
+                        Table_Command_Send_Start(Tilt_L);
                         break;
                     case R.id.fragment2_button4:
-                        textView2.setText("fragment2_button4");
+                        textView2.setText("Tilt_R");
+                        Table_Command_Send_Start(Tilt_R);
+                        break;
+                    case R.id.fragment2_button5:
+                        textView2.setText("Back_Up");
+                        Table_Command_Send_Start(Back_Up);
+                        break;
+                    case R.id.fragment2_button6:
+                        textView2.setText("Back_Down");
                         Table_Command_Send_Start(Back_Down);
                         break;
+                    case R.id.fragment2_button7:
+                        textView2.setText("Slide_Head");
+                        Table_Command_Send_Start(Slide_Head);
+                        break;
+                    case R.id.fragment2_button8:
+                        textView2.setText("Slide_Foot");
+                        Table_Command_Send_Start(Slide_Foot);
+                        break;
+                    case R.id.fragment2_button9:
+                        textView2.setText("Flex");
+                        Table_Command_Send_Start(Flex);
+                        break;
+                    case R.id.fragment2_button10:
+                        textView2.setText("Reflex");
+                        Table_Command_Send_Start(Reflex);
+                        break;
+                    case R.id.fragment2_button11:
+                        textView2.setText("Table_Up");
+                        Table_Command_Send_Start(Table_Up);
+                        break;
+                    case R.id.fragment2_button12:
+                        textView2.setText("Table_Down");
+                        Table_Command_Send_Start(Table_Down);
+                        break;
+                    case R.id.fragment2_button13:
+                        textView2.setText("Leg_Up");
+                        Table_Command_Send_Start(Leg_Up);
+                        break;
+                    case R.id.fragment2_button14:
+                        textView2.setText("Leg_Down");
+                        Table_Command_Send_Start(Leg_Down);
+                        break;
+                    case R.id.fragment2_button15:
+                        textView2.setText("Normal_Function");
+                        Table_Command_Send_Start(Normal_Function);
+                        break;
+                    case R.id.fragment2_button16:
+                        textView2.setText("Reverse_Function");
+                        Table_Command_Send_Start(Reverse_Function);
+                        break;
+                    case R.id.fragment2_button17:
+                        textView2.setText("Lock");
+                        Table_Command_Send_Start(Lock);
+                        break;
+                    case R.id.fragment2_button18:
+                        textView2.setText("Unlock");
+                        Table_Command_Send_Start(Unlock);
+                        break;
+                    case R.id.fragment2_button19:
+                        textView2.setText("Level");
+                        Table_Command_Send_Start(Level);
+                        break;
+                    case R.id.fragment2_button20:
+                        textView2.setText("Power");
+                        //Table_Command_Send_Start(Tilt_R);
+                        if(F2_Button1.isEnabled()){
+                            LastDelayTime = 49;
+                        }
+                        else {
+                            F2_Button1.setEnabled(true);
+                            F2_Button2.setEnabled(true);
+                            F2_Button3.setEnabled(true);
+                            F2_Button4.setEnabled(true);
+                            F2_Button5.setEnabled(true);
+                            F2_Button6.setEnabled(true);
+                            F2_Button7.setEnabled(true);
+                            F2_Button8.setEnabled(true);
+                            F2_Button9.setEnabled(true);
+                            F2_Button10.setEnabled(true);
+                            F2_Button11.setEnabled(true);
+                            F2_Button12.setEnabled(true);
+                            F2_Button13.setEnabled(true);
+                            F2_Button14.setEnabled(true);
+                            F2_Button15.setEnabled(true);
+                            F2_Button16.setEnabled(true);
+                            F2_Button17.setEnabled(true);
+                            F2_Button18.setEnabled(true);
+                            F2_Button19.setEnabled(true);
+                        }
+                        break;
+
+
                     case R.id.fragment3_button1:
                         textView3.setText("fragment3_button1");
                         Table_Command_Send_Start(Table_Up);
@@ -781,7 +936,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(event.getAction() == MotionEvent.ACTION_UP){
                 Log.d("test", "cansal button ---> cancel");
                 SW_Output = 0x00;
-                //mDelayTime = 0;
+                LastDelayTime = 0;
+//                mDelayTime = 90;
             }
             return false;
         }
@@ -802,8 +958,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView1 = (TextView) v.findViewById(R.id.fragment1_text);
         textView1.setTextSize(20);
+        textView1.setText("Press SCAN Button");
+        Fragment1_TextView = textView1;
         Fragment1_ListView = (ListView) v.findViewById(R.id.fragment1_List);
-        Fragment1_TextView = (TextView) v.findViewById(R.id.fragment1_text);
 
     }
     public void Get_Fragment2(View v)
@@ -823,11 +980,98 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button3 = (Button)v.findViewById(R.id.fragment2_button3);
         F2_Button3.setOnClickListener(b);
         F2_Button3.setOnTouchListener(b);
-        F2_Button3.setText("BackUp");
+        F2_Button3.setText("Tilt.L");
         F2_Button4 = (Button)v.findViewById(R.id.fragment2_button4);
         F2_Button4.setOnClickListener(b);
         F2_Button4.setOnTouchListener(b);
-        F2_Button4.setText("BackDown");
+        F2_Button4.setText("Tilt.R");
+        F2_Button5 = (Button)v.findViewById(R.id.fragment2_button5);
+        F2_Button5.setOnClickListener(b);
+        F2_Button5.setOnTouchListener(b);
+        F2_Button5.setText("BackUp");
+        F2_Button6 = (Button)v.findViewById(R.id.fragment2_button6);
+        F2_Button6.setOnClickListener(b);
+        F2_Button6.setOnTouchListener(b);
+        F2_Button6.setText("BackDown");
+        F2_Button7 = (Button)v.findViewById(R.id.fragment2_button7);
+        F2_Button7.setOnClickListener(b);
+        F2_Button7.setOnTouchListener(b);
+        F2_Button7.setText("SlideHead");
+        F2_Button8 = (Button)v.findViewById(R.id.fragment2_button8);
+        F2_Button8.setOnClickListener(b);
+        F2_Button8.setOnTouchListener(b);
+        F2_Button8.setText("SlideFoot");
+        F2_Button9 = (Button)v.findViewById(R.id.fragment2_button9);
+        F2_Button9.setOnClickListener(b);
+        F2_Button9.setOnTouchListener(b);
+        F2_Button9.setText("Flex");
+        F2_Button10 = (Button)v.findViewById(R.id.fragment2_button10);
+        F2_Button10.setOnClickListener(b);
+        F2_Button10.setOnTouchListener(b);
+        F2_Button10.setText("Reflex");
+        F2_Button11 = (Button)v.findViewById(R.id.fragment2_button11);
+        F2_Button11.setOnClickListener(b);
+        F2_Button11.setOnTouchListener(b);
+        F2_Button11.setText("TableUp");
+        F2_Button12 = (Button)v.findViewById(R.id.fragment2_button12);
+        F2_Button12.setOnClickListener(b);
+        F2_Button12.setOnTouchListener(b);
+        F2_Button12.setText("TableDown");
+        F2_Button13 = (Button)v.findViewById(R.id.fragment2_button13);
+        F2_Button13.setOnClickListener(b);
+        F2_Button13.setOnTouchListener(b);
+        F2_Button13.setText("LagUp");
+        F2_Button14 = (Button)v.findViewById(R.id.fragment2_button14);
+        F2_Button14.setOnClickListener(b);
+        F2_Button14.setOnTouchListener(b);
+        F2_Button14.setText("LagDown");
+        F2_Button15 = (Button)v.findViewById(R.id.fragment2_button15);
+        F2_Button15.setOnClickListener(b);
+        F2_Button15.setOnTouchListener(b);
+        F2_Button15.setText("Normal");
+        F2_Button16 = (Button)v.findViewById(R.id.fragment2_button16);
+        F2_Button16.setOnClickListener(b);
+        F2_Button16.setOnTouchListener(b);
+        F2_Button16.setText("Reverse");
+        F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
+        F2_Button17.setOnClickListener(b);
+        F2_Button17.setOnTouchListener(b);
+        F2_Button17.setText("Lock");
+        F2_Button18 = (Button)v.findViewById(R.id.fragment2_button18);
+        F2_Button18.setOnClickListener(b);
+        F2_Button18.setOnTouchListener(b);
+        F2_Button18.setText("Unlock");
+        F2_Button19 = (Button)v.findViewById(R.id.fragment2_button19);
+        F2_Button19.setOnClickListener(b);
+        F2_Button19.setOnTouchListener(b);
+        F2_Button19.setText("Level");
+        F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
+        F2_Button20.setOnClickListener(b);
+        F2_Button20.setOnTouchListener(b);
+        F2_Button20.setText("Power");
+
+
+
+
+        F2_Button1.setEnabled(false);
+        F2_Button2.setEnabled(false);
+        F2_Button3.setEnabled(false);
+        F2_Button4.setEnabled(false);
+        F2_Button5.setEnabled(false);
+        F2_Button6.setEnabled(false);
+        F2_Button7.setEnabled(false);
+        F2_Button8.setEnabled(false);
+        F2_Button9.setEnabled(false);
+        F2_Button10.setEnabled(false);
+        F2_Button11.setEnabled(false);
+        F2_Button12.setEnabled(false);
+        F2_Button13.setEnabled(false);
+        F2_Button14.setEnabled(false);
+        F2_Button15.setEnabled(false);
+        F2_Button16.setEnabled(false);
+        F2_Button17.setEnabled(false);
+        F2_Button18.setEnabled(false);
+        F2_Button19.setEnabled(false);
 
     }
     public void Get_Fragment3(View v)
