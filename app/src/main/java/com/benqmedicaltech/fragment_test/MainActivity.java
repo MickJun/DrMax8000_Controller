@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             //android.R.layout.simple_list_item_1 為內建樣式，還有其他樣式可自行研究
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
 //            Fragment1_ListView.setAdapter(adapter);
 //            Fragment1_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
 
@@ -252,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
 
         // Don't forget to unregister the ACTION_FOUND receiver.
-        if(mReceiver != null)unregisterReceiver(mReceiver);
         if(handler != null)handler.removeMessages(0);
         if(BTSocket != null && BTSocket.isConnected())
         {
@@ -261,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            unregisterReceiver(mReceiver);
         }
     }
     @Override
@@ -758,15 +758,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class ButtonListener implements View.OnClickListener, View.OnTouchListener {
 
         public void onClick(View v) {
+
             switch (v.getId()) {
                 case R.id.Button1:
-                    initFragment1();
+                    if(SW_Output== 0x00){
+                        initFragment1();
+                    }
                     break;
                 case R.id.Button2:
-                    initFragment2();
+                    if(SW_Output== 0x00){
+                        initFragment2();
+                    }
                     break;
                 case R.id.Button3:
-                    initFragment3();
+                    if(SW_Output== 0x00){
+                        initFragment3();
+                    }
                     break;
                 case R.id.fragment1_button1:
                     //textView1.setText("fragment1_button1");
@@ -807,134 +814,139 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
-                Log.d("test", "cansal button ---> down");
-                switch (v.getId()) {
-                    case R.id.fragment2_button1:
-                        textView2.setText("Rev_Trend");
-                        Table_Command_Send_Start(Rev_Trend);
-                        break;
-                    case R.id.fragment2_button2:
-                        textView2.setText("Trend");
-                        Table_Command_Send_Start(Trend);
-                        break;
-                    case R.id.fragment2_button3:
-                        textView2.setText("Tilt_L");
-                        Table_Command_Send_Start(Tilt_L);
-                        break;
-                    case R.id.fragment2_button4:
-                        textView2.setText("Tilt_R");
-                        Table_Command_Send_Start(Tilt_R);
-                        break;
-                    case R.id.fragment2_button5:
-                        textView2.setText("Back_Up");
-                        Table_Command_Send_Start(Back_Up);
-                        break;
-                    case R.id.fragment2_button6:
-                        textView2.setText("Back_Down");
-                        Table_Command_Send_Start(Back_Down);
-                        break;
-                    case R.id.fragment2_button7:
-                        textView2.setText("Slide_Head");
-                        Table_Command_Send_Start(Slide_Head);
-                        break;
-                    case R.id.fragment2_button8:
-                        textView2.setText("Slide_Foot");
-                        Table_Command_Send_Start(Slide_Foot);
-                        break;
-                    case R.id.fragment2_button9:
-                        textView2.setText("Flex");
-                        Table_Command_Send_Start(Flex);
-                        break;
-                    case R.id.fragment2_button10:
-                        textView2.setText("Reflex");
-                        Table_Command_Send_Start(Reflex);
-                        break;
-                    case R.id.fragment2_button11:
-                        textView2.setText("Table_Up");
-                        Table_Command_Send_Start(Table_Up);
-                        break;
-                    case R.id.fragment2_button12:
-                        textView2.setText("Table_Down");
-                        Table_Command_Send_Start(Table_Down);
-                        break;
-                    case R.id.fragment2_button13:
-                        textView2.setText("Leg_Up");
-                        Table_Command_Send_Start(Leg_Up);
-                        break;
-                    case R.id.fragment2_button14:
-                        textView2.setText("Leg_Down");
-                        Table_Command_Send_Start(Leg_Down);
-                        break;
-                    case R.id.fragment2_button15:
-                        textView2.setText("Normal_Function");
-                        Table_Command_Send_Start(Normal_Function);
-                        break;
-                    case R.id.fragment2_button16:
-                        textView2.setText("Reverse_Function");
-                        Table_Command_Send_Start(Reverse_Function);
-                        break;
-                    case R.id.fragment2_button17:
-                        textView2.setText("Lock");
-                        Table_Command_Send_Start(Lock);
-                        break;
-                    case R.id.fragment2_button18:
-                        textView2.setText("Unlock");
-                        Table_Command_Send_Start(Unlock);
-                        break;
-                    case R.id.fragment2_button19:
-                        textView2.setText("Level");
-                        Table_Command_Send_Start(Level);
-                        break;
-                    case R.id.fragment2_button20:
-                        textView2.setText("Power");
-                        //Table_Command_Send_Start(Tilt_R);
-                        if(F2_Button1.isEnabled()){
-                            LastDelayTime = 49;
-                        }
-                        else {
-                            F2_Button1.setEnabled(true);
-                            F2_Button2.setEnabled(true);
-                            F2_Button3.setEnabled(true);
-                            F2_Button4.setEnabled(true);
-                            F2_Button5.setEnabled(true);
-                            F2_Button6.setEnabled(true);
-                            F2_Button7.setEnabled(true);
-                            F2_Button8.setEnabled(true);
-                            F2_Button9.setEnabled(true);
-                            F2_Button10.setEnabled(true);
-                            F2_Button11.setEnabled(true);
-                            F2_Button12.setEnabled(true);
-                            F2_Button13.setEnabled(true);
-                            F2_Button14.setEnabled(true);
-                            F2_Button15.setEnabled(true);
-                            F2_Button16.setEnabled(true);
-                            F2_Button17.setEnabled(true);
-                            F2_Button18.setEnabled(true);
-                            F2_Button19.setEnabled(true);
-                        }
-                        break;
+                if(SW_Output!= 0x00){
+                    SW_Output = 0x00;
+                    LastDelayTime = 49;
+                }
+                else {
+                    switch (v.getId()) {
+                        case R.id.fragment2_button1:
+                            textView2.setText("Rev_Trend");
+                            Table_Command_Send_Start(Rev_Trend);
+                            break;
+                        case R.id.fragment2_button2:
+                            textView2.setText("Trend");
+                            Table_Command_Send_Start(Trend);
+                            break;
+                        case R.id.fragment2_button3:
+                            textView2.setText("Tilt_L");
+                            Table_Command_Send_Start(Tilt_L);
+                            break;
+                        case R.id.fragment2_button4:
+                            textView2.setText("Tilt_R");
+                            Table_Command_Send_Start(Tilt_R);
+                            break;
+                        case R.id.fragment2_button5:
+                            textView2.setText("Back_Up");
+                            Table_Command_Send_Start(Back_Up);
+                            break;
+                        case R.id.fragment2_button6:
+                            textView2.setText("Back_Down");
+                            Table_Command_Send_Start(Back_Down);
+                            break;
+                        case R.id.fragment2_button7:
+                            textView2.setText("Slide_Head");
+                            Table_Command_Send_Start(Slide_Head);
+                            break;
+                        case R.id.fragment2_button8:
+                            textView2.setText("Slide_Foot");
+                            Table_Command_Send_Start(Slide_Foot);
+                            break;
+                        case R.id.fragment2_button9:
+                            textView2.setText("Flex");
+                            Table_Command_Send_Start(Flex);
+                            break;
+                        case R.id.fragment2_button10:
+                            textView2.setText("Reflex");
+                            Table_Command_Send_Start(Reflex);
+                            break;
+                        case R.id.fragment2_button11:
+                            textView2.setText("Table_Up");
+                            Table_Command_Send_Start(Table_Up);
+                            break;
+                        case R.id.fragment2_button12:
+                            textView2.setText("Table_Down");
+                            Table_Command_Send_Start(Table_Down);
+                            break;
+                        case R.id.fragment2_button13:
+                            textView2.setText("Leg_Up");
+                            Table_Command_Send_Start(Leg_Up);
+                            break;
+                        case R.id.fragment2_button14:
+                            textView2.setText("Leg_Down");
+                            Table_Command_Send_Start(Leg_Down);
+                            break;
+                        case R.id.fragment2_button15:
+                            textView2.setText("Normal_Function");
+                            Table_Command_Send_Start(Normal_Function);
+                            break;
+                        case R.id.fragment2_button16:
+                            textView2.setText("Reverse_Function");
+                            Table_Command_Send_Start(Reverse_Function);
+                            break;
+                        case R.id.fragment2_button17:
+                            textView2.setText("Lock");
+                            Table_Command_Send_Start(Lock);
+                            break;
+                        case R.id.fragment2_button18:
+                            textView2.setText("Unlock");
+                            Table_Command_Send_Start(Unlock);
+                            break;
+                        case R.id.fragment2_button19:
+                            textView2.setText("Level");
+                            Table_Command_Send_Start(Level);
+                            break;
+                        case R.id.fragment2_button20:
+                            textView2.setText("Power");
+                            //Table_Command_Send_Start(Tilt_R);
+                            if (F2_Button1.isEnabled()) {
+                                LastDelayTime = 49;
+                            } else {
+                                F2_Button1.setEnabled(true);
+                                F2_Button2.setEnabled(true);
+                                F2_Button3.setEnabled(true);
+                                F2_Button4.setEnabled(true);
+                                F2_Button5.setEnabled(true);
+                                F2_Button6.setEnabled(true);
+                                F2_Button7.setEnabled(true);
+                                F2_Button8.setEnabled(true);
+                                F2_Button9.setEnabled(true);
+                                F2_Button10.setEnabled(true);
+                                F2_Button11.setEnabled(true);
+                                F2_Button12.setEnabled(true);
+                                F2_Button13.setEnabled(true);
+                                F2_Button14.setEnabled(true);
+                                F2_Button15.setEnabled(true);
+                                F2_Button16.setEnabled(true);
+                                F2_Button17.setEnabled(true);
+                                F2_Button18.setEnabled(true);
+                                F2_Button19.setEnabled(true);
+                            }
+                            break;
 
 
-                    case R.id.fragment3_button1:
-                        textView3.setText("fragment3_button1");
-                        Table_Command_Send_Start(Table_Up);
-                        break;
-                    case R.id.fragment3_button2:
-                        textView3.setText("fragment3_button2");
-                        Table_Command_Send_Start(Table_Down);
-                        break;
-                    case R.id.fragment3_button3:
-                        textView3.setText("fragment3_button3");
-                        Table_Command_Send_Start(Lock);
-                        break;
-                    case R.id.fragment3_button4:
-                        textView3.setText("fragment3_button4");
-                        Table_Command_Send_Start(Level);
-                        break;
+                        case R.id.fragment3_button1:
+                            textView3.setText("fragment3_button1");
+                            Table_Command_Send_Start(Table_Up);
+                            break;
+                        case R.id.fragment3_button2:
+                            textView3.setText("fragment3_button2");
+                            Table_Command_Send_Start(Table_Down);
+                            break;
+                        case R.id.fragment3_button3:
+                            textView3.setText("fragment3_button3");
+                            Table_Command_Send_Start(Lock);
+                            break;
+                        case R.id.fragment3_button4:
+                            textView3.setText("fragment3_button4");
+                            Table_Command_Send_Start(Level);
+                            break;
+                    }
+                    Log.d("test", v.getId()+ " button ---> down");
                 }
             }
             if(event.getAction() == MotionEvent.ACTION_UP){
-                Log.d("test", "cansal button ---> cancel");
+                Log.d("test", v.getId() + " button ---> cancel");
                 SW_Output = 0x00;
                 LastDelayTime = 0;
 //                mDelayTime = 90;
