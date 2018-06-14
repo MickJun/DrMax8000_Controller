@@ -923,6 +923,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 F2_Button17.setEnabled(true);
                                 F2_Button18.setEnabled(true);
                                 F2_Button19.setEnabled(true);
+                                LastDelayTime = 0;
                             }
                             break;
 
@@ -1086,7 +1087,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button17.setEnabled(false);
         F2_Button18.setEnabled(false);
         F2_Button19.setEnabled(false);
-
+        LastDelayTime = 100;
     }
     public void Get_Fragment3(View v)
     {
