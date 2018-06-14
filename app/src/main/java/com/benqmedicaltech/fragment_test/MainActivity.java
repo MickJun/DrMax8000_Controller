@@ -712,6 +712,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if(LastDelayTime == 50 && f2!=null)
             {
+                SW_Output = 0x00;
                 F2_Button1.setEnabled(false);
                 F2_Button2.setEnabled(false);
                 F2_Button3.setEnabled(false);
@@ -899,6 +900,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         case R.id.fragment2_button20:
                             textView2.setText("Power");
                             //Table_Command_Send_Start(Tilt_R);
+                            SW_Output = 0x00;
                             if (F2_Button1.isEnabled()) {
                                 LastDelayTime = 49;
                             } else {
@@ -1064,7 +1066,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
+        SW_Output = 0x00;
         F2_Button1.setEnabled(false);
         F2_Button2.setEnabled(false);
         F2_Button3.setEnabled(false);
