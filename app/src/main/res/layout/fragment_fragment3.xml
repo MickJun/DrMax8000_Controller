@@ -10,9 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/fragment3_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FRAGMENT3"
+            android:textSize="50dp" />
+
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="175dp"
             android:orientation="vertical">
 
             <Button
@@ -20,7 +28,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onClick"
                 android:text="1" />
 
             <Button
@@ -28,7 +35,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onClick"
                 android:text="2" />
 
             <Button
@@ -36,7 +42,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onClick"
                 android:text="3" />
 
             <Button
@@ -44,30 +49,84 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onClick"
                 android:text="4" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/Test_Button1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_revtrend_normal"
+                android:text="" />
+            <Button
+                android:id="@+id/Test_Button2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltright_normal"
+                android:text="" />
+
+            <Button
+                android:id="@+id/Test_Button3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_backup_normal"
+                android:text="" />
+
+            <Button
+                android:id="@+id/Test_Button4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidefoot_normal"
+                android:text="" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button
+                android:id="@+id/Test_Button5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_trend_normal"
+                android:text="" />
+            <Button
+                android:id="@+id/Test_Button6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltleft_normal"
+                android:text="" />
+            <Button
+                android:id="@+id/Test_Button7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_backdw_normal"
+                android:text="" />
+            <Button
+                android:id="@+id/Test_Button8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidehead_normal"
+                android:text="" />
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-        <TextView
-            android:id="@+id/fragment3_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="FRAGMENT3"
-            android:textSize="50dp" />
     </TableLayout>
 
 </FrameLayout>
