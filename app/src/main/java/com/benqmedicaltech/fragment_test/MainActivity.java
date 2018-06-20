@@ -154,18 +154,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             F1_Button2.setEnabled(true);
         }
 
+        mBluetoothAdapter.cancelDiscovery();
+
         // Register for broadcasts when a device is discovered.
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter);
 
         // Establish connection to the proxy.
         mBluetoothAdapter.getProfileProxy(MainActivity.this, mProfileListener, BluetoothProfile.HEADSET);
-
     }
 
     private void BT_Connecnting(){
 
-        mBluetoothAdapter.cancelDiscovery();
+        if(mBluetoothAdapter.isDiscovering())mBluetoothAdapter.cancelDiscovery();
 
         BluetoothDevice connDevices = mBluetoothAdapter.getRemoteDevice(BT_Addrlist.get(BT_Select_Point).toString());
 
