@@ -230,6 +230,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button F2_Button19;
     private Button F2_Button20;
 
+    private TextView F2_FunText1;
+    private TextView F2_FunText2;
+    private TextView F2_FunText3;
+    private TextView F2_FunText4;
+    private TextView F2_FunText5;
+    private TextView F2_FunText6;
+    private TextView F2_FunText7;
+    private TextView F2_FunText8;
+    private TextView F2_FunText9;
+    private TextView F2_FunText10;
+    private TextView F2_FunText11;
+    private TextView F2_FunText12;
+    private TextView F2_FunText13;
+    private TextView F2_FunText14;
+    private TextView F2_FunText15;
+    private TextView F2_FunText16;
+    private TextView F2_FunText17;
+    private TextView F2_FunText18;
+    private TextView F2_FunText19;
+    private TextView F2_FunText20;
+
 
 
     private Button F3_Button1;
@@ -730,9 +751,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 F2_Button14.setEnabled(false);
                 F2_Button15.setEnabled(false);
                 F2_Button16.setEnabled(false);
-                F2_Button17.setEnabled(false);
+                //F2_Button17.setEnabled(false);
                 F2_Button18.setEnabled(false);
-                F2_Button19.setEnabled(false);
+                //F2_Button19.setEnabled(false);
+                //F2_Button20.setEnabled(false);
                 LastDelayTime = 100;
                 //mDelayTime = 0;
             }
@@ -823,82 +845,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else {
                     switch (v.getId()) {
                         case R.id.fragment2_button1:
-                            textView2.setText("Rev_Trend");
-                            Table_Command_Send_Start(Rev_Trend);
-                            break;
-                        case R.id.fragment2_button2:
-                            textView2.setText("Trend");
-                            Table_Command_Send_Start(Trend);
-                            break;
-                        case R.id.fragment2_button3:
-                            textView2.setText("Tilt_L");
-                            Table_Command_Send_Start(Tilt_L);
-                            break;
-                        case R.id.fragment2_button4:
-                            textView2.setText("Tilt_R");
-                            Table_Command_Send_Start(Tilt_R);
-                            break;
-                        case R.id.fragment2_button5:
-                            textView2.setText("Back_Up");
-                            Table_Command_Send_Start(Back_Up);
-                            break;
-                        case R.id.fragment2_button6:
-                            textView2.setText("Back_Down");
-                            Table_Command_Send_Start(Back_Down);
-                            break;
-                        case R.id.fragment2_button7:
-                            textView2.setText("Slide_Head");
-                            Table_Command_Send_Start(Slide_Head);
-                            break;
-                        case R.id.fragment2_button8:
-                            textView2.setText("Slide_Foot");
-                            Table_Command_Send_Start(Slide_Foot);
-                            break;
-                        case R.id.fragment2_button9:
-                            textView2.setText("Flex");
-                            Table_Command_Send_Start(Flex);
-                            break;
-                        case R.id.fragment2_button10:
-                            textView2.setText("Reflex");
-                            Table_Command_Send_Start(Reflex);
-                            break;
-                        case R.id.fragment2_button11:
-                            textView2.setText("Table_Up");
-                            Table_Command_Send_Start(Table_Up);
-                            break;
-                        case R.id.fragment2_button12:
-                            textView2.setText("Table_Down");
-                            Table_Command_Send_Start(Table_Down);
-                            break;
-                        case R.id.fragment2_button13:
-                            textView2.setText("Leg_Up");
-                            Table_Command_Send_Start(Leg_Up);
-                            break;
-                        case R.id.fragment2_button14:
-                            textView2.setText("Leg_Down");
-                            Table_Command_Send_Start(Leg_Down);
-                            break;
-                        case R.id.fragment2_button15:
-                            textView2.setText("Normal_Function");
-                            Table_Command_Send_Start(Normal_Function);
-                            break;
-                        case R.id.fragment2_button16:
-                            textView2.setText("Reverse_Function");
-                            Table_Command_Send_Start(Reverse_Function);
-                            break;
-                        case R.id.fragment2_button17:
-                            textView2.setText("Lock");
-                            Table_Command_Send_Start(Lock);
-                            break;
-                        case R.id.fragment2_button18:
                             textView2.setText("Unlock");
                             Table_Command_Send_Start(Unlock);
                             break;
-                        case R.id.fragment2_button19:
+                        case R.id.fragment2_button2:
+                            textView2.setText("Normal_Function");
+                            Table_Command_Send_Start(Normal_Function);
+                            break;
+                        case R.id.fragment2_button3:
+                            textView2.setText("Flex");
+                            Table_Command_Send_Start(Flex);
+                            break;
+                        case R.id.fragment2_button4:
+                            textView2.setText("Slide_Foot");
+                            Table_Command_Send_Start(Slide_Foot);
+                            break;
+                        case R.id.fragment2_button5:
+                            textView2.setText("Lock");
+                            Table_Command_Send_Start(Lock);
+                            break;
+                        case R.id.fragment2_button6:
+                            textView2.setText("Reverse_Function");
+                            Table_Command_Send_Start(Reverse_Function);
+                            break;
+                        case R.id.fragment2_button7:
+                            textView2.setText("Reflex");
+                            Table_Command_Send_Start(Reflex);
+                            break;
+                        case R.id.fragment2_button8:
+                            textView2.setText("Slide_Head");
+                            Table_Command_Send_Start(Slide_Head);
+                            break;
+                        case R.id.fragment2_button9:
+                            textView2.setText("Tilt_R");
+                            Table_Command_Send_Start(Tilt_R);
+                            break;
+                        case R.id.fragment2_button10:
+                            textView2.setText("Rev_Trend");
+                            Table_Command_Send_Start(Rev_Trend);
+                            break;
+                        case R.id.fragment2_button11:
+                            textView2.setText("Back_Up");
+                            Table_Command_Send_Start(Back_Up);
+                            break;
+                        case R.id.fragment2_button12:
+                            textView2.setText("Table_Up");
+                            Table_Command_Send_Start(Table_Up);
+                            break;
+                        case R.id.fragment2_button13:
+                            textView2.setText("Tilt_L");
+                            Table_Command_Send_Start(Tilt_L);
+                            break;
+                        case R.id.fragment2_button14:
+                            textView2.setText("Trend");
+                            Table_Command_Send_Start(Trend);
+                            break;
+                        case R.id.fragment2_button15:
+                            textView2.setText("Back_Down");
+                            Table_Command_Send_Start(Back_Down);
+                            break;
+                        case R.id.fragment2_button16:
+                            textView2.setText("Table_Down");
+                            Table_Command_Send_Start(Table_Down);
+                            break;
+                        case R.id.fragment2_button17:
+                            break;
+                        case R.id.fragment2_button18:
                             textView2.setText("Level");
                             Table_Command_Send_Start(Level);
                             break;
-                        case R.id.fragment2_button20:
+                        case R.id.fragment2_button19:
                             textView2.setText("Power");
                             //Table_Command_Send_Start(Tilt_R);
                             SW_Output = 0x00;
@@ -921,11 +937,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 F2_Button14.setEnabled(true);
                                 F2_Button15.setEnabled(true);
                                 F2_Button16.setEnabled(true);
-                                F2_Button17.setEnabled(true);
+                                //F2_Button17.setEnabled(true);
                                 F2_Button18.setEnabled(true);
-                                F2_Button19.setEnabled(true);
+                                //F2_Button19.setEnabled(true);
+                                //F2_Button20.setEnabled(true);
                                 LastDelayTime = 0;
                             }
+                            break;
+                        case R.id.fragment2_button20:
                             break;
 
 
@@ -988,85 +1007,144 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button1 = (Button)v.findViewById(R.id.fragment2_button1);
         F2_Button1.setOnClickListener(b);
         F2_Button1.setOnTouchListener(b);
-        F2_Button1.setText("Rev.Trend");
+        F2_Button1.setText("");
         F2_Button2 = (Button)v.findViewById(R.id.fragment2_button2);
         F2_Button2.setOnClickListener(b);
         F2_Button2.setOnTouchListener(b);
-        F2_Button2.setText("Trend");
+        F2_Button2.setText("");
         F2_Button3 = (Button)v.findViewById(R.id.fragment2_button3);
         F2_Button3.setOnClickListener(b);
         F2_Button3.setOnTouchListener(b);
-        F2_Button3.setText("Tilt.L");
+        F2_Button3.setText("");
         F2_Button4 = (Button)v.findViewById(R.id.fragment2_button4);
         F2_Button4.setOnClickListener(b);
         F2_Button4.setOnTouchListener(b);
-        F2_Button4.setText("Tilt.R");
+        F2_Button4.setText("");
         F2_Button5 = (Button)v.findViewById(R.id.fragment2_button5);
         F2_Button5.setOnClickListener(b);
         F2_Button5.setOnTouchListener(b);
-        F2_Button5.setText("BackUp");
+        F2_Button5.setText("");
         F2_Button6 = (Button)v.findViewById(R.id.fragment2_button6);
         F2_Button6.setOnClickListener(b);
         F2_Button6.setOnTouchListener(b);
-        F2_Button6.setText("BackDown");
+        F2_Button6.setText("");
         F2_Button7 = (Button)v.findViewById(R.id.fragment2_button7);
         F2_Button7.setOnClickListener(b);
         F2_Button7.setOnTouchListener(b);
-        F2_Button7.setText("SlideHead");
+        F2_Button7.setText("");
         F2_Button8 = (Button)v.findViewById(R.id.fragment2_button8);
         F2_Button8.setOnClickListener(b);
         F2_Button8.setOnTouchListener(b);
-        F2_Button8.setText("SlideFoot");
+        F2_Button8.setText("");
         F2_Button9 = (Button)v.findViewById(R.id.fragment2_button9);
         F2_Button9.setOnClickListener(b);
         F2_Button9.setOnTouchListener(b);
-        F2_Button9.setText("Flex");
+        F2_Button9.setText("");
         F2_Button10 = (Button)v.findViewById(R.id.fragment2_button10);
         F2_Button10.setOnClickListener(b);
         F2_Button10.setOnTouchListener(b);
-        F2_Button10.setText("Reflex");
+        F2_Button10.setText("");
         F2_Button11 = (Button)v.findViewById(R.id.fragment2_button11);
         F2_Button11.setOnClickListener(b);
         F2_Button11.setOnTouchListener(b);
-        F2_Button11.setText("TableUp");
+        F2_Button11.setText("");
         F2_Button12 = (Button)v.findViewById(R.id.fragment2_button12);
         F2_Button12.setOnClickListener(b);
         F2_Button12.setOnTouchListener(b);
-        F2_Button12.setText("TableDown");
+        F2_Button12.setText("");
         F2_Button13 = (Button)v.findViewById(R.id.fragment2_button13);
         F2_Button13.setOnClickListener(b);
         F2_Button13.setOnTouchListener(b);
-        F2_Button13.setText("LagUp");
+        F2_Button13.setText("");
         F2_Button14 = (Button)v.findViewById(R.id.fragment2_button14);
         F2_Button14.setOnClickListener(b);
         F2_Button14.setOnTouchListener(b);
-        F2_Button14.setText("LagDown");
+        F2_Button14.setText("");
         F2_Button15 = (Button)v.findViewById(R.id.fragment2_button15);
         F2_Button15.setOnClickListener(b);
         F2_Button15.setOnTouchListener(b);
-        F2_Button15.setText("Normal");
+        F2_Button15.setText("");
         F2_Button16 = (Button)v.findViewById(R.id.fragment2_button16);
         F2_Button16.setOnClickListener(b);
         F2_Button16.setOnTouchListener(b);
-        F2_Button16.setText("Reverse");
+        F2_Button16.setText("");
         F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
         F2_Button17.setOnClickListener(b);
         F2_Button17.setOnTouchListener(b);
-        F2_Button17.setText("Lock");
+        F2_Button17.setText("");
         F2_Button18 = (Button)v.findViewById(R.id.fragment2_button18);
         F2_Button18.setOnClickListener(b);
         F2_Button18.setOnTouchListener(b);
-        F2_Button18.setText("Unlock");
+        F2_Button18.setText("");
         F2_Button19 = (Button)v.findViewById(R.id.fragment2_button19);
         F2_Button19.setOnClickListener(b);
         F2_Button19.setOnTouchListener(b);
-        F2_Button19.setText("Level");
+        F2_Button19.setText("");
         F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
         F2_Button20.setOnClickListener(b);
         F2_Button20.setOnTouchListener(b);
-        F2_Button20.setText("Power");
+        F2_Button20.setText("");
 
-
+        F2_FunText1 = (TextView)v.findViewById(R.id.FunctionText1);
+        F2_FunText1.setTextSize(10);
+        F2_FunText1.setText("UNLOCK");
+        F2_FunText2 = (TextView)v.findViewById(R.id.FunctionText2);
+        F2_FunText2.setTextSize(10);
+        F2_FunText2.setText("NORMAL");
+        F2_FunText3 = (TextView)v.findViewById(R.id.FunctionText3);
+        F2_FunText3.setTextSize(10);
+        F2_FunText3.setText("FLEX");
+        F2_FunText4 = (TextView)v.findViewById(R.id.FunctionText4);
+        F2_FunText4.setTextSize(10);
+        F2_FunText4.setText("SLIDE FOOT");
+        F2_FunText5 = (TextView)v.findViewById(R.id.FunctionText5);
+        F2_FunText5.setTextSize(10);
+        F2_FunText5.setText("LOCK");
+        F2_FunText6 = (TextView)v.findViewById(R.id.FunctionText6);
+        F2_FunText6.setTextSize(10);
+        F2_FunText6.setText("REVERSE");
+        F2_FunText7 = (TextView)v.findViewById(R.id.FunctionText7);
+        F2_FunText7.setTextSize(10);
+        F2_FunText7.setText("REFLEX");
+        F2_FunText8 = (TextView)v.findViewById(R.id.FunctionText8);
+        F2_FunText8.setTextSize(10);
+        F2_FunText8.setText("SLIDE HEAD");
+        F2_FunText9 = (TextView)v.findViewById(R.id.FunctionText9);
+        F2_FunText9.setTextSize(10);
+        F2_FunText9.setText("TILT R.");
+        F2_FunText10 = (TextView)v.findViewById(R.id.FunctionText10);
+        F2_FunText10.setTextSize(10);
+        F2_FunText10.setText("REV. TREND.");
+        F2_FunText11 = (TextView)v.findViewById(R.id.FunctionText11);
+        F2_FunText11.setTextSize(10);
+        F2_FunText11.setText("BACK UP");
+        F2_FunText12 = (TextView)v.findViewById(R.id.FunctionText12);
+        F2_FunText12.setTextSize(10);
+        F2_FunText12.setText("TABLE UP");
+        F2_FunText13 = (TextView)v.findViewById(R.id.FunctionText13);
+        F2_FunText13.setTextSize(10);
+        F2_FunText13.setText("TILT L.");
+        F2_FunText14 = (TextView)v.findViewById(R.id.FunctionText14);
+        F2_FunText14.setTextSize(10);
+        F2_FunText14.setText("TREND.");
+        F2_FunText15 = (TextView)v.findViewById(R.id.FunctionText15);
+        F2_FunText15.setTextSize(10);
+        F2_FunText15.setText("BACK DOWN");
+        F2_FunText16 = (TextView)v.findViewById(R.id.FunctionText16);
+        F2_FunText16.setTextSize(10);
+        F2_FunText16.setText("TABLE DOWN");
+        F2_FunText17 = (TextView)v.findViewById(R.id.FunctionText17);
+        F2_FunText17.setTextSize(10);
+        F2_FunText17.setText("");
+        F2_FunText18 = (TextView)v.findViewById(R.id.FunctionText18);
+        F2_FunText18.setTextSize(10);
+        F2_FunText18.setText("LEVEL");
+        F2_FunText19 = (TextView)v.findViewById(R.id.FunctionText19);
+        F2_FunText19.setTextSize(10);
+        F2_FunText19.setText("ON/OFF");
+        F2_FunText20 = (TextView)v.findViewById(R.id.FunctionText20);
+        F2_FunText20.setTextSize(10);
+        F2_FunText20.setText("");
 
         SW_Output = 0x00;
         F2_Button1.setEnabled(false);
@@ -1086,8 +1164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button15.setEnabled(false);
         F2_Button16.setEnabled(false);
         F2_Button17.setEnabled(false);
+        F2_Button17.setVisibility(View.INVISIBLE);
         F2_Button18.setEnabled(false);
-        F2_Button19.setEnabled(false);
+        //F2_Button19.setEnabled(false);
+        F2_Button20.setEnabled(false);
+        F2_Button20.setVisibility(View.INVISIBLE);
         LastDelayTime = 100;
     }
     public void Get_Fragment3(View v)
