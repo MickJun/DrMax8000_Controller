@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,13 +70,30 @@
                 android:background= "@drawable/bisor_gui_eq_content_button_flunlockoff_normal"
                 android:text="1" />
 
-            <Button
-                android:id="@+id/fragment2_button2"
+
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_normal_normal"
-                android:text="2" />
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/fragment2_button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bisor_gui_eq_content_button_normal_normal"
+                    android:text="2" />
+
+
+                <ImageView
+                    android:id="@+id/imageView_Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/bisor_gui_report_content_icon_record_light_on" />
+
+            </FrameLayout>
 
             <Button
                 android:id="@+id/fragment2_button3"
@@ -109,13 +127,27 @@
                 android:background= "@drawable/bisor_gui_eq_content_button_fllockoff_normal"
                 android:text="5" />
 
-            <Button
-                android:id="@+id/fragment2_button6"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_reverse_normal"
-                android:text="6" />
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/fragment2_button6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bisor_gui_eq_content_button_reverse_normal"
+                    android:text="6" />
+
+
+                <ImageView
+                    android:id="@+id/imageView_Reverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/bisor_gui_report_content_icon_record_light_off" />
+
+            </FrameLayout>
 
             <Button
                 android:id="@+id/fragment2_button7"

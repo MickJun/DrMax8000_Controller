@@ -14,12 +14,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -251,6 +254,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView F2_FunText19;
     private TextView F2_FunText20;
 
+    private ImageView IV_Normal;
+    private ImageView IV_Reverse;
 
 
     private Button F3_Button1;
@@ -1145,6 +1150,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_FunText20 = (TextView)v.findViewById(R.id.FunctionText20);
         F2_FunText20.setTextSize(10);
         F2_FunText20.setText("");
+
+
+        IV_Normal = (ImageView) v.findViewById(R.id.imageView_Normal);
+        IV_Normal.bringToFront();
+        IV_Reverse = (ImageView) v.findViewById(R.id.imageView_Reverse);
+        IV_Reverse.bringToFront();
 
         SW_Output = 0x00;
         F2_Button1.setEnabled(false);

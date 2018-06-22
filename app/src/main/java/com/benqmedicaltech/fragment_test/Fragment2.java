@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -35,8 +36,9 @@ public class Fragment2 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_fragment2, container, false);
 //    }
 
-    View MyView;
-
+    private View MyView;
+    private  ImageView mIV_Reverse;
+    private  ImageView mIV_Normal;
 
     public String MyString = "Loading...";
     private Handler handler = new Handler();
@@ -45,6 +47,8 @@ public class Fragment2 extends Fragment {
     int LED_Check = 0;
     byte[] Table_Power_Status = new byte[3];
     byte[] Output_Table = new byte[1024];
+
+
 
     public void Show_text(byte[] Output_Temp, TextView mtv) {
 
@@ -166,10 +170,19 @@ public class Fragment2 extends Fragment {
             if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
             {
                 MyString = MyString + "_Reverse";
+//                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
+//                mIV_Reverse.bringToFront();
+//                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
+//                mIV_Normal.bringToFront();
+
             }
             else
             {
                 MyString = MyString + "_Normal";
+//                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
+//                mIV_Reverse.bringToFront();
+//                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
+//                mIV_Normal.bringToFront();
             }
         }
 
@@ -185,6 +198,22 @@ public class Fragment2 extends Fragment {
             check_Data();
             if(myTextView != null)myTextView.setText(MyString);
             handler.postDelayed(this,mDelayTime);
+
+            if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
+            {
+                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
+                mIV_Reverse.bringToFront();
+                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
+                mIV_Normal.bringToFront();
+
+            }
+            else
+            {
+                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
+                mIV_Reverse.bringToFront();
+                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
+                mIV_Normal.bringToFront();
+            }
         }
     };
 
@@ -192,6 +221,10 @@ public class Fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
         MyView = view;
+
+
+        mIV_Reverse = (ImageView) MyView.findViewById(R.id.imageView_Reverse);
+        mIV_Normal  = (ImageView) MyView.findViewById(R.id.imageView_Normal);
 //        tv = (TextView) view.findViewById(R.id.fragment2_text);
 //        tv.setText(name);
 //        tv.setOnClickListener(new View.OnClickListener() {
