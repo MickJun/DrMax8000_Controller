@@ -67,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_flunlockoff_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_flunlockon_disable"
                 android:text="1" />
 
 
@@ -76,23 +76,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/fragment2_button2"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bisor_gui_eq_content_button_normal_normal"
-                    android:text="2" />
-
-
-                <ImageView
-                    android:id="@+id/imageView_Normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/bisor_gui_report_content_icon_record_light_on" />
-
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/fragment2_button2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bisor_gui_eq_content_button_normal_disable"
+                        android:text="2" />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/imageView_Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/bisor_gui_report_content_icon_record_light_on" />
+                </FrameLayout>
             </FrameLayout>
 
             <Button
@@ -100,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_flex_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_flex_disable"
                 android:text="3" />
 
             <Button
@@ -108,7 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_slidefoot_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidefoot_disable"
                 android:text="4" />
 
         </TableRow>
@@ -124,28 +128,36 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_fllockoff_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_fllockon_disable"
                 android:text="5" />
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/fragment2_button6"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bisor_gui_eq_content_button_reverse_normal"
-                    android:text="6" />
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/fragment2_button6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bisor_gui_eq_content_button_reverse_disable"
+                        android:text="6" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/imageView_Reverse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/bisor_gui_report_content_icon_record_light_off" />
+                </FrameLayout>
 
 
-                <ImageView
-                    android:id="@+id/imageView_Reverse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/bisor_gui_report_content_icon_record_light_off" />
 
             </FrameLayout>
 
@@ -154,7 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_reflex_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_reflex_disable"
                 android:text="7" />
 
             <Button
@@ -162,7 +174,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_slidehead_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidehead_disable"
                 android:text="8" />
 
         </TableRow>
@@ -202,6 +214,16 @@
                 android:gravity="center_horizontal"
                 android:text="FunctionText8" />
         </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp">
+            </FrameLayout>
+        </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -248,7 +270,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tiltright_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltright_disable"
                 android:text="9" />
 
             <Button
@@ -256,7 +278,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_revtrend_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_revtrend_disable"
                 android:text="10" />
 
             <Button
@@ -264,7 +286,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_backup_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_backup_disable"
                 android:text="11" />
 
             <Button
@@ -272,7 +294,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tableup_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_tableup_disable"
                 android:text="12" />
 
         </TableRow>
@@ -288,7 +310,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tiltleft_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltleft_disable"
                 android:text="13" />
 
             <Button
@@ -296,7 +318,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_trend_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_trend_disable"
                 android:text="14" />
 
             <Button
@@ -304,7 +326,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_backdw_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_backdw_disable"
                 android:text="15" />
 
             <Button
@@ -312,7 +334,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tabledw_normal"
+                android:background= "@drawable/bisor_gui_eq_content_button_tabledw_disable"
                 android:text="16" />
 
         </TableRow>
@@ -352,6 +374,54 @@
                 android:gravity="center_horizontal"
                 android:text="FunctionText16" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp">
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/fragment2_button17"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="17" />
+
+            <Button
+                android:id="@+id/fragment2_button18"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_levelcenter_disable"
+                android:text="18" />
+
+            <Button
+                android:id="@+id/fragment2_button19"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_pwoff2"
+                android:text="19" />
+
+            <Button
+                android:id="@+id/fragment2_button20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="20" />
+
+        </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -386,44 +456,6 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="FunctionText20" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/fragment2_button17"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="17" />
-
-            <Button
-                android:id="@+id/fragment2_button18"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_levelcenter_normal"
-                android:text="18" />
-
-            <Button
-                android:id="@+id/fragment2_button19"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_pwoff2"
-                android:text="19" />
-
-            <Button
-                android:id="@+id/fragment2_button20"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="20" />
-
         </TableRow>
 
     </TableLayout>

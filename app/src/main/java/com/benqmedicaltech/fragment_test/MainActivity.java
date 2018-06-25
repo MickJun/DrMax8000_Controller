@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +38,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{    //
+
 
 
 
@@ -298,6 +300,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unregisterReceiver(mReceiver);
         }
         super.onDestroy();
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {   //原本以為可以用來擋螢幕翻轉，但沒用
+        // TODO Auto-generated method stub
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // 什麼都不用寫
+        }
+        else {
+            // 什麼都不用寫
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

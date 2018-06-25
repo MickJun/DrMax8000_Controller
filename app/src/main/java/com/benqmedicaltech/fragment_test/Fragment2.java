@@ -45,7 +45,7 @@ public class Fragment2 extends Fragment {
 
     public String MyString = "Loading...";
     private Handler handler = new Handler();
-    int mDelayTime = 1000;
+    int mDelayTime = 300;
     public TextView myTextView;
     int LED_Check = 0;
     byte[] Table_Power_Status = new byte[3];
