@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -180,8 +182,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mreadThread.start();
             if(BTSocket.isConnected()){
                 F1_Button2.setText("DISCONNECT");
-                foot2.setEnabled(true);
-                foot3.setEnabled(true);
+//                foot2.setEnabled(true);
+//                foot3.setEnabled(true);
+                menu_function.setEnabled(true);
+                menu_test.setEnabled(true);
                 initFragment2();
                 mDelayTime = 90;
                 SW_Output = 0;
@@ -204,9 +208,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     View View_Fragment3;
 
     //底部三个按钮
-    private Button foot1;
-    private Button foot2;
-    private Button foot3;
+//    private Button foot1;
+//    private Button foot2;
+//    private Button foot3;
+    private Menu menu_Main;
+    private MenuItem menu_setting;
+    private MenuItem menu_function;
+    private MenuItem menu_test;
 
     private Button F1_Button1;
     private Button F1_Button2;
@@ -276,9 +284,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
 
         // Don't forget to unregister the ACTION_FOUND receiver.
+        mBluetoothAdapter.closeProfileProxy(BluetoothProfile.HEADSET,mBluetoothHeadset);
         if(handler != null)handler.removeMessages(0);
         if(BTSocket != null && BTSocket.isConnected())
         {
@@ -289,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             unregisterReceiver(mReceiver);
         }
+        super.onDestroy();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,23 +308,93 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //透過下方程式碼，取得Activity中執行的個體。
         //manager = getSupportFragmentManager();
-        foot1 = (Button) findViewById(R.id.Button1);
-        foot2 = (Button) findViewById(R.id.Button2);
-        foot3 = (Button) findViewById(R.id.Button3);
-        foot1.setOnClickListener(b);
-        foot2.setOnClickListener(b);
-        foot3.setOnClickListener(b);
-        foot1.setText("LINK");
-        foot2.setText("Function");
-        foot3.setText("Data");
-        foot2.setEnabled(false);
-        foot3.setEnabled(false);
+
+//        foot1.setOnClickListener(b);
+//        foot2.setOnClickListener(b);
+//        foot3.setOnClickListener(b);
+//        foot1.setText("LINK");
+//        foot2.setText("Function");
+//        foot3.setText("Data");
         //第一次初始化首页默认显示第一个fragment
         //initFragment3();
         //initFragment2();
         initFragment1();
 
     }
+
+    /**
+     *创建菜单
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu); //通过getMenuInflater()方法得到MenuInflater对象，再调用它的inflate()方法就可以给当前活动创建菜单了，第一个参数：用于指定我们通过哪一个资源文件来创建菜单；第二个参数：用于指定我们的菜单项将添加到哪一个Menu对象当中。
+        menu_Main =  menu;
+        menu_setting = menu.findItem(R.id.menu_setting_item);
+        menu_function = menu.findItem(R.id.menu_function_item);
+        menu_test = menu.findItem(R.id.menu_test_item);
+        menu_function.setEnabled(false);
+        menu_test.setEnabled(false);
+        return true; // true：允许创建的菜单显示出来，false：创建的菜单将无法显示。
+    }
+
+    /**
+     *菜单的点击事件
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_setting_item:
+                Toast.makeText(this, "Setting！", Toast.LENGTH_SHORT).show();
+                if(SW_Output== 0x00){
+                    initFragment1();
+                }
+                break;
+            case R.id.menu_function_item:
+                Toast.makeText(this, "Function！", Toast.LENGTH_SHORT).show();
+                if(SW_Output== 0x00){
+                    initFragment2();
+                }
+                break;
+            case R.id.menu_test_item:
+                Toast.makeText(this, "Test！", Toast.LENGTH_SHORT).show();
+                if(SW_Output== 0x00){
+                    initFragment3();
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        /**
+         * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
+         * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等） TODO
+         * Auto-generated method stub
+         */
+        if(SW_Output != 0x00) {
+            menu_setting.setVisible(false);
+            menu_function.setVisible(false);
+            menu_test.setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onOptionsMenuClosed(Menu menu) {
+        /**
+         * 每次菜单被关闭时调用. （菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项） TODO
+         * Auto-generated method stub
+         */
+        super.onOptionsMenuClosed(menu);
+    }
+
+
 
     private void initFragment1(){
         //开启事务，fragment的控制是由事务来实现的
@@ -779,9 +858,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    public void onClick(View v) {
-
-    }
+    public void onClick(View v) {}
 
 
     class ButtonListener implements View.OnClickListener, View.OnTouchListener {
@@ -789,21 +866,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.Button1:
-                    if(SW_Output== 0x00){
-                        initFragment1();
-                    }
-                    break;
-                case R.id.Button2:
-                    if(SW_Output== 0x00){
-                        initFragment2();
-                    }
-                    break;
-                case R.id.Button3:
-                    if(SW_Output== 0x00){
-                        initFragment3();
-                    }
-                    break;
+//                case R.id.Button1:
+//                    if(SW_Output== 0x00){
+//                        initFragment1();
+//                    }
+//                    break;
+//                case R.id.Button2:
+//                    if(SW_Output== 0x00){
+//                        initFragment2();
+//                    }
+//                    break;
+//                case R.id.Button3:
+//                    if(SW_Output== 0x00){
+//                        initFragment3();
+//                    }
+//                    break;
                 case R.id.fragment1_button1:
                     //textView1.setText("fragment1_button1");
                     BT_Scan();
@@ -815,8 +892,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             BTSocket.close();
                             F1_Button2.setText("CONNECT");
-                            foot2.setEnabled(false);
-                            foot3.setEnabled(false);
+//                            foot2.setEnabled(false);
+//                            foot3.setEnabled(false);
+                            menu_function.setEnabled(false);
+                            menu_test.setEnabled(false);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -829,7 +908,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         private void Table_Command_Send_Start(byte command){
-
             SW_Output = command;
             Output_First_Set();
             Function_Code();
@@ -977,6 +1055,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("test", v.getId() + " button ---> cancel");
                 SW_Output = 0x00;
                 LastDelayTime = 0;
+                if(menu_setting.isVisible() == false) {
+                    menu_setting.setVisible(true);
+                    menu_function.setVisible(true);
+                    menu_test.setVisible(true);
+                    menu_Main.close();
+                }
 //                mDelayTime = 90;
             }
             return false;

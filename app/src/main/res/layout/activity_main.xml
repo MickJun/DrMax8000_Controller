@@ -15,35 +15,35 @@
         android:layout_height="0dp">
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
-        //切換第一個Fragment的按鈕
-        <Button
-            android:id="@+id/Button1"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Button1" />
-        //切換第二個Fragment的按鈕
-        <Button
-            android:id="@+id/Button2"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Button2" />
-        //切換第3個Fragment的按鈕
-        <Button
-            android:id="@+id/Button3"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Button3" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp">-->
+        <!--//切換第一個Fragment的按鈕-->
+        <!--<Button-->
+            <!--android:id="@+id/Button1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClick"-->
+            <!--android:text="Button1" />-->
+        <!--//切換第二個Fragment的按鈕-->
+        <!--<Button-->
+            <!--android:id="@+id/Button2"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClick"-->
+            <!--android:text="Button2" />-->
+        <!--//切換第3個Fragment的按鈕-->
+        <!--<Button-->
+            <!--android:id="@+id/Button3"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClick"-->
+            <!--android:text="Button3" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     //準備顯示Fragment的Layout視窗
     <!--<LinearLayout-->

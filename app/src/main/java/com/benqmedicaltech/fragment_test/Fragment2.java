@@ -1,6 +1,7 @@
 package com.benqmedicaltech.fragment_test;
 
 
+import android.bluetooth.BluetoothProfile;
 import android.os.Bundle;
 //import android.app.Fragment;
 import android.os.Handler;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 
 /**
@@ -238,6 +241,11 @@ public class Fragment2 extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        if(handler != null)handler.removeMessages(0);
+        super.onDestroy();
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {

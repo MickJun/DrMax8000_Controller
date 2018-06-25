@@ -197,6 +197,11 @@ public class Fragment3 extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        if(handler != null)handler.removeMessages(0);
+        super.onDestroy();
+    }
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
