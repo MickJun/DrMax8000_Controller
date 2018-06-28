@@ -51,14 +51,49 @@ public class Fragment2 extends Fragment {
     byte[] Table_Power_Status = new byte[3];
     byte[] Output_Table = new byte[1024];
 
+    public int Update_Flag = 0;
 
-
-    public void Show_text(byte[] Output_Temp, TextView mtv) {
-
+    public void Update_Status(byte[] Output_Temp, TextView mtv) {
+        Update_Flag = 1;
         myTextView = mtv;
         Output_Table = Output_Temp;
+    }
+
+    public int Change_Photo_Flag = 0;
+    public int Change_Button_Number = 0;
+    public int Change_Function_Number = 0;
+    public int Chenged_Button = 0;
+    public String Change_Photo_Name = "";
+
+
+    public void Change_Button(int Change_Function,int Button_Number , String photo_Name) {
+        Change_Photo_Flag = 1;
+        Change_Function_Number = Change_Function;
+        Change_Button_Number = Button_Number;
+        Change_Photo_Name = photo_Name;
+    }
+
+    public void Press_Button_UI(int Button_Number , String photo_Name){
+
 
     }
+
+    public void Release_Button_UI(int Button_Number , String photo_Name){
+
+
+    }
+
+    public void Lock_Button_UI(int Button_Number , String photo_Name){
+
+    }
+
+    public void Unlock_Button_UI(int Button_Number , String photo_Name){
+
+    }
+
+
+
+
     public void check_Data(){
         //byte[] Output_Table = ;
         byte[] Temp_int = new byte[24];
@@ -198,25 +233,27 @@ public class Fragment2 extends Fragment {
     private Runnable runnable = new Runnable() {
         public void run() {
             //update
-            check_Data();
-            if(myTextView != null)myTextView.setText(MyString);
-            handler.postDelayed(this,mDelayTime);
+            if(Update_Flag == 0) {
+                check_Data();
+                if (myTextView != null) myTextView.setText(MyString);
+                handler.postDelayed(this, mDelayTime);
+                if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
+                {
+                    mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
+                    mIV_Reverse.bringToFront();
+                    mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_off, null));
+                    mIV_Normal.bringToFront();
 
-            if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
-            {
-                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
-                mIV_Reverse.bringToFront();
-                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
-                mIV_Normal.bringToFront();
+                } else {
+                    mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_off, null));
+                    mIV_Reverse.bringToFront();
+                    mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
+                    mIV_Normal.bringToFront();
+                }
+            }
 
-            }
-            else
-            {
-                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
-                mIV_Reverse.bringToFront();
-                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
-                mIV_Normal.bringToFront();
-            }
+
+
         }
     };
 

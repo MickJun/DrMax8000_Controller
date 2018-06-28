@@ -35,7 +35,7 @@ public class Fragment3 extends Fragment {
     byte[] Table_Power_Status = new byte[3];
     byte[] Output_Table = new byte[1024];
 
-    public void Show_text(byte[] Output_Temp, TextView mtv) {
+    public void Update_Status(byte[] Output_Temp, TextView mtv) {
 
         myTextView = mtv;
         Output_Table = Output_Temp;

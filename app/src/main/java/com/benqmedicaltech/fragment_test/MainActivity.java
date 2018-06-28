@@ -189,9 +189,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 menu_function.setEnabled(true);
                 menu_test.setEnabled(true);
                 initFragment2();
-                mDelayTime = 90;
                 SW_Output = 0;
-                handler.postDelayed(runnable,mDelayTime);
+                if(mDelayTime == 0) {
+                    mDelayTime = 90;
+                    handler.postDelayed(runnable, mDelayTime);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -774,10 +776,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        }
                         if(Table_Data_Start == 2){
                             if(f2 != null && View_Fragment2 != null) {
-                                f2.Show_text(Table_Data,textView2);
+                                f2.Update_Status(Table_Data,textView2);
                             }
                             if(f3 != null && View_Fragment3 != null) {
-                                f3.Show_text(Table_Data,textView3);
+                                f3.Update_Status(Table_Data,textView3);
                             }
                             Table_Data_Start = 0;
                         }
