@@ -2,6 +2,7 @@ package com.benqmedicaltech.fragment_test;
 
 
 import android.bluetooth.BluetoothProfile;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 //import android.app.Fragment;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -39,6 +41,42 @@ public class Fragment2 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_fragment2, container, false);
 //    }
 
+    private static final byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
+    private static final byte Trend = 0x2;                   //#define	Trend				2
+    private static final byte Tilt_R = 0x3;                  //#define	Tilt_R				3
+    private static final byte Tilt_L = 0x4;                  //#define	Tilt_L				4
+    private static final byte Back_Up = 0x5;                 //#define	Back_Up				5
+    private static final byte Back_Down = 0x6;               //#define	Back_Down			6
+    private static final byte Table_Up = 0x7;                //#define	Table_Up			7
+    private static final byte Table_Down = 0x8;              //#define	Table_Down			8
+    private static final byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
+    private static final byte Slide_Head = 0xa;              //#define	Slide_Head			10
+    private static final byte Leg_Up = 0xb;                  //#define	Leg_Up				11
+    private static final byte Leg_Down = 0xc;                //#define	Leg_Down			12
+    private static final byte Unlock = 0xd;                  //#define	Unlock				13
+    private static final byte Lock = 0xe;                    //#define	Lock				14
+    private static final byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
+    private static final byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
+    private static final byte Flex = 0x15;                   //#define	Flex				21
+    private static final byte Reflex = 0x16;                 //#define	Reflex				22
+    private static final byte Level = 0x17;                  //#define	Level				23
+    //byte Config_TS710 = 0x18;           //#define	Config_TS710		24
+    //byte Config_7000_Rev = 0x19;        //#define   Config_7000_Rev	    25
+    //byte Config_Q100 = 0x1b;            //#define	Config_Q100			27
+    //byte Config_650NS = 0x1c;           //#define	Config_MOT1600_650	28
+    //byte Unlock_Stop = 0x1e;            //#define	Unlock_Stop			30          //650NS  進入腳踏模式=馬達無動作
+    //byte Lock_Run = 0x1f;               //#define	Lock_Run			31          //650NS  取消腳踏模式=馬達有動作
+    private static final byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
+    private static final byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
+    private static final byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
+    private static final byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
+    //byte Config_Mode = 0x37;
+    //byte Restrict_Function = 0x42;      //#define   Restrict_Function	66
+    private static final byte No_Function = 0x4d;            //#define   No_Function		    77
+    //byte Shutdown = 0x58;               //#define   Shutdown			88
+    byte SW_Output = 0x00;
+    byte Checksum = 0x00;
+
     private View MyView;
     private  ImageView mIV_Reverse;
     private  ImageView mIV_Normal;
@@ -59,12 +97,119 @@ public class Fragment2 extends Fragment {
         Output_Table = Output_Temp;
     }
 
+
+    public void setF2_Button1(Button f2_Button1) {
+        F2_Button1 = f2_Button1;
+    }
+
+    public void setF2_Button2(Button f2_Button2) {
+        F2_Button2 = f2_Button2;
+    }
+
+    public void setF2_Button3(Button f2_Button3) {
+        F2_Button3 = f2_Button3;
+    }
+
+    public void setF2_Button4(Button f2_Button4) {
+        F2_Button4 = f2_Button4;
+    }
+
+    public void setF2_Button5(Button f2_Button5) {
+        F2_Button5 = f2_Button5;
+    }
+
+    public void setF2_Button6(Button f2_Button6) {
+        F2_Button6 = f2_Button6;
+    }
+
+    public void setF2_Button7(Button f2_Button7) {
+        F2_Button7 = f2_Button7;
+    }
+
+    public void setF2_Button8(Button f2_Button8) {
+        F2_Button8 = f2_Button8;
+    }
+
+    public void setF2_Button9(Button f2_Button9) {
+        F2_Button9 = f2_Button9;
+    }
+
+    public void setF2_Button10(Button f2_Button10) {
+        F2_Button10 = f2_Button10;
+    }
+
+    public void setF2_Button11(Button f2_Button11) {
+        F2_Button11 = f2_Button11;
+    }
+
+    public void setF2_Button12(Button f2_Button12) {
+        F2_Button12 = f2_Button12;
+    }
+
+    public void setF2_Button13(Button f2_Button13) {
+        F2_Button13 = f2_Button13;
+    }
+
+    public void setF2_Button14(Button f2_Button14) {
+        F2_Button14 = f2_Button14;
+    }
+
+    public void setF2_Button15(Button f2_Button15) {
+        F2_Button15 = f2_Button15;
+    }
+
+    public void setF2_Button16(Button f2_Button16) {
+        F2_Button16 = f2_Button16;
+    }
+
+    public void setF2_Button17(Button f2_Button17) {
+        F2_Button17 = f2_Button17;
+    }
+
+    public void setF2_Button18(Button f2_Button18) {
+        F2_Button18 = f2_Button18;
+    }
+
+    public void setF2_Button19(Button f2_Button19) {
+        F2_Button19 = f2_Button19;
+    }
+
+    public void setF2_Button20(Button f2_Button20) {
+        F2_Button20 = f2_Button20;
+    }
+
+    public Button F2_Button1;
+    public Button F2_Button2;
+    public Button F2_Button3;
+    public Button F2_Button4;
+    public Button F2_Button5;
+    public Button F2_Button6;
+    public Button F2_Button7;
+    public Button F2_Button8;
+    public Button F2_Button9;
+    public Button F2_Button10;
+    public Button F2_Button11;
+    public Button F2_Button12;
+    public Button F2_Button13;
+    public Button F2_Button14;
+    public Button F2_Button15;
+    public Button F2_Button16;
+    public Button F2_Button17;
+    public Button F2_Button18;
+    public Button F2_Button19;
+    private Button F2_Button20;
+
+
     public int Change_Photo_Flag = 0;
     public int Change_Button_Number = 0;
     public int Change_Function_Number = 0;
     public int Chenged_Button = 0;
     public String Change_Photo_Name = "";
-
+    private static final int Function_non = 0;
+    private static final int Function_press = 1;
+    private static final int Function_release = 2;
+    private static final int Function_lock = 3;
+    private static final int Function_unlock = 4;
 
     public void Change_Button(int Change_Function,int Button_Number , String photo_Name) {
         Change_Photo_Flag = 1;
@@ -73,22 +218,72 @@ public class Fragment2 extends Fragment {
         Change_Photo_Name = photo_Name;
     }
 
-    public void Press_Button_UI(int Button_Number , String photo_Name){
+    public Button Press_Button;
+    public int Press_Drawable;
+
+    public void Press_Button_UI(Button getButton , int getPhoto_Name){
+        Change_Photo_Flag = Function_press;
+        Press_Button = getButton;
+        Press_Drawable = getPhoto_Name;
+//        switch (Button_Number){
+//            case Rev_Trend :
+//                break;
+//            case Trend :
+//                break;
+//            case Tilt_R :
+//                break;
+//            case Tilt_L :
+//                break;
+//            case Back_Up :
+//                break;
+//            case Back_Down :
+//                break;
+//            case Table_Up :
+//                break;
+//            case Table_Down :
+//                break;
+//            case Slide_Foot :
+//                break;
+//            case Slide_Head :
+//                break;
+//            case Leg_Up :
+//                break;
+//            case Leg_Down :
+//                break;
+//            case Unlock :
+//                break;
+//            case Lock :
+//                break;
+//            case Flex :
+//                break;
+//            case Reflex :
+//                break;
+//            case Level :
+//                break;
+//            case Normal_Function :
+//                break;
+//            case Reverse_Function :
+//                break;
+//        }
+
+    }
+
+    public Button Release_Button;
+    public int Release_Drawable;
+    public void Release_Button_UI(Button getButton , int getPhoto_Name){
+        Change_Photo_Flag = Function_release;
+        Release_Button = getButton;
+        Release_Drawable = getPhoto_Name;
 
 
     }
 
-    public void Release_Button_UI(int Button_Number , String photo_Name){
-
-
+    public void Lock_Button_UI(){
+        Change_Photo_Flag = Function_lock;
     }
 
-    public void Lock_Button_UI(int Button_Number , String photo_Name){
-
-    }
-
-    public void Unlock_Button_UI(int Button_Number , String photo_Name){
-
+    public void Unlock_Button_UI(){
+        Change_Photo_Flag = Function_unlock;
     }
 
 
@@ -233,10 +428,9 @@ public class Fragment2 extends Fragment {
     private Runnable runnable = new Runnable() {
         public void run() {
             //update
-            if(Update_Flag == 0) {
+            if(Update_Flag == 1) {
                 check_Data();
                 if (myTextView != null) myTextView.setText(MyString);
-                handler.postDelayed(this, mDelayTime);
                 if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
                 {
                     mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
@@ -250,10 +444,63 @@ public class Fragment2 extends Fragment {
                     mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
                     mIV_Normal.bringToFront();
                 }
+                Update_Flag = 0;
+            }
+            if(Change_Photo_Flag == Function_press || Change_Photo_Flag == Function_release ) {
+                Press_Button.setBackgroundResource(Press_Drawable);
+                Change_Photo_Flag = Function_non;
+            }
+            else if(Change_Photo_Flag == Function_lock) {
+                F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockon_disable);
+                F2_Button2.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_normal_disable);
+                F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_disable);
+                F2_Button4.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidefoot_disable);
+                F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockon_disable);
+                F2_Button6.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reverse_disable);
+                F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_disable);
+                F2_Button8.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidehead_disable);
+                F2_Button9.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tiltright_disable);
+                F2_Button10.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_revtrend_disable);
+                F2_Button11.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backup_disable);
+                F2_Button12.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tableup_disable);
+                F2_Button13.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tiltleft_disable);
+                F2_Button14.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_trend_disable);
+                F2_Button15.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backdw_disable);
+                F2_Button16.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tabledw_disable);
+                //F2_Button17.setBackgroundResource(R.drawable.XXXXXX);
+                F2_Button18.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_levelcenter_disable);
+                F2_Button19.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_pwoff2);
+                //F2_Button20.setBackgroundResource(R.drawable.XXXXXX);
+                Change_Photo_Flag = Function_non;
+            }
+            else if(Change_Photo_Flag == Function_unlock) {
+                F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockon_normal);
+                F2_Button2.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_normal_normal);
+                F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_normal);
+                F2_Button4.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidefoot_normal);
+                F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockon_normal);
+                F2_Button6.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reverse_normal);
+                F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_normal);
+                F2_Button8.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidehead_normal);
+                F2_Button9.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tiltright_normal);
+                F2_Button10.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_revtrend_normal);
+                F2_Button11.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backup_normal);
+                F2_Button12.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tableup_normal);
+                F2_Button13.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tiltleft_normal);
+                F2_Button14.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_trend_normal);
+                F2_Button15.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backdw_normal);
+                F2_Button16.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tabledw_normal);
+                //F2_Button17.setBackgroundResource(R.drawable.XXXXXX);
+                F2_Button18.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_levelcenter_normal);
+                F2_Button19.setBackgroundResource(R.drawable.bisor_gui_final_for_release_smaller);
+                //F2_Button20.setBackgroundResource(R.drawable.XXXXXX);
+                Change_Photo_Flag = Function_non;
             }
 
 
-
+            if(mDelayTime > 0){
+                handler.postDelayed(this,mDelayTime);
+            }
         }
     };
 

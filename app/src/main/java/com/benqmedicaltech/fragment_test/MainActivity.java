@@ -1015,11 +1015,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             break;
                         case R.id.fragment2_button19:
                             textView2.setText("Power");
+                            //f2.Press_Button_UI(F2_Button19,R.drawable.bisor_gui_final_for_release_smaller);
                             //Table_Command_Send_Start(Tilt_R);
                             SW_Output = 0x00;
                             if (F2_Button1.isEnabled()) {
+                                f2.Lock_Button_UI();
                                 LastDelayTime = 49;
                             } else {
+                                f2.Unlock_Button_UI();
                                 F2_Button1.setEnabled(true);
                                 F2_Button2.setEnabled(true);
                                 F2_Button3.setEnabled(true);
@@ -1067,8 +1070,90 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("test", v.getId()+ " button ---> down");
                 }
             }
+
+            //Release
             if(event.getAction() == MotionEvent.ACTION_UP){
                 Log.d("test", v.getId() + " button ---> cancel");
+                switch (v.getId()) {
+                    case R.id.fragment2_button1:
+                        break;
+                    case R.id.fragment2_button2:
+                        break;
+                    case R.id.fragment2_button3:
+                        break;
+                    case R.id.fragment2_button4:
+                        break;
+                    case R.id.fragment2_button5:
+                        break;
+                    case R.id.fragment2_button6:
+                        break;
+                    case R.id.fragment2_button7:
+                        break;
+                    case R.id.fragment2_button8:
+                        break;
+                    case R.id.fragment2_button9:
+                        break;
+                    case R.id.fragment2_button10:
+                        break;
+                    case R.id.fragment2_button11:
+                        break;
+                    case R.id.fragment2_button12:
+                        break;
+                    case R.id.fragment2_button13:
+                        break;
+                    case R.id.fragment2_button14:
+                        break;
+                    case R.id.fragment2_button15:
+                        break;
+                    case R.id.fragment2_button16:
+                        break;
+                    case R.id.fragment2_button17:
+                        break;
+                    case R.id.fragment2_button18:
+
+                        break;
+                    case R.id.fragment2_button19:
+                        //f2.Press_Button_UI(F2_Button19,R.drawable.bisor_gui_final_for_release_smaller);
+                        //Table_Command_Send_Start(Tilt_R);
+                        //SW_Output = 0x00;
+//                        if (F2_Button1.isEnabled()) {
+//                            LastDelayTime = 49;
+//                        } else {
+//                            F2_Button1.setEnabled(true);
+//                            F2_Button2.setEnabled(true);
+//                            F2_Button3.setEnabled(true);
+//                            F2_Button4.setEnabled(true);
+//                            F2_Button5.setEnabled(true);
+//                            F2_Button6.setEnabled(true);
+//                            F2_Button7.setEnabled(true);
+//                            F2_Button8.setEnabled(true);
+//                            F2_Button9.setEnabled(true);
+//                            F2_Button10.setEnabled(true);
+//                            F2_Button11.setEnabled(true);
+//                            F2_Button12.setEnabled(true);
+//                            F2_Button13.setEnabled(true);
+//                            F2_Button14.setEnabled(true);
+//                            F2_Button15.setEnabled(true);
+//                            F2_Button16.setEnabled(true);
+//                            //F2_Button17.setEnabled(true);
+//                            F2_Button18.setEnabled(true);
+//                            //F2_Button19.setEnabled(true);
+//                            //F2_Button20.setEnabled(true);
+//                            LastDelayTime = 0;
+//                        }
+                        break;
+                    case R.id.fragment2_button20:
+                        break;
+                    case R.id.fragment3_button1:
+                        break;
+                    case R.id.fragment3_button2:
+                        break;
+                    case R.id.fragment3_button3:
+                        break;
+                    case R.id.fragment3_button4:
+                        break;
+                }
+
                 SW_Output = 0x00;
                 LastDelayTime = 0;
                 if(menu_setting.isVisible() == false) {
@@ -1077,6 +1162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     menu_test.setVisible(true);
                     menu_Main.close();
                 }
+
 //                mDelayTime = 90;
             }
             return false;
@@ -1113,82 +1199,102 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button1.setOnClickListener(b);
         F2_Button1.setOnTouchListener(b);
         F2_Button1.setText("");
+        f2.setF2_Button1(F2_Button1);
         F2_Button2 = (Button)v.findViewById(R.id.fragment2_button2);
         F2_Button2.setOnClickListener(b);
         F2_Button2.setOnTouchListener(b);
         F2_Button2.setText("");
+        f2.setF2_Button2(F2_Button2);
         F2_Button3 = (Button)v.findViewById(R.id.fragment2_button3);
         F2_Button3.setOnClickListener(b);
         F2_Button3.setOnTouchListener(b);
         F2_Button3.setText("");
+        f2.setF2_Button3(F2_Button3);
         F2_Button4 = (Button)v.findViewById(R.id.fragment2_button4);
         F2_Button4.setOnClickListener(b);
         F2_Button4.setOnTouchListener(b);
         F2_Button4.setText("");
+        f2.setF2_Button4(F2_Button4);
         F2_Button5 = (Button)v.findViewById(R.id.fragment2_button5);
         F2_Button5.setOnClickListener(b);
         F2_Button5.setOnTouchListener(b);
         F2_Button5.setText("");
+        f2.setF2_Button5(F2_Button5);
         F2_Button6 = (Button)v.findViewById(R.id.fragment2_button6);
         F2_Button6.setOnClickListener(b);
         F2_Button6.setOnTouchListener(b);
         F2_Button6.setText("");
+        f2.setF2_Button6(F2_Button6);
         F2_Button7 = (Button)v.findViewById(R.id.fragment2_button7);
         F2_Button7.setOnClickListener(b);
         F2_Button7.setOnTouchListener(b);
         F2_Button7.setText("");
+        f2.setF2_Button7(F2_Button7);
         F2_Button8 = (Button)v.findViewById(R.id.fragment2_button8);
         F2_Button8.setOnClickListener(b);
         F2_Button8.setOnTouchListener(b);
         F2_Button8.setText("");
+        f2.setF2_Button8(F2_Button8);
         F2_Button9 = (Button)v.findViewById(R.id.fragment2_button9);
         F2_Button9.setOnClickListener(b);
         F2_Button9.setOnTouchListener(b);
         F2_Button9.setText("");
+        f2.setF2_Button9(F2_Button9);
         F2_Button10 = (Button)v.findViewById(R.id.fragment2_button10);
         F2_Button10.setOnClickListener(b);
         F2_Button10.setOnTouchListener(b);
         F2_Button10.setText("");
+        f2.setF2_Button10(F2_Button10);
         F2_Button11 = (Button)v.findViewById(R.id.fragment2_button11);
         F2_Button11.setOnClickListener(b);
         F2_Button11.setOnTouchListener(b);
         F2_Button11.setText("");
+        f2.setF2_Button11(F2_Button11);
         F2_Button12 = (Button)v.findViewById(R.id.fragment2_button12);
         F2_Button12.setOnClickListener(b);
         F2_Button12.setOnTouchListener(b);
         F2_Button12.setText("");
+        f2.setF2_Button12(F2_Button12);
         F2_Button13 = (Button)v.findViewById(R.id.fragment2_button13);
         F2_Button13.setOnClickListener(b);
         F2_Button13.setOnTouchListener(b);
         F2_Button13.setText("");
+        f2.setF2_Button13(F2_Button13);
         F2_Button14 = (Button)v.findViewById(R.id.fragment2_button14);
         F2_Button14.setOnClickListener(b);
         F2_Button14.setOnTouchListener(b);
         F2_Button14.setText("");
+        f2.setF2_Button14(F2_Button14);
         F2_Button15 = (Button)v.findViewById(R.id.fragment2_button15);
         F2_Button15.setOnClickListener(b);
         F2_Button15.setOnTouchListener(b);
         F2_Button15.setText("");
+        f2.setF2_Button15(F2_Button15);
         F2_Button16 = (Button)v.findViewById(R.id.fragment2_button16);
         F2_Button16.setOnClickListener(b);
         F2_Button16.setOnTouchListener(b);
         F2_Button16.setText("");
+        f2.setF2_Button16(F2_Button16);
         F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
         F2_Button17.setOnClickListener(b);
         F2_Button17.setOnTouchListener(b);
         F2_Button17.setText("");
+        f2.setF2_Button17(F2_Button17);
         F2_Button18 = (Button)v.findViewById(R.id.fragment2_button18);
         F2_Button18.setOnClickListener(b);
         F2_Button18.setOnTouchListener(b);
         F2_Button18.setText("");
+        f2.setF2_Button18(F2_Button18);
         F2_Button19 = (Button)v.findViewById(R.id.fragment2_button19);
         F2_Button19.setOnClickListener(b);
         F2_Button19.setOnTouchListener(b);
         F2_Button19.setText("");
+        f2.setF2_Button19(F2_Button19);
         F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
         F2_Button20.setOnClickListener(b);
         F2_Button20.setOnTouchListener(b);
         F2_Button20.setText("");
+        f2.setF2_Button20(F2_Button20);
 
         F2_FunText1 = (TextView)v.findViewById(R.id.FunctionText1);
         F2_FunText1.setTextSize(10);
