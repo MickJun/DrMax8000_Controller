@@ -83,7 +83,7 @@ public class Fragment2 extends Fragment {
 
     public String MyString = "Loading...";
     private Handler handler = new Handler();
-    int mDelayTime = 300;
+    int mDelayTime = 100;
     public TextView myTextView;
     int LED_Check = 0;
     byte[] Table_Power_Status = new byte[3];
@@ -211,71 +211,26 @@ public class Fragment2 extends Fragment {
     private static final int Function_lock = 3;
     private static final int Function_unlock = 4;
 
-    public void Change_Button(int Change_Function,int Button_Number , String photo_Name) {
-        Change_Photo_Flag = 1;
-        Change_Function_Number = Change_Function;
-        Change_Button_Number = Button_Number;
-        Change_Photo_Name = photo_Name;
-    }
-
     public Button Press_Button;
     public int Press_Drawable;
+    public int Need_Release_Flag = 0;
 
     public void Press_Button_UI(Button getButton , int getPhoto_Name){
         Change_Photo_Flag = Function_press;
+        Need_Release_Flag = 1;
         Press_Button = getButton;
         Press_Drawable = getPhoto_Name;
-//        switch (Button_Number){
-//            case Rev_Trend :
-//                break;
-//            case Trend :
-//                break;
-//            case Tilt_R :
-//                break;
-//            case Tilt_L :
-//                break;
-//            case Back_Up :
-//                break;
-//            case Back_Down :
-//                break;
-//            case Table_Up :
-//                break;
-//            case Table_Down :
-//                break;
-//            case Slide_Foot :
-//                break;
-//            case Slide_Head :
-//                break;
-//            case Leg_Up :
-//                break;
-//            case Leg_Down :
-//                break;
-//            case Unlock :
-//                break;
-//            case Lock :
-//                break;
-//            case Flex :
-//                break;
-//            case Reflex :
-//                break;
-//            case Level :
-//                break;
-//            case Normal_Function :
-//                break;
-//            case Reverse_Function :
-//                break;
-//        }
 
     }
 
     public Button Release_Button;
     public int Release_Drawable;
+
     public void Release_Button_UI(Button getButton , int getPhoto_Name){
         Change_Photo_Flag = Function_release;
+        Need_Release_Flag = 0;
         Release_Button = getButton;
         Release_Drawable = getPhoto_Name;
-
-
     }
 
     public void Lock_Button_UI(){
@@ -287,7 +242,8 @@ public class Fragment2 extends Fragment {
     }
 
 
-
+    public int Locking_Flag = 0;
+    public int Reverse_Flag = 0;
 
     public void check_Data(){
         //byte[] Output_Table = ;
@@ -394,28 +350,23 @@ public class Fragment2 extends Fragment {
                 if (((Table_Power_Status[0] & 0x20) == 0x20)) //Table Lock
                 {
                     MyString = MyString + "_Lock";
+                    Locking_Flag = 1;
                 }
                 else
                 {
                     MyString = MyString + "_UnLock";
+                    Locking_Flag= 0;
                 }
             }
             if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
             {
                 MyString = MyString + "_Reverse";
-//                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
-//                mIV_Reverse.bringToFront();
-//                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
-//                mIV_Normal.bringToFront();
-
+                Reverse_Flag = 1;
             }
             else
             {
                 MyString = MyString + "_Normal";
-//                mIV_Reverse.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_off,null));
-//                mIV_Reverse.bringToFront();
-//                mIV_Normal.setImageDrawable(getResources().getDrawable( R.drawable.bisor_gui_report_content_icon_record_light_on,null));
-//                mIV_Normal.bringToFront();
+                Reverse_Flag = 0;
             }
         }
 
@@ -427,27 +378,28 @@ public class Fragment2 extends Fragment {
 
     private Runnable runnable = new Runnable() {
         public void run() {
-            //update
-            if(Update_Flag == 1) {
+
+            if(Update_Flag == 1) {//Power Status Update
                 check_Data();
                 if (myTextView != null) myTextView.setText(MyString);
-                if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
-                {
+                if (Reverse_Flag == 1){
                     mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
-                    mIV_Reverse.bringToFront();
                     mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_off, null));
-                    mIV_Normal.bringToFront();
 
                 } else {
                     mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_off, null));
-                    mIV_Reverse.bringToFront();
                     mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
-                    mIV_Normal.bringToFront();
                 }
                 Update_Flag = 0;
             }
-            if(Change_Photo_Flag == Function_press || Change_Photo_Flag == Function_release ) {
+
+            //Button Image
+            if(Change_Photo_Flag == Function_press ) {
                 Press_Button.setBackgroundResource(Press_Drawable);
+                Change_Photo_Flag = Function_non;
+            }
+            else if(Change_Photo_Flag == Function_release){
+                Release_Button.setBackgroundResource(Release_Drawable);
                 Change_Photo_Flag = Function_non;
             }
             else if(Change_Photo_Flag == Function_lock) {
@@ -474,11 +426,19 @@ public class Fragment2 extends Fragment {
                 Change_Photo_Flag = Function_non;
             }
             else if(Change_Photo_Flag == Function_unlock) {
-                F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockon_normal);
+                if(Locking_Flag == 1) {
+                    F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockoff_normal);
+                    F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockon_normal);
+                }
+                else
+                {
+
+                    F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockon_normal);
+                    F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockoff_normal);
+                }
                 F2_Button2.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_normal_normal);
                 F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_normal);
                 F2_Button4.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidefoot_normal);
-                F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockon_normal);
                 F2_Button6.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reverse_normal);
                 F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_normal);
                 F2_Button8.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidehead_normal);
