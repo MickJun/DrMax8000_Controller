@@ -214,23 +214,166 @@ public class Fragment2 extends Fragment {
     public Button Press_Button;
     public int Press_Drawable;
     public int Need_Release_Flag = 0;
+    public Button Last_Button;
+    public int Last_Drawable;
+    public int Need_Release_Last = 0;
 
-    public void Press_Button_UI(Button getButton , int getPhoto_Name){
+    public void Press_Button_UI(Button getButton){
+
+        if(Need_Release_Flag == 1){
+            Need_Release_Last = 1;
+            Last_Button = Press_Button;
+            Release_Button_UI(Last_Button);
+            Last_Drawable = Release_Drawable;
+        }
         Change_Photo_Flag = Function_press;
-        Need_Release_Flag = 1;
         Press_Button = getButton;
-        Press_Drawable = getPhoto_Name;
+        //Press_Drawable = getPhoto_Name;
+
+        switch (Press_Button.getId()) {
+            case R.id.fragment2_button1:
+                if(Locking_Flag == 0) {
+                    Press_Drawable = R.drawable.bisor_gui_eq_content_button_flunlockon_press;
+                }
+                else{
+                    Press_Drawable = R.drawable.bisor_gui_eq_content_button_flunlockoff_press;
+                }
+                break;
+            case R.id.fragment2_button2:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_normal_press;
+                break;
+            case R.id.fragment2_button3:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_flex_press;
+                break;
+            case R.id.fragment2_button4:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_slidefoot_press;
+                break;
+            case R.id.fragment2_button5:
+                if(Locking_Flag == 0) {
+                    Press_Drawable = R.drawable.bisor_gui_eq_content_button_fllockoff_press;
+                }
+                else{
+                    Press_Drawable = R.drawable.bisor_gui_eq_content_button_fllockon_press;
+                }
+                break;
+            case R.id.fragment2_button6:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_reverse_press;
+                break;
+            case R.id.fragment2_button7:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_reflex_press;
+                break;
+            case R.id.fragment2_button8:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_slidehead_press;
+                break;
+            case R.id.fragment2_button9:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_tiltright_press;
+                break;
+            case R.id.fragment2_button10:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_revtrend_press;
+                break;
+            case R.id.fragment2_button11:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_backup_press;
+                break;
+            case R.id.fragment2_button12:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_tableup_press;
+                break;
+            case R.id.fragment2_button13:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_tiltleft_press;
+                break;
+            case R.id.fragment2_button14:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_trend_press;
+                break;
+            case R.id.fragment2_button15:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_backdw_press;
+                break;
+            case R.id.fragment2_button16:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_tabledw_press;
+                break;
+            case R.id.fragment2_button17:
+                break;
+            case R.id.fragment2_button18:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_levelcenter_press;
+                break;
+        }
 
     }
 
     public Button Release_Button;
     public int Release_Drawable;
 
-    public void Release_Button_UI(Button getButton , int getPhoto_Name){
+    public void Release_Button_UI(Button getButton){
         Change_Photo_Flag = Function_release;
-        Need_Release_Flag = 0;
         Release_Button = getButton;
-        Release_Drawable = getPhoto_Name;
+        //Release_Drawable = getPhoto_Name;
+
+
+        switch (Release_Button.getId()) {
+            case R.id.fragment2_button1:
+                if(Locking_Flag == 0) {
+                    Release_Drawable = R.drawable.bisor_gui_eq_content_button_flunlockon_normal;
+                }
+                else{
+                    Release_Drawable = R.drawable.bisor_gui_eq_content_button_flunlockoff_normal;
+                }
+                break;
+            case R.id.fragment2_button2:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_normal_normal;
+                break;
+            case R.id.fragment2_button3:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_flex_normal;
+                break;
+            case R.id.fragment2_button4:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_slidefoot_normal;
+                break;
+            case R.id.fragment2_button5:
+                if(Locking_Flag == 0) {
+                    Release_Drawable = R.drawable.bisor_gui_eq_content_button_fllockoff_normal;
+                }
+                else{
+                    Release_Drawable = R.drawable.bisor_gui_eq_content_button_fllockon_normal;
+                }
+                break;
+            case R.id.fragment2_button6:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_reverse_normal;
+                break;
+            case R.id.fragment2_button7:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_reflex_normal;
+                break;
+            case R.id.fragment2_button8:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_slidehead_normal;
+                break;
+            case R.id.fragment2_button9:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_tiltright_normal;
+                break;
+            case R.id.fragment2_button10:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_revtrend_normal;
+                break;
+            case R.id.fragment2_button11:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_backup_normal;
+                break;
+            case R.id.fragment2_button12:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_tableup_normal;
+                break;
+            case R.id.fragment2_button13:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_tiltleft_normal;
+                break;
+            case R.id.fragment2_button14:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_trend_normal;
+                break;
+            case R.id.fragment2_button15:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_backdw_normal;
+                break;
+            case R.id.fragment2_button16:
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_tabledw_normal;
+                break;
+            case R.id.fragment2_button17:
+                break;
+            case R.id.fragment2_button18:
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_levelcenter_normal;
+                break;
+        }
+
+
     }
 
     public void Lock_Button_UI(){
@@ -394,12 +537,18 @@ public class Fragment2 extends Fragment {
             }
 
             //Button Image
+            if(Need_Release_Last == 1){
+                Last_Button.setBackgroundResource(Last_Drawable);
+                Need_Release_Last = 0;
+            }
             if(Change_Photo_Flag == Function_press ) {
                 Press_Button.setBackgroundResource(Press_Drawable);
+                Need_Release_Flag = 1;
                 Change_Photo_Flag = Function_non;
             }
             else if(Change_Photo_Flag == Function_release){
                 Release_Button.setBackgroundResource(Release_Drawable);
+                Need_Release_Flag = 0;
                 Change_Photo_Flag = Function_non;
             }
             else if(Change_Photo_Flag == Function_lock) {
@@ -424,6 +573,7 @@ public class Fragment2 extends Fragment {
                 F2_Button19.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_pwoff2);
                 //F2_Button20.setBackgroundResource(R.drawable.XXXXXX);
                 Change_Photo_Flag = Function_non;
+                Need_Release_Flag = 0;
             }
             else if(Change_Photo_Flag == Function_unlock) {
                 if(Locking_Flag == 1) {
@@ -455,6 +605,7 @@ public class Fragment2 extends Fragment {
                 F2_Button19.setBackgroundResource(R.drawable.bisor_gui_final_for_release_smaller);
                 //F2_Button20.setBackgroundResource(R.drawable.XXXXXX);
                 Change_Photo_Flag = Function_non;
+                Need_Release_Flag =0;
             }
 
 

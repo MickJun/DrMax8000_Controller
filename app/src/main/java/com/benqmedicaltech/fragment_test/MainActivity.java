@@ -831,6 +831,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else
             {
                 if(LastDelayTime < Max_Delay_Time)LastDelayTime++;
+                if(f2 != null && LastDelayTime == 5)
+                {
+                    f2.Unlock_Button_UI();
+                }
             }
 
             if(LastDelayTime == Max_Delay_Time && f2!=null)
@@ -946,122 +950,110 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else {
                     switch (v.getId()) {
                         case R.id.fragment2_button1:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Unlock");
                             Table_Command_Send_Start(Unlock);
-                            if(f2.Locking_Flag == 0) {
-                                f2.Press_Button_UI(F2_Button1, R.drawable.bisor_gui_eq_content_button_flunlockon_press);
-                            }
-                            else{
-                                f2.Press_Button_UI(F2_Button1, R.drawable.bisor_gui_eq_content_button_flunlockoff_press);
-                            }
+                            f2.Press_Button_UI(F2_Button1);
                             break;
                         case R.id.fragment2_button2:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Normal_Function");
                             Table_Command_Send_Start(Normal_Function);
-                            f2.Press_Button_UI(F2_Button2, R.drawable.bisor_gui_eq_content_button_normal_press);
+                            f2.Press_Button_UI(F2_Button2);
                             break;
                         case R.id.fragment2_button3:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Flex");
                             Table_Command_Send_Start(Flex);
-                            f2.Press_Button_UI(F2_Button3, R.drawable.bisor_gui_eq_content_button_flex_press);
+                            f2.Press_Button_UI(F2_Button3);
                             break;
                         case R.id.fragment2_button4:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Slide_Foot");
                             Table_Command_Send_Start(Slide_Foot);
-                            f2.Press_Button_UI(F2_Button4, R.drawable.bisor_gui_eq_content_button_slidefoot_press);
+                            f2.Press_Button_UI(F2_Button4);
                             break;
                         case R.id.fragment2_button5:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Lock");
                             Table_Command_Send_Start(Lock);
-                            if(f2.Locking_Flag == 0) {
-                                f2.Press_Button_UI(F2_Button5, R.drawable.bisor_gui_eq_content_button_fllockoff_press);
-                            }
-                            else{
-                                f2.Press_Button_UI(F2_Button5, R.drawable.bisor_gui_eq_content_button_fllockon_press);
-                            }
+                            f2.Press_Button_UI(F2_Button5);
                             break;
                         case R.id.fragment2_button6:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Reverse_Function");
                             Table_Command_Send_Start(Reverse_Function);
-                            f2.Press_Button_UI(F2_Button6, R.drawable.bisor_gui_eq_content_button_reverse_press);
+                            f2.Press_Button_UI(F2_Button6);
                             break;
                         case R.id.fragment2_button7:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Reflex");
                             Table_Command_Send_Start(Reflex);
-                            f2.Press_Button_UI(F2_Button7, R.drawable.bisor_gui_eq_content_button_reflex_press);
+                            f2.Press_Button_UI(F2_Button7);
                             break;
                         case R.id.fragment2_button8:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Slide_Head");
                             Table_Command_Send_Start(Slide_Head);
-                            f2.Press_Button_UI(F2_Button8, R.drawable.bisor_gui_eq_content_button_slidehead_press);
+                            f2.Press_Button_UI(F2_Button8);
                             break;
                         case R.id.fragment2_button9:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Tilt_R");
                             Table_Command_Send_Start(Tilt_R);
-                            f2.Press_Button_UI(F2_Button9, R.drawable.bisor_gui_eq_content_button_tiltright_press);
+                            f2.Press_Button_UI(F2_Button9);
                             break;
                         case R.id.fragment2_button10:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Rev_Trend");
                             Table_Command_Send_Start(Rev_Trend);
-                            f2.Press_Button_UI(F2_Button10, R.drawable.bisor_gui_eq_content_button_revtrend_press);
+                            f2.Press_Button_UI(F2_Button10);
                             break;
                         case R.id.fragment2_button11:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Back_Up");
                             Table_Command_Send_Start(Back_Up);
-                            f2.Press_Button_UI(F2_Button11, R.drawable.bisor_gui_eq_content_button_backup_press);
+                            f2.Press_Button_UI(F2_Button11);
                             break;
                         case R.id.fragment2_button12:
                             textView2.setText("Table_Up");
                             Table_Command_Send_Start(Table_Up);
-                            f2.Press_Button_UI(F2_Button12, R.drawable.bisor_gui_eq_content_button_tableup_press);
+                            f2.Press_Button_UI(F2_Button12);
                             break;
                         case R.id.fragment2_button13:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Tilt_L");
                             Table_Command_Send_Start(Tilt_L);
-                            f2.Press_Button_UI(F2_Button13, R.drawable.bisor_gui_eq_content_button_tiltleft_press);
+                            f2.Press_Button_UI(F2_Button13);
                             break;
                         case R.id.fragment2_button14:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Trend");
                             Table_Command_Send_Start(Trend);
-                            f2.Press_Button_UI(F2_Button14, R.drawable.bisor_gui_eq_content_button_trend_press);
+                            f2.Press_Button_UI(F2_Button14);
                             break;
                         case R.id.fragment2_button15:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Back_Down");
                             Table_Command_Send_Start(Back_Down);
-                            f2.Press_Button_UI(F2_Button15, R.drawable.bisor_gui_eq_content_button_backdw_press);
+                            f2.Press_Button_UI(F2_Button15);
                             break;
                         case R.id.fragment2_button16:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Table_Down");
                             Table_Command_Send_Start(Table_Down);
-                            f2.Press_Button_UI(F2_Button16, R.drawable.bisor_gui_eq_content_button_tabledw_press);
+                            f2.Press_Button_UI(F2_Button16);
                             break;
                         case R.id.fragment2_button17:
                             break;
                         case R.id.fragment2_button18:
-                            if(f2.Need_Release_Flag == 1){break;}
+//                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Level");
                             Table_Command_Send_Start(Level);
-                            f2.Press_Button_UI(F2_Button18, R.drawable.bisor_gui_eq_content_button_levelcenter_press);
+                            f2.Press_Button_UI(F2_Button18);
                             break;
                         case R.id.fragment2_button19:
                             textView2.setText("Power");
-                            //f2.Press_Button_UI(F2_Button19,R.drawable.bisor_gui_final_for_release_smaller);
-                            //Table_Command_Send_Start(Tilt_R);
                             SW_Output = 0x00;
                             if (F2_Button1.isEnabled()) {
                                 LastDelayTime = Max_Delay_Time;
@@ -1118,76 +1110,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Release
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 Log.d("test", v.getId() + " button ---> release");
-//                if (f2.Change_Photo_Flag != 0) {
-//                    f2.Lock_Button_UI();
-//                    LastDelayTime = 49;
-//                } else
-                    {
-                    switch (v.getId()) {
-                        case R.id.fragment2_button1:
-                            if(f2.Locking_Flag == 0) {
-                                f2.Release_Button_UI(F2_Button1, R.drawable.bisor_gui_eq_content_button_flunlockon_normal);
-                            }
-                            else{
-                                f2.Release_Button_UI(F2_Button1, R.drawable.bisor_gui_eq_content_button_flunlockoff_normal);
-                            }
-                            break;
-                        case R.id.fragment2_button2:
-                            f2.Release_Button_UI(F2_Button2, R.drawable.bisor_gui_eq_content_button_normal_normal);
-                            break;
-                        case R.id.fragment2_button3:
-                            f2.Release_Button_UI(F2_Button3, R.drawable.bisor_gui_eq_content_button_flex_normal);
-                            break;
-                        case R.id.fragment2_button4:
-                            f2.Release_Button_UI(F2_Button4, R.drawable.bisor_gui_eq_content_button_slidefoot_normal);
-                            break;
-                        case R.id.fragment2_button5:
-                            if(f2.Locking_Flag == 0) {
-                                f2.Release_Button_UI(F2_Button5, R.drawable.bisor_gui_eq_content_button_fllockoff_normal);
-                            }
-                            else{
-                                f2.Release_Button_UI(F2_Button5, R.drawable.bisor_gui_eq_content_button_fllockon_normal);
-                            }
-                            break;
-                        case R.id.fragment2_button6:
-                            f2.Release_Button_UI(F2_Button6, R.drawable.bisor_gui_eq_content_button_reverse_normal);
-                            break;
-                        case R.id.fragment2_button7:
-                            f2.Release_Button_UI(F2_Button7, R.drawable.bisor_gui_eq_content_button_reflex_normal);
-                            break;
-                        case R.id.fragment2_button8:
-                            f2.Release_Button_UI(F2_Button8, R.drawable.bisor_gui_eq_content_button_slidehead_normal);
-                            break;
-                        case R.id.fragment2_button9:
-                            f2.Release_Button_UI(F2_Button9, R.drawable.bisor_gui_eq_content_button_tiltright_normal);
-                            break;
-                        case R.id.fragment2_button10:
-                            f2.Release_Button_UI(F2_Button10, R.drawable.bisor_gui_eq_content_button_revtrend_normal);
-                            break;
-                        case R.id.fragment2_button11:
-                            f2.Release_Button_UI(F2_Button11, R.drawable.bisor_gui_eq_content_button_backup_normal);
-                            break;
-                        case R.id.fragment2_button12:
-                            f2.Release_Button_UI(F2_Button12, R.drawable.bisor_gui_eq_content_button_tableup_normal);
-                            break;
-                        case R.id.fragment2_button13:
-                            f2.Release_Button_UI(F2_Button13, R.drawable.bisor_gui_eq_content_button_tiltleft_normal);
-                            break;
-                        case R.id.fragment2_button14:
-                            f2.Release_Button_UI(F2_Button14, R.drawable.bisor_gui_eq_content_button_trend_normal);
-                            break;
-                        case R.id.fragment2_button15:
-                            f2.Release_Button_UI(F2_Button15, R.drawable.bisor_gui_eq_content_button_backdw_normal);
-                            break;
-                        case R.id.fragment2_button16:
-                            f2.Release_Button_UI(F2_Button16, R.drawable.bisor_gui_eq_content_button_tabledw_normal);
-                            break;
-                        case R.id.fragment2_button17:
-                            break;
-                        case R.id.fragment2_button18:
-                            f2.Release_Button_UI(F2_Button18, R.drawable.bisor_gui_eq_content_button_levelcenter_normal);
-                            break;
-                    }
+                switch (v.getId()) {
+                    case R.id.fragment2_button1:
+                        if(f2.Locking_Flag == 0) {
+                            f2.Release_Button_UI(F2_Button1);
+                        }
+                        else{
+                            f2.Release_Button_UI(F2_Button1);
+                        }
+                        break;
+                    case R.id.fragment2_button2:
+                        f2.Release_Button_UI(F2_Button2);
+                        break;
+                    case R.id.fragment2_button3:
+                        f2.Release_Button_UI(F2_Button3);
+                        break;
+                    case R.id.fragment2_button4:
+                        f2.Release_Button_UI(F2_Button4);
+                        break;
+                    case R.id.fragment2_button5:
+                        if(f2.Locking_Flag == 0) {
+                            f2.Release_Button_UI(F2_Button5);
+                        }
+                        else{
+                            f2.Release_Button_UI(F2_Button5);
+                        }
+                        break;
+                    case R.id.fragment2_button6:
+                        f2.Release_Button_UI(F2_Button6);
+                        break;
+                    case R.id.fragment2_button7:
+                        f2.Release_Button_UI(F2_Button7);
+                        break;
+                    case R.id.fragment2_button8:
+                        f2.Release_Button_UI(F2_Button8);
+                        break;
+                    case R.id.fragment2_button9:
+                        f2.Release_Button_UI(F2_Button9);
+                        break;
+                    case R.id.fragment2_button10:
+                        f2.Release_Button_UI(F2_Button10);
+                        break;
+                    case R.id.fragment2_button11:
+                        f2.Release_Button_UI(F2_Button11);
+                        break;
+                    case R.id.fragment2_button12:
+                        f2.Release_Button_UI(F2_Button12);
+                        break;
+                    case R.id.fragment2_button13:
+                        f2.Release_Button_UI(F2_Button13);
+                        break;
+                    case R.id.fragment2_button14:
+                        f2.Release_Button_UI(F2_Button14);
+                        break;
+                    case R.id.fragment2_button15:
+                        f2.Release_Button_UI(F2_Button15);
+                        break;
+                    case R.id.fragment2_button16:
+                        f2.Release_Button_UI(F2_Button16);
+                        break;
+                    case R.id.fragment2_button17:
+                        break;
+                    case R.id.fragment2_button18:
+                        f2.Release_Button_UI(F2_Button18);
+                        break;
                 }
                 SW_Output = 0x00;
                 LastDelayTime = 0;
