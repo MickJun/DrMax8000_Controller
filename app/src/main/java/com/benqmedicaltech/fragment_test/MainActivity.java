@@ -11,12 +11,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Handler;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -320,6 +317,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.iqor_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         //mDelayTime = 1000;
         //handler.postDelayed(runnable,1000); //90ms timer
 
@@ -339,18 +341,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+//    private TintImageView overflow;
+
+
+//    MenuItem moreItem;
     /**
      *创建菜单
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+//        moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+//        moreItem.setIcon(R.drawable.bisor_gui_element_button_option_normal);
+//        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         getMenuInflater().inflate(R.menu.menu_main,menu); //通过getMenuInflater()方法得到MenuInflater对象，再调用它的inflate()方法就可以给当前活动创建菜单了，第一个参数：用于指定我们通过哪一个资源文件来创建菜单；第二个参数：用于指定我们的菜单项将添加到哪一个Menu对象当中。
+
+
         menu_Main =  menu;
         menu_setting = menu.findItem(R.id.menu_setting_item);
+        menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_press);
+        menu_setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu_function = menu.findItem(R.id.menu_function_item);
+        menu_function.setIcon(R.drawable.bisor_gui_eq_sub_icon_table_normal);
+        menu_function.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu_test = menu.findItem(R.id.menu_test_item);
         menu_function.setEnabled(false);
         menu_test.setEnabled(false);
+        menu_test.setVisible(false);
+        //super.onCreateOptionsMenu(menu);
         return true; // true：允许创建的菜单显示出来，false：创建的菜单将无法显示。
     }
 
@@ -362,19 +380,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (item.getItemId()){
             case R.id.menu_setting_item:
-                Toast.makeText(this, "Setting！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Setting！", Toast.LENGTH_SHORT).show();
                 if(SW_Output== 0x00){
                     initFragment1();
                 }
                 break;
             case R.id.menu_function_item:
-                Toast.makeText(this, "Function！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Function！", Toast.LENGTH_SHORT).show();
                 if(SW_Output== 0x00){
                     initFragment2();
                 }
                 break;
             case R.id.menu_test_item:
-                Toast.makeText(this, "Test！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Test！", Toast.LENGTH_SHORT).show();
                 if(SW_Output== 0x00){
                     initFragment3();
                 }
@@ -426,6 +444,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //显示需要显示的fragment
         transaction.show(f1);
 
+        if(menu_setting != null)menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_press);
+        if(menu_function != null)menu_function.setIcon(R.drawable.bisor_gui_eq_sub_icon_table_normal);
         //第二种方式(replace)，初始化fragment
 //        if(f1 == null){
 //            f1 = new MyFragment("消息");
@@ -447,6 +467,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hideFragment(transaction);
         transaction.show(f2);
 
+        if(menu_setting != null)menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_normal);
+        if(menu_function != null)menu_function.setIcon(R.drawable.bisor_gui_eq_content_icon_table);
 //        if(f2 == null) {
 //            f2 = new MyFragment("联系人");
 //        }
@@ -1176,7 +1198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                 }
                 SW_Output = 0x00;
-                LastDelayTime = 0;
+                //LastDelayTime = 0;
                 if (menu_setting.isVisible() == false) {
                     menu_setting.setVisible(true);
                     menu_function.setVisible(true);

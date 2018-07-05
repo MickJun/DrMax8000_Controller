@@ -8,14 +8,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/iqor"
         android:label="BenQ Table APP"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/iqor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/IQOR_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,3 +30,5 @@
     <!--android:configChanges="orientation|keyboardHidden"-->
     <!--android:screenOrientation="portrait"-->
     <!--android:screenOrientation="landscape"-->
+    <!--android:icon="@drawable/bisor_gui_eq_sub_icon_table_normal"-->
+    <!--android:roundIcon="@drawable/bisor_gui_eq_sub_icon_table_normal"-->

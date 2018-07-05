@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="IQOR_Theme" parent="AppTheme" />
+
+
+    <!--<style name="MyOverFlow.Dark" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">-->
+        <!--<item name="android:src">@drawable/bisor_gui_element_button_option_normal</item>-->
+        <!--<item name="android:contentDescription">@string/accessibility_overflow</item>-->
+    <!--</style>-->
+
 </resources>
