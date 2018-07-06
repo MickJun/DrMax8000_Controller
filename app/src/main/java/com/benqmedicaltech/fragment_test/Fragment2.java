@@ -2,6 +2,7 @@ package com.benqmedicaltech.fragment_test;
 
 
 import android.bluetooth.BluetoothProfile;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 //import android.app.Fragment;
@@ -11,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
@@ -80,6 +83,10 @@ public class Fragment2 extends Fragment {
     private View MyView;
     private  ImageView mIV_Reverse;
     private  ImageView mIV_Normal;
+    private  ImageView mIV_Status1;
+    private  ImageView mIV_Status2;
+    private  int status_path1;
+    private  int status_path2;
 
     public String MyString = "Loading...";
     private Handler handler = new Handler();
@@ -162,9 +169,9 @@ public class Fragment2 extends Fragment {
         F2_Button16 = f2_Button16;
     }
 
-    public void setF2_Button17(Button f2_Button17) {
-        F2_Button17 = f2_Button17;
-    }
+//    public void setF2_Button17(Button f2_Button17) {
+//        F2_Button17 = f2_Button17;
+//    }
 
     public void setF2_Button18(Button f2_Button18) {
         F2_Button18 = f2_Button18;
@@ -174,9 +181,9 @@ public class Fragment2 extends Fragment {
         F2_Button19 = f2_Button19;
     }
 
-    public void setF2_Button20(Button f2_Button20) {
-        F2_Button20 = f2_Button20;
-    }
+//    public void setF2_Button20(Button f2_Button20) {
+//        F2_Button20 = f2_Button20;
+//    }
 
     public Button F2_Button1;
     public Button F2_Button2;
@@ -194,10 +201,10 @@ public class Fragment2 extends Fragment {
     public Button F2_Button14;
     public Button F2_Button15;
     public Button F2_Button16;
-    public Button F2_Button17;
+    //public Button F2_Button17;
     public Button F2_Button18;
     public Button F2_Button19;
-    private Button F2_Button20;
+    //private Button F2_Button20;
 
 
     public int Change_Photo_Flag = 0;
@@ -288,8 +295,6 @@ public class Fragment2 extends Fragment {
                 break;
             case R.id.fragment2_button16:
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_tabledw_press;
-                break;
-            case R.id.fragment2_button17:
                 break;
             case R.id.fragment2_button18:
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_levelcenter_press;
@@ -447,39 +452,47 @@ public class Fragment2 extends Fragment {
                     //Image_Table_Power.Source = new BitmapImage(new Uri("Photo/POWER1-1.png", UriKind.Relative));
                     //充電中
                     MyString = "AC";
+                    status_path1 = R.drawable.bisor_gui_eq_content_icon_poweron_battery_charge;
                 }
                 else//無AC電
                 {
                     MyString = "non AC";
-                }
-                if ((Table_Power_Status[0] & 0x0E) == 0x0E)         //100%電量
-                {
-                    MyString = MyString + "_100%";
-                }
-                else if ((Table_Power_Status[0] & 0x0E) == 0x06)    //75%電量
-                {
-                    MyString = MyString + "_75%";
-                }
-                else if ((Table_Power_Status[0] & 0x0E) == 0x02)    //30%電量
-                {
-                    MyString = MyString + "_30%";
-                }
-                else        //電量過低 (<30%)
-                {
-                    MyString = MyString + "<30%";
+                    if ((Table_Power_Status[0] & 0x0E) == 0x0E)         //100%電量
+                    {
+                        MyString = MyString + "_100%";
+                        status_path1 = R.drawable.bisor_gui_eq_content_icon_battery100;
+                    }
+                    else if ((Table_Power_Status[0] & 0x0E) == 0x06)    //75%電量
+                    {
+                        MyString = MyString + "_75%";
+                        status_path1 = R.drawable.bisor_gui_eq_content_icon_battery75;
+                    }
+                    else if ((Table_Power_Status[0] & 0x0E) == 0x02)    //30%電量
+                    {
+                        MyString = MyString + "_30%";
+                        status_path1 = R.drawable.bisor_gui_eq_content_icon_battery30;
+                    }
+                    else        //電量過低 (<30%)
+                    {
+                        MyString = MyString + "<30%";
+                        status_path1 = R.drawable.bisor_gui_eq_content_icon_battery000;
+                    }
                 }
             }
             else    //純AC電//無充電板
             {
                 MyString = "AC Table";
+                status_path1 = R.drawable.bisor_gui_eq_content_icon_poweron;
             }
 
             if (((Table_Power_Status[1] & 0x01) == 0x01)) //Slide center
             {
                 MyString = MyString + "_SC";
+                status_path2 = R.drawable.bisor_gui_eq_content_icon_slidecenterlight_focus;
             }
             else
             {
+                status_path2 = R.drawable.bisor_gui_eq_content_icon_slidecenterlight_normal;
             }
             if (((Table_Power_Status[1] & 0x02) == 0x02)) //inter lock
             {
@@ -533,6 +546,8 @@ public class Fragment2 extends Fragment {
                     mIV_Reverse.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_off, null));
                     mIV_Normal.setImageDrawable(getResources().getDrawable(R.drawable.bisor_gui_report_content_icon_record_light_on, null));
                 }
+                mIV_Status1.setImageDrawable(getResources().getDrawable(status_path1, null));
+                mIV_Status2.setImageDrawable(getResources().getDrawable(status_path2, null));
                 Update_Flag = 0;
             }
 
@@ -615,14 +630,25 @@ public class Fragment2 extends Fragment {
         }
     };
 
+
+    private FrameLayout f2FL;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
         MyView = view;
 
 
+        f2FL = (FrameLayout) MyView.findViewById(R.id.f2FrameLayout);
+        f2FL.setBackgroundColor(Color.parseColor("#F1F1F1"));
+
+
         mIV_Reverse = (ImageView) MyView.findViewById(R.id.imageView_Reverse);
         mIV_Normal  = (ImageView) MyView.findViewById(R.id.imageView_Normal);
+        mIV_Status1 = (ImageView) MyView.findViewById(R.id.imageView_Status1);
+        mIV_Status2 = (ImageView) MyView.findViewById(R.id.imageView_Status2);
+
 //        tv = (TextView) view.findViewById(R.id.fragment2_text);
 //        tv.setText(name);
 //        tv.setOnClickListener(new View.OnClickListener() {

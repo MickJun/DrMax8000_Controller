@@ -1,11 +1,14 @@
 package com.benqmedicaltech.fragment_test;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -30,6 +33,9 @@ public class Fragment1 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_fragment1, container, false);
 //    }
 
+
+    private FrameLayout f1FL;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment1,container,false);
@@ -41,6 +47,10 @@ public class Fragment1 extends Fragment {
 //                tv.setText("我变了-" + name);
 //            }
 //        });
+
+        f1FL = (FrameLayout) view.findViewById(R.id.f1FrameLayout);
+        f1FL.setBackgroundColor(Color.parseColor("#C4C4C4"));
+
         ((MainActivity)this.getActivity()).Get_Fragment1(view);
         return view;
     }

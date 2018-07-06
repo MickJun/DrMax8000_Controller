@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -237,10 +238,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button F2_Button14;
     private Button F2_Button15;
     private Button F2_Button16;
-    private Button F2_Button17;
+//    private Button F2_Button17;
     private Button F2_Button18;
     private Button F2_Button19;
-    private Button F2_Button20;
+//    private Button F2_Button20;
 
     private TextView F2_FunText1;
     private TextView F2_FunText2;
@@ -443,9 +444,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hideFragment(transaction);
         //显示需要显示的fragment
         transaction.show(f1);
-
         if(menu_setting != null)menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_press);
-        if(menu_function != null)menu_function.setIcon(R.drawable.bisor_gui_eq_sub_icon_table_normal);
+        if(menu_function != null)menu_function.setIcon(R.drawable.bisor_gui_eq_sub_icon_table_press);
         //第二种方式(replace)，初始化fragment
 //        if(f1 == null){
 //            f1 = new MyFragment("消息");
@@ -466,7 +466,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         hideFragment(transaction);
         transaction.show(f2);
-
         if(menu_setting != null)menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_normal);
         if(menu_function != null)menu_function.setIcon(R.drawable.bisor_gui_eq_content_icon_table);
 //        if(f2 == null) {
@@ -1224,7 +1223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F1_Button2.setEnabled(false);
 
         textView1 = (TextView) v.findViewById(R.id.fragment1_text);
-        textView1.setTextSize(20);
+        textView1.setTextSize(25);
         textView1.setText("Press SCAN Button");
         Fragment1_TextView = textView1;
         Fragment1_ListView = (ListView) v.findViewById(R.id.fragment1_List);
@@ -1316,11 +1315,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button16.setOnTouchListener(b);
         F2_Button16.setText("");
         f2.setF2_Button16(F2_Button16);
-        F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
-        F2_Button17.setOnClickListener(b);
-        F2_Button17.setOnTouchListener(b);
-        F2_Button17.setText("");
-        f2.setF2_Button17(F2_Button17);
+//        F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
+//        F2_Button17.setOnClickListener(b);
+//        F2_Button17.setOnTouchListener(b);
+//        F2_Button17.setText("");
+//        f2.setF2_Button17(F2_Button17);
         F2_Button18 = (Button)v.findViewById(R.id.fragment2_button18);
         F2_Button18.setOnClickListener(b);
         F2_Button18.setOnTouchListener(b);
@@ -1331,11 +1330,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button19.setOnTouchListener(b);
         F2_Button19.setText("");
         f2.setF2_Button19(F2_Button19);
-        F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
-        F2_Button20.setOnClickListener(b);
-        F2_Button20.setOnTouchListener(b);
-        F2_Button20.setText("");
-        f2.setF2_Button20(F2_Button20);
+//        F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
+//        F2_Button20.setOnClickListener(b);
+//        F2_Button20.setOnTouchListener(b);
+//        F2_Button20.setText("");
+//        f2.setF2_Button20(F2_Button20);
 
         F2_FunText1 = (TextView)v.findViewById(R.id.FunctionText1);
         F2_FunText1.setTextSize(10);
@@ -1387,7 +1386,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_FunText16.setText("TABLE DOWN");
         F2_FunText17 = (TextView)v.findViewById(R.id.FunctionText17);
         F2_FunText17.setTextSize(10);
-        F2_FunText17.setText("");
+        F2_FunText17.setText("Power");
         F2_FunText18 = (TextView)v.findViewById(R.id.FunctionText18);
         F2_FunText18.setTextSize(10);
         F2_FunText18.setText("LEVEL");
@@ -1396,7 +1395,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_FunText19.setText("ON/OFF");
         F2_FunText20 = (TextView)v.findViewById(R.id.FunctionText20);
         F2_FunText20.setTextSize(10);
-        F2_FunText20.setText("");
+        F2_FunText20.setText("Slide Center");
 
 
         IV_Normal = (ImageView) v.findViewById(R.id.imageView_Normal);
@@ -1421,12 +1420,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_Button14.setEnabled(false);
         F2_Button15.setEnabled(false);
         F2_Button16.setEnabled(false);
-        F2_Button17.setEnabled(false);
-        F2_Button17.setVisibility(View.INVISIBLE);
+//        F2_Button17.setEnabled(false);
+//        F2_Button17.setVisibility(View.INVISIBLE);
         F2_Button18.setEnabled(false);
         //F2_Button19.setEnabled(false);
-        F2_Button20.setEnabled(false);
-        F2_Button20.setVisibility(View.INVISIBLE);
+//        F2_Button20.setEnabled(false);
+//        F2_Button20.setVisibility(View.INVISIBLE);
         LastDelayTime = 100;
     }
     public void Get_Fragment3(View v)
