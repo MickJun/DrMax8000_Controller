@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Toast 快顯功能 第三個參數 Toast.LENGTH_SHORT 2秒  LENGTH_LONG 5秒
-            Toast.makeText(MainActivity.this, "點選第 " + (position + 1) + " 個 \n內容：" + BT_Addrlist.get(position).toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "點選第 " + (position + 1) + " 個 \n內容：" + BT_Addrlist.get(position).toString(), Toast.LENGTH_SHORT).show();
 
             BT_Select_Point = position;
 
@@ -1386,7 +1386,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F2_FunText16.setText("TABLE DOWN");
         F2_FunText17 = (TextView)v.findViewById(R.id.FunctionText17);
         F2_FunText17.setTextSize(10);
-        F2_FunText17.setText("Power");
+        F2_FunText17.setText("Power Status");
         F2_FunText18 = (TextView)v.findViewById(R.id.FunctionText18);
         F2_FunText18.setTextSize(10);
         F2_FunText18.setText("LEVEL");
