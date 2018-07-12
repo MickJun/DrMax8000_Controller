@@ -937,6 +937,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             F1_Button2.setText("CONNECT");
 //                            foot2.setEnabled(false);
 //                            foot3.setEnabled(false);
+//                            unregisterReceiver(mReceiver);
+                            mBluetoothAdapter.closeProfileProxy(BluetoothProfile.HEADSET,mBluetoothHeadset);
                             menu_function.setEnabled(false);
                             menu_test.setEnabled(false);
                         } catch (IOException e) {

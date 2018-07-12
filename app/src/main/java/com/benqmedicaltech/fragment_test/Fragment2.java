@@ -374,7 +374,7 @@ public class Fragment2 extends Fragment {
             case R.id.fragment2_button17:
                 break;
             case R.id.fragment2_button18:
-                Press_Drawable = R.drawable.bisor_gui_eq_content_button_levelcenter_normal;
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_levelcenter_normal;
                 break;
         }
 
