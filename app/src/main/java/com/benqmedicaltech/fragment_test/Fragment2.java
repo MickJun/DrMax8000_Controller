@@ -31,9 +31,17 @@ public class Fragment2 extends Fragment {
 //    public Fragment2() {
 //        // Required empty public constructor
 //    }
-    public Fragment2(String fName) {
-        // Required empty public constructor
-        this.name = fName;
+//    public Fragment2(String fName) {
+//        // Required empty public constructor
+//        this.name = fName;
+//    }
+
+    public static Fragment2 newInstance(String name) {
+        Fragment2 newFragment = new Fragment2();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        newFragment.setArguments(bundle);
+        return newFragment;
     }
 
 

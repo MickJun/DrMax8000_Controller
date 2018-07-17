@@ -437,7 +437,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         //第一种方式（add），初始化fragment并添加到事务中，如果为null就new一个
         if(f1 == null){
-            f1 = new Fragment1("連線頁面");
+            f1 = Fragment1.newInstance("F1");
             transaction.add(R.id.center, f1);
         }
         //隐藏所有fragment
@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if(f2 == null){
-            f2 = new Fragment2("功能按鍵");
+            f2 = Fragment2.newInstance("F2");
             transaction.add(R.id.center,f2);
         }
         hideFragment(transaction);
@@ -481,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if(f3 == null){
-            f3 = new Fragment3("功能按鍵2");
+            f3 = Fragment3.newInstance("F3");
             transaction.add(R.id.center,f3);
         }
         hideFragment(transaction);

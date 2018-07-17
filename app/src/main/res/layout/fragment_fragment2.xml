@@ -489,7 +489,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:text="FRAGMENT2"
-            android:textSize="50dp" />
+            android:textSize="50sp" />
 
     </TableLayout>
 

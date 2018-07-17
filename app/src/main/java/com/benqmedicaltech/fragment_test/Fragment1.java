@@ -1,6 +1,7 @@
 package com.benqmedicaltech.fragment_test;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,10 +20,24 @@ public class Fragment1 extends Fragment {
 
     private TextView tv;
     private String name;
+    private Context mContext;
 
-    public Fragment1(String fName) {
-        // Required empty public constructor
-            this.name = fName;
+//    public Fragment1(String fName) {
+//        // Required empty public constructor
+//        super();
+//        this.name = fName;
+//    }
+
+//    public Fragment1() {
+//        mContext = getActivity();
+//    }
+
+    public static Fragment1 newInstance(String name) {
+        Fragment1 newFragment = new Fragment1();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        newFragment.setArguments(bundle);
+        return newFragment;
     }
 
 
@@ -38,6 +53,11 @@ public class Fragment1 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        Bundle args = getArguments();
+//        if (args != null) {
+//            name = args.getString("name");
+//        }
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment1,container,false);
 //        tv = (TextView) view.findViewById(R.id.fragment1_text);
 //        tv.setText(name);

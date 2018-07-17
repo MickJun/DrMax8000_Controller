@@ -21,9 +21,18 @@ public class Fragment3 extends Fragment {
 //    public Fragment3() {
 //        // Required empty public constructor
 //    }
-    public Fragment3(String fName) {
-        // Required empty public constructor
-        this.name = fName;
+//    public Fragment3(String fName) {
+//        // Required empty public constructor
+//        this.name = fName;
+//    }
+
+
+    public static Fragment3 newInstance(String name) {
+        Fragment3 newFragment = new Fragment3();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        newFragment.setArguments(bundle);
+        return newFragment;
     }
 
 

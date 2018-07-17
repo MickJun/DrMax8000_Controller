@@ -48,7 +48,6 @@
 
     <!--</LinearLayout>-->
 
-    //準備顯示Fragment的Layout視窗
     <!--<LinearLayout-->
         <!--android:id="@+id/center"-->
         <!--android:layout_width="match_parent"-->
