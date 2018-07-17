@@ -1067,8 +1067,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Table_Command_Send_Start(Table_Down);
                             f2.Press_Button_UI(F2_Button16);
                             break;
-                        case R.id.fragment2_button17:
-                            break;
+//                        case R.id.fragment2_button17:
+//                            break;
                         case R.id.fragment2_button18:
 //                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Level");
@@ -1105,8 +1105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 LastDelayTime = 0;
                             }
                             break;
-                        case R.id.fragment2_button20:
-                            break;
+//                        case R.id.fragment2_button20:
+//                            break;
 
 
                         case R.id.fragment3_button1:

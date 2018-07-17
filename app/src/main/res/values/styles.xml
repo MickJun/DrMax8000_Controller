@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <!--Android Gangverk:style/-->
+    <!--Android Gangverk:style/Theme.AppCompat.Light.DarkActionBar-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
