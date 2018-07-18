@@ -15,8 +15,8 @@ import android.widget.TextView;
  */
 public class Fragment3 extends Fragment {
 
-    private TextView tv;
-    private String name;
+//    private TextView tv;
+//    private String name;
 
 //    public Fragment3() {
 //        // Required empty public constructor
@@ -36,13 +36,13 @@ public class Fragment3 extends Fragment {
     }
 
 
-    public String MyString = "Loading...";
-    private Handler handler = new Handler();
-    int mDelayTime = 1000;
-    public TextView myTextView;
-    int LED_Check = 0;
-    byte[] Table_Power_Status = new byte[3];
-    byte[] Output_Table = new byte[1024];
+    private String MyString = "Loading...";
+    private final Handler handler = new Handler();
+    private final int mDelayTime = 1000;
+    private TextView myTextView;
+    private int LED_Check = 0;
+    private final byte[] Table_Power_Status = new byte[3];
+    private byte[] Output_Table = new byte[1024];
 
     public void Update_Status(byte[] Output_Temp, TextView mtv) {
 
@@ -50,11 +50,11 @@ public class Fragment3 extends Fragment {
         Output_Table = Output_Temp;
 
     }
-    public void check_Data(){
+    private void check_Data(){
         //byte[] Output_Table = ;
         byte[] Temp_int = new byte[24];
         byte Temp_Char;
-        byte Info1 = 0x00, Info2 = 0x00, Info3 = 0x00, Checksum = 0x00, Check_OK = 0x01;
+        byte Info1, Info2, Info3, Checksum, Check_OK = 0x01;
         for (int x = 0; x < 24; x++)
         {
             Temp_Char = (byte)(Output_Table[x] & 0xFF);
@@ -140,18 +140,18 @@ public class Fragment3 extends Fragment {
             {
                 MyString = MyString + "_SC";
             }
-            else
-            {
-            }
+//            else
+//            {
+//            }
             if (((Table_Power_Status[1] & 0x02) == 0x02)) //inter lock
             {
                 MyString = MyString + "_Bz";
             }
-            else
-            {
-            }
-            //if (FL_Lock_Black_Screen_Count == 0)
-            {
+//            else
+//            {
+//            }
+//            if (FL_Lock_Black_Screen_Count == 0)
+//            {
                 if (((Table_Power_Status[0] & 0x20) == 0x20)) //Table Lock
                 {
                     MyString = MyString + "_Lock";
@@ -160,7 +160,7 @@ public class Fragment3 extends Fragment {
                 {
                     MyString = MyString + "_UnLock";
                 }
-            }
+//            }
             if (((Table_Power_Status[1] & 0x10) == 0x10)) //inter lock
             {
                 MyString = MyString + "_Reverse";
@@ -177,7 +177,7 @@ public class Fragment3 extends Fragment {
 
     }
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         public void run() {
             //update
             check_Data();
@@ -213,11 +213,11 @@ public class Fragment3 extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) {
-            //Fragment隐藏时调用
-        } else {
-            //Fragment显示时调用
-        }
+//        if (hidden) {
+//            //Fragment隐藏时调用
+//        } else {
+//            //Fragment显示时调用
+//        }
     }
 
 }

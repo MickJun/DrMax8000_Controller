@@ -18,9 +18,9 @@ import android.widget.TextView;
  */
 public class Fragment1 extends Fragment {
 
-    private TextView tv;
-    private String name;
-    private Context mContext;
+//    private TextView tv;
+//    private String name;
+//    private Context mContext;
 
 //    public Fragment1(String fName) {
 //        // Required empty public constructor
@@ -49,7 +49,6 @@ public class Fragment1 extends Fragment {
 //    }
 
 
-    private FrameLayout f1FL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +67,8 @@ public class Fragment1 extends Fragment {
 //            }
 //        });
 
-        f1FL = (FrameLayout) view.findViewById(R.id.f1FrameLayout);
+        FrameLayout f1FL;
+        f1FL = view.findViewById(R.id.f1FrameLayout);
         f1FL.setBackgroundColor(Color.parseColor("#C4C4C4"));
 
         ((MainActivity)this.getActivity()).Get_Fragment1(view);
@@ -79,11 +79,11 @@ public class Fragment1 extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden){
-            //Fragment隐藏时调用
-        }else {
-            //Fragment显示时调用
-        }
+//        if (hidden){
+//            //Fragment隐藏时调用
+//        }else {
+//            //Fragment显示时调用
+//        }
 
     }
 

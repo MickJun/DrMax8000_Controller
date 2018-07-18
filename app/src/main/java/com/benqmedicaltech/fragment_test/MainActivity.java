@@ -41,13 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     //Bluetooth
-    private UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
-    ArrayList<String> BT_Devicelist = new ArrayList<>();
-    ArrayList<String> BT_Addrlist = new ArrayList<>();
-    int BT_Select_Point = 0;
-    BluetoothHeadset mBluetoothHeadset;
-    BluetoothSocket BTSocket;
+    private final ArrayList<String> BT_Devicelist = new ArrayList<>();
+    private final ArrayList<String> BT_Addrlist = new ArrayList<>();
+    private int BT_Select_Point = 0;
+    private BluetoothHeadset mBluetoothHeadset;
+    private BluetoothSocket BTSocket;
 
 
     private ListView Fragment1_ListView ;
@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private TextView Fragment1_TextView ;
 
     // Get the default adapter
-    private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-    private BluetoothProfile.ServiceListener mProfileListener = new BluetoothProfile.ServiceListener() {
+    private final BluetoothProfile.ServiceListener mProfileListener = new BluetoothProfile.ServiceListener() {
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
             if (profile == BluetoothProfile.HEADSET) {
                 mBluetoothHeadset = (BluetoothHeadset) proxy;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
-    private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Toast 快顯功能 第三個參數 Toast.LENGTH_SHORT 2秒  LENGTH_LONG 5秒
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             BT_Select_Point = position;
 
-            Fragment1_TextView.setText(BT_Devicelist.get(position).toString());
+            Fragment1_TextView.setText(BT_Devicelist.get(position));
         }
 
     };
@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         public void onReceive(Context context, Intent intent) {
-//            TextView mytextview = (TextView) findViewById(R.id.textView234);
-//            ListView listview = (ListView) findViewById(R.id.listView234);
+//            TextView mytextview =  findViewById(R.id.textView234);
+//            ListView listview = findViewById(R.id.listView234);
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Discovery has found a device. Get the BluetoothDevice
@@ -151,11 +151,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BT_Addrlist.add(deviceHardwareAddress);
             }
             //android.R.layout.simple_list_item_1 為內建樣式，還有其他樣式可自行研究
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
             Fragment1_ListView.setAdapter(adapter);
             Fragment1_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
             //Fragment1_TextView.setText("pair bluetooth is over");
-            Fragment1_TextView.setText(BT_Devicelist.get(0).toString());
+            Fragment1_TextView.setText(BT_Devicelist.get(0));
             F1_Button2.setEnabled(true);
         }
 
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(mBluetoothAdapter.isDiscovering())mBluetoothAdapter.cancelDiscovery();
 
-        BluetoothDevice connDevices = mBluetoothAdapter.getRemoteDevice(BT_Addrlist.get(BT_Select_Point).toString());
+        BluetoothDevice connDevices = mBluetoothAdapter.getRemoteDevice(BT_Addrlist.get(BT_Select_Point));
 
         try {
             BTSocket = connDevices.createRfcommSocketToServiceRecord(MY_UUID);
@@ -205,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment2 f2;
     private Fragment3 f3;
 
-    View View_Fragment1;
-    View View_Fragment2;
-    View View_Fragment3;
+    private View View_Fragment1;
+    private View View_Fragment2;
+    private View View_Fragment3;
 
     //底部三个按钮
 //    private Button foot1;
@@ -266,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView IV_Normal;
     private ImageView IV_Reverse;
+//    private ImageView IV_Status1;
+//    private ImageView IV_Status2;
 
 
     private Button F3_Button1;
@@ -277,12 +279,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textView2;
     private TextView textView3;
 
-    public ButtonListener b = new ButtonListener();
+    private ButtonListener b = new ButtonListener();
 
 
-    private Handler handler = new Handler();
-    int mDelayTime = 0;
-    int LastDelayTime = 0;
+    private final Handler handler = new Handler();
+    private int mDelayTime = 0;
+    private int LastDelayTime = 0;
     private final int Max_Delay_Time = 50;
 
     @Override
@@ -361,10 +363,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menu_Main =  menu;
         menu_setting = menu.findItem(R.id.menu_setting_item);
         menu_setting.setIcon(R.drawable.bisor_gui_element_button_option_press);
-        menu_setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu_setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   //SHOW_AS_ACTION_ALWAYS
         menu_function = menu.findItem(R.id.menu_function_item);
         menu_function.setIcon(R.drawable.bisor_gui_eq_sub_icon_table_normal);
-        menu_function.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu_function.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  //SHOW_AS_ACTION_ALWAYS
         menu_test = menu.findItem(R.id.menu_test_item);
         menu_function.setEnabled(false);
         menu_test.setEnabled(false);
@@ -408,11 +410,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        /**
-         * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
-         * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等） TODO
-         * Auto-generated method stub
-         */
+//        /**
+//         * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
+//         * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等） TODO
+//         * Auto-generated method stub
+//         */
         if(SW_Output != 0x00) {
             menu_setting.setVisible(false);
             menu_function.setVisible(false);
@@ -423,10 +425,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onOptionsMenuClosed(Menu menu) {
-        /**
-         * 每次菜单被关闭时调用. （菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项） TODO
-         * Auto-generated method stub
-         */
+//        /**
+//         * 每次菜单被关闭时调用. （菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项） TODO
+//         * Auto-generated method stub
+//         */
         super.onOptionsMenuClosed(menu);
     }
 
@@ -512,48 +514,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*  Table Define  */
 
     //byte ON_OFF = 0x00;                  //#define	ON_OFF 				0
-    byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
-    byte Trend = 0x2;                   //#define	Trend				2
-    byte Tilt_R = 0x3;                  //#define	Tilt_R				3
-    byte Tilt_L = 0x4;                  //#define	Tilt_L				4
-    byte Back_Up = 0x5;                 //#define	Back_Up				5
-    byte Back_Down = 0x6;               //#define	Back_Down			6
-    byte Table_Up = 0x7;                //#define	Table_Up			7
-    byte Table_Down = 0x8;              //#define	Table_Down			8
-    byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
-    byte Slide_Head = 0xa;              //#define	Slide_Head			10
-    byte Leg_Up = 0xb;                  //#define	Leg_Up				11
-    byte Leg_Down = 0xc;                //#define	Leg_Down			12
-    byte Unlock = 0xd;                  //#define	Unlock				13
-    byte Lock = 0xe;                    //#define	Lock				14
-    byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
-    byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
-    byte Flex = 0x15;                   //#define	Flex				21
-    byte Reflex = 0x16;                 //#define	Reflex				22
-    byte Level = 0x17;                  //#define	Level				23
+    private final byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
+    private final byte Trend = 0x2;                   //#define	Trend				2
+    private final byte Tilt_R = 0x3;                  //#define	Tilt_R				3
+    private final byte Tilt_L = 0x4;                  //#define	Tilt_L				4
+    private final byte Back_Up = 0x5;                 //#define	Back_Up				5
+    private final byte Back_Down = 0x6;               //#define	Back_Down			6
+    private final byte Table_Up = 0x7;                //#define	Table_Up			7
+    private final byte Table_Down = 0x8;              //#define	Table_Down			8
+    private final byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
+    private final byte Slide_Head = 0xa;              //#define	Slide_Head			10
+    private final byte Leg_Up = 0xb;                  //#define	Leg_Up				11
+    private final byte Leg_Down = 0xc;                //#define	Leg_Down			12
+    private final byte Unlock = 0xd;                  //#define	Unlock				13
+    private final byte Lock = 0xe;                    //#define	Lock				14
+    private final byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
+    private final byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
+    private final byte Flex = 0x15;                   //#define	Flex				21
+    private final byte Reflex = 0x16;                 //#define	Reflex				22
+    private final byte Level = 0x17;                  //#define	Level				23
     //byte Config_TS710 = 0x18;           //#define	Config_TS710		24
     //byte Config_7000_Rev = 0x19;        //#define   Config_7000_Rev	    25
     //byte Config_Q100 = 0x1b;            //#define	Config_Q100			27
     //byte Config_650NS = 0x1c;           //#define	Config_MOT1600_650	28
     //byte Unlock_Stop = 0x1e;            //#define	Unlock_Stop			30          //650NS  進入腳踏模式=馬達無動作
     //byte Lock_Run = 0x1f;               //#define	Lock_Run			31          //650NS  取消腳踏模式=馬達有動作
-        byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
-        byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
-    byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
-    byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
+    private final  byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
+    private final byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
+    private final byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
+    private final byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
     //byte Config_Mode = 0x37;
     //byte Restrict_Function = 0x42;      //#define   Restrict_Function	66
-    byte No_Function = 0x4d;            //#define   No_Function		    77
+    private final byte No_Function = 0x4d;            //#define   No_Function		    77
     //byte Shutdown = 0x58;               //#define   Shutdown			88
-    byte SW_Output = 0x00;
-    byte Checksum = 0x00;
+    private byte SW_Output = 0x00;
+    private byte Checksum = 0x00;
 
-    byte[] Output_First = new byte[8];
-    byte[] Output_Function = new byte[8];
-    byte[] Output_Checksum = new byte[8];
-    byte[] Output_Final = new byte[24];
+    private final byte[] Output_First = new byte[8];
+    private final byte[] Output_Function = new byte[8];
+    private final byte[] Output_Checksum = new byte[8];
+    private final byte[] Output_Final = new byte[24];
 
-    public void Output_First_Set()
+    private void Output_First_Set()
     {
         Output_First[0] = 0x55;
         Output_First[1] = 0x0;
@@ -565,7 +567,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Output_First[7] = 0x0;
     }
 
-    public void Function_Code()
+    private void Function_Code()
     {
         if ((SW_Output & 0x01) == 0x01)
         {
@@ -640,7 +642,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void Checksum_Code()
+    private void Checksum_Code()
     {
         Checksum = (byte)(0x55 + SW_Output - 0x01);
         if ((Checksum & 0x01) == 0x01)
@@ -721,11 +723,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for(int i =0;i<8;i++){
             Output_Final[i] = Output_First[i];
-        }
-        for(int i =0;i<8;i++){
+//        }
+//        for(int i =0;i<8;i++){
             Output_Final[i+8] = Output_Function[i];
-        }
-        for(int i =0;i<8;i++){
+//        }
+//        for(int i =0;i<8;i++){
             Output_Final[i+16] = Output_Checksum[i];
         }
 
@@ -737,9 +739,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 读取数据
      */
 
-    public byte[] Table_Data = new byte[1024];
-    public int Table_Data_Point = 0;
-    public int Table_Data_Start = 0;
+    private final byte[] Table_Data = new byte[1024];
+    private int Table_Data_Point = 0;
+    private int Table_Data_Start = 0;
 
     private class readThread extends Thread {
 
@@ -825,7 +827,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 发送数据
      */
-    public void sendMessage() {
+    private void sendMessage() {
         if (BTSocket == null) {
             Toast.makeText(this, "没有连接", Toast.LENGTH_SHORT).show();
             return;
@@ -842,7 +844,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         public void run() {
             //update
             if(SW_Output != 0x00){
@@ -1069,6 +1071,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             break;
 //                        case R.id.fragment2_button17:
 //                            break;
+//                        case R.id.imageView_Status1:
+//                            textView2.setText("imageView_Status1");
+//                            break;
+//                        case R.id.imageView_Status2:
+//                            textView2.setText("imageView_Status2");
+//                            break;
                         case R.id.fragment2_button18:
 //                            if(f2.Need_Release_Flag == 1){break;}
                             textView2.setText("Level");
@@ -1192,15 +1200,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.fragment2_button16:
                         f2.Release_Button_UI(F2_Button16);
                         break;
-                    case R.id.fragment2_button17:
-                        break;
+//                    case R.id.fragment2_button17:
+//                        break;
                     case R.id.fragment2_button18:
                         f2.Release_Button_UI(F2_Button18);
+                        break;
+                    case R.id.imageView_Status1:
+                        break;
+                    case R.id.imageView_Status2:
                         break;
                 }
                 SW_Output = 0x00;
                 //LastDelayTime = 0;
-                if (menu_setting.isVisible() == false) {
+                if (!menu_setting.isVisible()) {
                     menu_setting.setVisible(true);
                     menu_function.setVisible(true);
                     menu_test.setVisible(true);
@@ -1216,194 +1228,199 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         View_Fragment1 = v;
 
-        F1_Button1 = (Button)v.findViewById(R.id.fragment1_button1);
+        F1_Button1 = v.findViewById(R.id.fragment1_button1);
         F1_Button1.setOnClickListener(b);
         F1_Button1.setOnTouchListener(b);
-        F1_Button2 = (Button)v.findViewById(R.id.fragment1_button2);
+        F1_Button2 = v.findViewById(R.id.fragment1_button2);
         F1_Button2.setOnClickListener(b);
         F1_Button2.setOnTouchListener(b);
         F1_Button2.setEnabled(false);
 
-        textView1 = (TextView) v.findViewById(R.id.fragment1_text);
+        textView1 =  v.findViewById(R.id.fragment1_text);
         textView1.setTextSize(25);
         textView1.setText("Press SCAN Button");
         Fragment1_TextView = textView1;
-        Fragment1_ListView = (ListView) v.findViewById(R.id.fragment1_List);
+        Fragment1_ListView = v.findViewById(R.id.fragment1_List);
 
     }
     public void Get_Fragment2(View v)
     {
         View_Fragment2 = v;
-        textView2 = (TextView) v.findViewById(R.id.fragment2_text);
+        textView2 =  v.findViewById(R.id.fragment2_text);
         textView2.setTextSize(20);
 
-        F2_Button1 = (Button)v.findViewById(R.id.fragment2_button1);
+        F2_Button1 = v.findViewById(R.id.fragment2_button1);
         F2_Button1.setOnClickListener(b);
         F2_Button1.setOnTouchListener(b);
         F2_Button1.setText("");
         f2.setF2_Button1(F2_Button1);
-        F2_Button2 = (Button)v.findViewById(R.id.fragment2_button2);
+        F2_Button2 = v.findViewById(R.id.fragment2_button2);
         F2_Button2.setOnClickListener(b);
         F2_Button2.setOnTouchListener(b);
         F2_Button2.setText("");
         f2.setF2_Button2(F2_Button2);
-        F2_Button3 = (Button)v.findViewById(R.id.fragment2_button3);
+        F2_Button3 = v.findViewById(R.id.fragment2_button3);
         F2_Button3.setOnClickListener(b);
         F2_Button3.setOnTouchListener(b);
         F2_Button3.setText("");
         f2.setF2_Button3(F2_Button3);
-        F2_Button4 = (Button)v.findViewById(R.id.fragment2_button4);
+        F2_Button4 = v.findViewById(R.id.fragment2_button4);
         F2_Button4.setOnClickListener(b);
         F2_Button4.setOnTouchListener(b);
         F2_Button4.setText("");
         f2.setF2_Button4(F2_Button4);
-        F2_Button5 = (Button)v.findViewById(R.id.fragment2_button5);
+        F2_Button5 = v.findViewById(R.id.fragment2_button5);
         F2_Button5.setOnClickListener(b);
         F2_Button5.setOnTouchListener(b);
         F2_Button5.setText("");
         f2.setF2_Button5(F2_Button5);
-        F2_Button6 = (Button)v.findViewById(R.id.fragment2_button6);
+        F2_Button6 = v.findViewById(R.id.fragment2_button6);
         F2_Button6.setOnClickListener(b);
         F2_Button6.setOnTouchListener(b);
         F2_Button6.setText("");
         f2.setF2_Button6(F2_Button6);
-        F2_Button7 = (Button)v.findViewById(R.id.fragment2_button7);
+        F2_Button7 = v.findViewById(R.id.fragment2_button7);
         F2_Button7.setOnClickListener(b);
         F2_Button7.setOnTouchListener(b);
         F2_Button7.setText("");
         f2.setF2_Button7(F2_Button7);
-        F2_Button8 = (Button)v.findViewById(R.id.fragment2_button8);
+        F2_Button8 = v.findViewById(R.id.fragment2_button8);
         F2_Button8.setOnClickListener(b);
         F2_Button8.setOnTouchListener(b);
         F2_Button8.setText("");
         f2.setF2_Button8(F2_Button8);
-        F2_Button9 = (Button)v.findViewById(R.id.fragment2_button9);
+        F2_Button9 = v.findViewById(R.id.fragment2_button9);
         F2_Button9.setOnClickListener(b);
         F2_Button9.setOnTouchListener(b);
         F2_Button9.setText("");
         f2.setF2_Button9(F2_Button9);
-        F2_Button10 = (Button)v.findViewById(R.id.fragment2_button10);
+        F2_Button10 = v.findViewById(R.id.fragment2_button10);
         F2_Button10.setOnClickListener(b);
         F2_Button10.setOnTouchListener(b);
         F2_Button10.setText("");
         f2.setF2_Button10(F2_Button10);
-        F2_Button11 = (Button)v.findViewById(R.id.fragment2_button11);
+        F2_Button11 = v.findViewById(R.id.fragment2_button11);
         F2_Button11.setOnClickListener(b);
         F2_Button11.setOnTouchListener(b);
         F2_Button11.setText("");
         f2.setF2_Button11(F2_Button11);
-        F2_Button12 = (Button)v.findViewById(R.id.fragment2_button12);
+        F2_Button12 = v.findViewById(R.id.fragment2_button12);
         F2_Button12.setOnClickListener(b);
         F2_Button12.setOnTouchListener(b);
         F2_Button12.setText("");
         f2.setF2_Button12(F2_Button12);
-        F2_Button13 = (Button)v.findViewById(R.id.fragment2_button13);
+        F2_Button13 = v.findViewById(R.id.fragment2_button13);
         F2_Button13.setOnClickListener(b);
         F2_Button13.setOnTouchListener(b);
         F2_Button13.setText("");
         f2.setF2_Button13(F2_Button13);
-        F2_Button14 = (Button)v.findViewById(R.id.fragment2_button14);
+        F2_Button14 = v.findViewById(R.id.fragment2_button14);
         F2_Button14.setOnClickListener(b);
         F2_Button14.setOnTouchListener(b);
         F2_Button14.setText("");
         f2.setF2_Button14(F2_Button14);
-        F2_Button15 = (Button)v.findViewById(R.id.fragment2_button15);
+        F2_Button15 = v.findViewById(R.id.fragment2_button15);
         F2_Button15.setOnClickListener(b);
         F2_Button15.setOnTouchListener(b);
         F2_Button15.setText("");
         f2.setF2_Button15(F2_Button15);
-        F2_Button16 = (Button)v.findViewById(R.id.fragment2_button16);
+        F2_Button16 = v.findViewById(R.id.fragment2_button16);
         F2_Button16.setOnClickListener(b);
         F2_Button16.setOnTouchListener(b);
         F2_Button16.setText("");
         f2.setF2_Button16(F2_Button16);
-//        F2_Button17 = (Button)v.findViewById(R.id.fragment2_button17);
+//        F2_Button17 = v.findViewById(R.id.fragment2_button17);
 //        F2_Button17.setOnClickListener(b);
 //        F2_Button17.setOnTouchListener(b);
 //        F2_Button17.setText("");
 //        f2.setF2_Button17(F2_Button17);
-        F2_Button18 = (Button)v.findViewById(R.id.fragment2_button18);
+        F2_Button18 = v.findViewById(R.id.fragment2_button18);
         F2_Button18.setOnClickListener(b);
         F2_Button18.setOnTouchListener(b);
         F2_Button18.setText("");
         f2.setF2_Button18(F2_Button18);
-        F2_Button19 = (Button)v.findViewById(R.id.fragment2_button19);
+        F2_Button19 = v.findViewById(R.id.fragment2_button19);
         F2_Button19.setOnClickListener(b);
         F2_Button19.setOnTouchListener(b);
         F2_Button19.setText("");
         f2.setF2_Button19(F2_Button19);
-//        F2_Button20 = (Button)v.findViewById(R.id.fragment2_button20);
+//        F2_Button20 = v.findViewById(R.id.fragment2_button20);
 //        F2_Button20.setOnClickListener(b);
 //        F2_Button20.setOnTouchListener(b);
 //        F2_Button20.setText("");
 //        f2.setF2_Button20(F2_Button20);
 
-        F2_FunText1 = (TextView)v.findViewById(R.id.FunctionText1);
+        F2_FunText1 = v.findViewById(R.id.FunctionText1);
         F2_FunText1.setTextSize(10);
         F2_FunText1.setText("UNLOCK");
-        F2_FunText2 = (TextView)v.findViewById(R.id.FunctionText2);
+        F2_FunText2 = v.findViewById(R.id.FunctionText2);
         F2_FunText2.setTextSize(10);
         F2_FunText2.setText("NORMAL");
-        F2_FunText3 = (TextView)v.findViewById(R.id.FunctionText3);
+        F2_FunText3 = v.findViewById(R.id.FunctionText3);
         F2_FunText3.setTextSize(10);
         F2_FunText3.setText("FLEX");
-        F2_FunText4 = (TextView)v.findViewById(R.id.FunctionText4);
+        F2_FunText4 = v.findViewById(R.id.FunctionText4);
         F2_FunText4.setTextSize(10);
         F2_FunText4.setText("SLIDE FOOT");
-        F2_FunText5 = (TextView)v.findViewById(R.id.FunctionText5);
+        F2_FunText5 = v.findViewById(R.id.FunctionText5);
         F2_FunText5.setTextSize(10);
         F2_FunText5.setText("LOCK");
-        F2_FunText6 = (TextView)v.findViewById(R.id.FunctionText6);
+        F2_FunText6 = v.findViewById(R.id.FunctionText6);
         F2_FunText6.setTextSize(10);
         F2_FunText6.setText("REVERSE");
-        F2_FunText7 = (TextView)v.findViewById(R.id.FunctionText7);
+        F2_FunText7 = v.findViewById(R.id.FunctionText7);
         F2_FunText7.setTextSize(10);
         F2_FunText7.setText("REFLEX");
-        F2_FunText8 = (TextView)v.findViewById(R.id.FunctionText8);
+        F2_FunText8 = v.findViewById(R.id.FunctionText8);
         F2_FunText8.setTextSize(10);
         F2_FunText8.setText("SLIDE HEAD");
-        F2_FunText9 = (TextView)v.findViewById(R.id.FunctionText9);
+        F2_FunText9 = v.findViewById(R.id.FunctionText9);
         F2_FunText9.setTextSize(10);
         F2_FunText9.setText("TILT R.");
-        F2_FunText10 = (TextView)v.findViewById(R.id.FunctionText10);
+        F2_FunText10 = v.findViewById(R.id.FunctionText10);
         F2_FunText10.setTextSize(10);
         F2_FunText10.setText("REV. TREND.");
-        F2_FunText11 = (TextView)v.findViewById(R.id.FunctionText11);
+        F2_FunText11 = v.findViewById(R.id.FunctionText11);
         F2_FunText11.setTextSize(10);
         F2_FunText11.setText("BACK UP");
-        F2_FunText12 = (TextView)v.findViewById(R.id.FunctionText12);
+        F2_FunText12 = v.findViewById(R.id.FunctionText12);
         F2_FunText12.setTextSize(10);
         F2_FunText12.setText("TABLE UP");
-        F2_FunText13 = (TextView)v.findViewById(R.id.FunctionText13);
+        F2_FunText13 = v.findViewById(R.id.FunctionText13);
         F2_FunText13.setTextSize(10);
         F2_FunText13.setText("TILT L.");
-        F2_FunText14 = (TextView)v.findViewById(R.id.FunctionText14);
+        F2_FunText14 = v.findViewById(R.id.FunctionText14);
         F2_FunText14.setTextSize(10);
         F2_FunText14.setText("TREND.");
-        F2_FunText15 = (TextView)v.findViewById(R.id.FunctionText15);
+        F2_FunText15 = v.findViewById(R.id.FunctionText15);
         F2_FunText15.setTextSize(10);
         F2_FunText15.setText("BACK DOWN");
-        F2_FunText16 = (TextView)v.findViewById(R.id.FunctionText16);
+        F2_FunText16 = v.findViewById(R.id.FunctionText16);
         F2_FunText16.setTextSize(10);
         F2_FunText16.setText("TABLE DOWN");
-        F2_FunText17 = (TextView)v.findViewById(R.id.FunctionText17);
+        F2_FunText17 = v.findViewById(R.id.FunctionText17);
         F2_FunText17.setTextSize(10);
         F2_FunText17.setText("Power Status");
-        F2_FunText18 = (TextView)v.findViewById(R.id.FunctionText18);
+        F2_FunText18 = v.findViewById(R.id.FunctionText18);
         F2_FunText18.setTextSize(10);
         F2_FunText18.setText("LEVEL");
-        F2_FunText19 = (TextView)v.findViewById(R.id.FunctionText19);
+        F2_FunText19 = v.findViewById(R.id.FunctionText19);
         F2_FunText19.setTextSize(10);
         F2_FunText19.setText("ON/OFF");
-        F2_FunText20 = (TextView)v.findViewById(R.id.FunctionText20);
+        F2_FunText20 = v.findViewById(R.id.FunctionText20);
         F2_FunText20.setTextSize(10);
         F2_FunText20.setText("Slide Center");
 
 
-        IV_Normal = (ImageView) v.findViewById(R.id.imageView_Normal);
+        IV_Normal =  v.findViewById(R.id.imageView_Normal);
         IV_Normal.bringToFront();
-        IV_Reverse = (ImageView) v.findViewById(R.id.imageView_Reverse);
+        IV_Reverse =  v.findViewById(R.id.imageView_Reverse);
         IV_Reverse.bringToFront();
+
+//        IV_Status1 = v.findViewById(R.id.imageView_Status1);
+//        IV_Status1.setOnTouchListener(b);
+//        IV_Status2 = v.findViewById(R.id.imageView_Status2);
+//        IV_Status2.setOnTouchListener(b);
 
         SW_Output = 0x00;
         F2_Button1.setEnabled(false);
@@ -1433,22 +1450,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Get_Fragment3(View v)
     {
         View_Fragment3 = v;
-        textView3 = (TextView) v.findViewById(R.id.fragment3_text);
+        textView3 =  v.findViewById(R.id.fragment3_text);
         textView3.setTextSize(20);
 
-        F3_Button1 = (Button)v.findViewById(R.id.fragment3_button1);
+        F3_Button1 = v.findViewById(R.id.fragment3_button1);
         F3_Button1.setOnClickListener(b);
         F3_Button1.setOnTouchListener(b);
         F3_Button1.setText("TableUp");
-        F3_Button2 = (Button)v.findViewById(R.id.fragment3_button2);
+        F3_Button2 = v.findViewById(R.id.fragment3_button2);
         F3_Button2.setOnClickListener(b);
         F3_Button2.setOnTouchListener(b);
         F3_Button2.setText("TableDown");
-        F3_Button3 = (Button)v.findViewById(R.id.fragment3_button3);
+        F3_Button3 = v.findViewById(R.id.fragment3_button3);
         F3_Button3.setOnClickListener(b);
         F3_Button3.setOnTouchListener(b);
         F3_Button3.setText("Lock");
-        F3_Button4 = (Button)v.findViewById(R.id.fragment3_button4);
+        F3_Button4 = v.findViewById(R.id.fragment3_button4);
         F3_Button4.setOnClickListener(b);
         F3_Button4.setOnTouchListener(b);
         F3_Button4.setText("Level");

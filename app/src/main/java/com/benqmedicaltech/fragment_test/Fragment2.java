@@ -26,8 +26,8 @@ import java.io.IOException;
  */
 public class Fragment2 extends Fragment {
 
-    private TextView tv;
-    private String name;
+//    private TextView tv;
+//    private String name;
 //    public Fragment2() {
 //        // Required empty public constructor
 //    }
@@ -52,43 +52,42 @@ public class Fragment2 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_fragment2, container, false);
 //    }
 
-    private static final byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
-    private static final byte Trend = 0x2;                   //#define	Trend				2
-    private static final byte Tilt_R = 0x3;                  //#define	Tilt_R				3
-    private static final byte Tilt_L = 0x4;                  //#define	Tilt_L				4
-    private static final byte Back_Up = 0x5;                 //#define	Back_Up				5
-    private static final byte Back_Down = 0x6;               //#define	Back_Down			6
-    private static final byte Table_Up = 0x7;                //#define	Table_Up			7
-    private static final byte Table_Down = 0x8;              //#define	Table_Down			8
-    private static final byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
-    private static final byte Slide_Head = 0xa;              //#define	Slide_Head			10
-    private static final byte Leg_Up = 0xb;                  //#define	Leg_Up				11
-    private static final byte Leg_Down = 0xc;                //#define	Leg_Down			12
-    private static final byte Unlock = 0xd;                  //#define	Unlock				13
-    private static final byte Lock = 0xe;                    //#define	Lock				14
-    private static final byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
-    private static final byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
-    private static final byte Flex = 0x15;                   //#define	Flex				21
-    private static final byte Reflex = 0x16;                 //#define	Reflex				22
-    private static final byte Level = 0x17;                  //#define	Level				23
-    //byte Config_TS710 = 0x18;           //#define	Config_TS710		24
-    //byte Config_7000_Rev = 0x19;        //#define   Config_7000_Rev	    25
-    //byte Config_Q100 = 0x1b;            //#define	Config_Q100			27
-    //byte Config_650NS = 0x1c;           //#define	Config_MOT1600_650	28
-    //byte Unlock_Stop = 0x1e;            //#define	Unlock_Stop			30          //650NS  進入腳踏模式=馬達無動作
-    //byte Lock_Run = 0x1f;               //#define	Lock_Run			31          //650NS  取消腳踏模式=馬達有動作
-    private static final byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
-    private static final byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
-    private static final byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
-    private static final byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
-    //byte Config_Mode = 0x37;
-    //byte Restrict_Function = 0x42;      //#define   Restrict_Function	66
-    private static final byte No_Function = 0x4d;            //#define   No_Function		    77
-    //byte Shutdown = 0x58;               //#define   Shutdown			88
-    byte SW_Output = 0x00;
-    byte Checksum = 0x00;
+//    private static final byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
+//    private static final byte Trend = 0x2;                   //#define	Trend				2
+//    private static final byte Tilt_R = 0x3;                  //#define	Tilt_R				3
+//    private static final byte Tilt_L = 0x4;                  //#define	Tilt_L				4
+//    private static final byte Back_Up = 0x5;                 //#define	Back_Up				5
+//    private static final byte Back_Down = 0x6;               //#define	Back_Down			6
+//    private static final byte Table_Up = 0x7;                //#define	Table_Up			7
+//    private static final byte Table_Down = 0x8;              //#define	Table_Down			8
+//    private static final byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
+//    private static final byte Slide_Head = 0xa;              //#define	Slide_Head			10
+//    private static final byte Leg_Up = 0xb;                  //#define	Leg_Up				11
+//    private static final byte Leg_Down = 0xc;                //#define	Leg_Down			12
+//    private static final byte Unlock = 0xd;                  //#define	Unlock				13
+//    private static final byte Lock = 0xe;                    //#define	Lock				14
+//    private static final byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
+//    private static final byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
+//    private static final byte Flex = 0x15;                   //#define	Flex				21
+//    private static final byte Reflex = 0x16;                 //#define	Reflex				22
+//    private static final byte Level = 0x17;                  //#define	Level				23
+//    //byte Config_TS710 = 0x18;           //#define	Config_TS710		24
+//    //byte Config_7000_Rev = 0x19;        //#define   Config_7000_Rev	    25
+//    //byte Config_Q100 = 0x1b;            //#define	Config_Q100			27
+//    //byte Config_650NS = 0x1c;           //#define	Config_MOT1600_650	28
+//    //byte Unlock_Stop = 0x1e;            //#define	Unlock_Stop			30          //650NS  進入腳踏模式=馬達無動作
+//    //byte Lock_Run = 0x1f;               //#define	Lock_Run			31          //650NS  取消腳踏模式=馬達有動作
+//    private static final byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
+//    private static final byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
+//    private static final byte Set_M1 = 0x23;                 //#define     Set_M1                  35  //Save Angle in Memery now
+//    private static final byte Set_M2 = 0x24;                 //#define     Set_M2                  36  //Save Angle in Memery now
+//    //byte Config_Mode = 0x37;
+//    //byte Restrict_Function = 0x42;      //#define   Restrict_Function	66
+//    private static final byte No_Function = 0x4d;            //#define   No_Function		    77
+//    //byte Shutdown = 0x58;               //#define   Shutdown			88
+//    byte SW_Output = 0x00;
+//    byte Checksum = 0x00;
 
-    private View MyView;
     private  ImageView mIV_Reverse;
     private  ImageView mIV_Normal;
     private  ImageView mIV_Status1;
@@ -96,15 +95,15 @@ public class Fragment2 extends Fragment {
     private  int status_path1;
     private  int status_path2;
 
-    public String MyString = "Loading...";
-    private Handler handler = new Handler();
-    int mDelayTime = 100;
-    public TextView myTextView;
-    int LED_Check = 0;
-    byte[] Table_Power_Status = new byte[3];
-    byte[] Output_Table = new byte[1024];
+    private String MyString = "Loading...";
+    private final Handler handler = new Handler();
+    private final int mDelayTime = 100;
+    private TextView myTextView;
+    private int LED_Check = 0;
+    private final byte[] Table_Power_Status = new byte[3];
+    private byte[] Output_Table = new byte[1024];
 
-    public int Update_Flag = 0;
+    private int Update_Flag = 0;
 
     public void Update_Status(byte[] Output_Temp, TextView mtv) {
         Update_Flag = 1;
@@ -193,45 +192,45 @@ public class Fragment2 extends Fragment {
 //        F2_Button20 = f2_Button20;
 //    }
 
-    public Button F2_Button1;
-    public Button F2_Button2;
-    public Button F2_Button3;
-    public Button F2_Button4;
-    public Button F2_Button5;
-    public Button F2_Button6;
-    public Button F2_Button7;
-    public Button F2_Button8;
-    public Button F2_Button9;
-    public Button F2_Button10;
-    public Button F2_Button11;
-    public Button F2_Button12;
-    public Button F2_Button13;
-    public Button F2_Button14;
-    public Button F2_Button15;
-    public Button F2_Button16;
-    //public Button F2_Button17;
-    public Button F2_Button18;
-    public Button F2_Button19;
+    private Button F2_Button1;
+    private Button F2_Button2;
+    private Button F2_Button3;
+    private Button F2_Button4;
+    private Button F2_Button5;
+    private Button F2_Button6;
+    private Button F2_Button7;
+    private Button F2_Button8;
+    private Button F2_Button9;
+    private Button F2_Button10;
+    private Button F2_Button11;
+    private Button F2_Button12;
+    private Button F2_Button13;
+    private Button F2_Button14;
+    private Button F2_Button15;
+    private Button F2_Button16;
+    //private Button F2_Button17;
+    private Button F2_Button18;
+    private Button F2_Button19;
     //private Button F2_Button20;
 
 
-    public int Change_Photo_Flag = 0;
-    public int Change_Button_Number = 0;
-    public int Change_Function_Number = 0;
-    public int Chenged_Button = 0;
-    public String Change_Photo_Name = "";
+    private int Change_Photo_Flag = 0;
+//    private int Change_Button_Number = 0;
+//    private int Change_Function_Number = 0;
+//    private int Chenged_Button = 0;
+//    private String Change_Photo_Name = "";
     private static final int Function_non = 0;
     private static final int Function_press = 1;
     private static final int Function_release = 2;
     private static final int Function_lock = 3;
     private static final int Function_unlock = 4;
 
-    public Button Press_Button;
-    public int Press_Drawable;
-    public int Need_Release_Flag = 0;
-    public Button Last_Button;
-    public int Last_Drawable;
-    public int Need_Release_Last = 0;
+    private  Button Press_Button;
+    private int Press_Drawable;
+    private int Need_Release_Flag = 0;
+    private Button Last_Button;
+    private int Last_Drawable;
+    private  int Need_Release_Last = 0;
 
     public void Press_Button_UI(Button getButton){
 
@@ -311,8 +310,8 @@ public class Fragment2 extends Fragment {
 
     }
 
-    public Button Release_Button;
-    public int Release_Drawable;
+    private Button Release_Button;
+    private int Release_Drawable;
 
     public void Release_Button_UI(Button getButton){
         Change_Photo_Flag = Function_release;
@@ -401,11 +400,11 @@ public class Fragment2 extends Fragment {
     public int Locking_Flag = 0;
     public int Reverse_Flag = 0;
 
-    public void check_Data(){
+    private void check_Data(){
         //byte[] Output_Table = ;
         byte[] Temp_int = new byte[24];
         byte Temp_Char;
-        byte Info1 = 0x00, Info2 = 0x00, Info3 = 0x00, Checksum = 0x00, Check_OK = 0x01;
+        byte Info1, Info2, Info3, Checksum, Check_OK = 0x01;
         for (int x = 0; x < 24; x++)
         {
             Temp_Char = (byte)(Output_Table[x] & 0xFF);
@@ -506,9 +505,9 @@ public class Fragment2 extends Fragment {
             {
                 MyString = MyString + "_Bz";
             }
-            else
-            {
-            }
+//            else
+//            {
+//            }
             //if (FL_Lock_Black_Screen_Count == 0)
             {
                 if (((Table_Power_Status[0] & 0x20) == 0x20)) //Table Lock
@@ -540,7 +539,7 @@ public class Fragment2 extends Fragment {
 
     }
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         public void run() {
 
             if(Update_Flag == 1) {//Power Status Update
@@ -639,23 +638,21 @@ public class Fragment2 extends Fragment {
     };
 
 
-    private FrameLayout f2FL;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fragment2,container,false);
-        MyView = view;
 
-
-        f2FL = (FrameLayout) MyView.findViewById(R.id.f2FrameLayout);
+        FrameLayout f2FL;
+        f2FL = view.findViewById(R.id.f2FrameLayout);
         f2FL.setBackgroundColor(Color.parseColor("#F1F1F1"));
 
 
-        mIV_Reverse = (ImageView) MyView.findViewById(R.id.imageView_Reverse);
-        mIV_Normal  = (ImageView) MyView.findViewById(R.id.imageView_Normal);
-        mIV_Status1 = (ImageView) MyView.findViewById(R.id.imageView_Status1);
-        mIV_Status2 = (ImageView) MyView.findViewById(R.id.imageView_Status2);
+        mIV_Reverse = view.findViewById(R.id.imageView_Reverse);
+        mIV_Normal  = view.findViewById(R.id.imageView_Normal);
+        mIV_Status1 = view.findViewById(R.id.imageView_Status1);
+        mIV_Status2 = view.findViewById(R.id.imageView_Status2);
 
 //        tv = (TextView) view.findViewById(R.id.fragment2_text);
 //        tv.setText(name);
@@ -679,11 +676,11 @@ public class Fragment2 extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) {
-            //Fragment隐藏时调用
-        } else {
-            //Fragment显示时调用
-        }
+//        if (hidden) {
+//            //Fragment隐藏时调用
+//        } else {
+//            //Fragment显示时调用
+//        }
     }
 
 
