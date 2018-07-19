@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -956,6 +957,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void Table_Command_Send_Start(byte command){
             SW_Output = command;
+            if(f2.Reverse_Flag == 1) {
+                switch (command){
+                    case  Slide_Foot:
+                        SW_Output = Slide_Head;
+                        break;
+                    case  Slide_Head:
+                        SW_Output = Slide_Foot;
+                        break;
+                    case  Tilt_L:
+                        SW_Output = Tilt_R;
+                        break;
+                    case  Tilt_R:
+                        SW_Output = Tilt_L;
+                        break;
+                    case  Trend:
+                        SW_Output = Rev_Trend;
+                        break;
+                    case  Rev_Trend:
+                        SW_Output = Trend;
+                        break;
+                }
+            }
             Output_First_Set();
             Function_Code();
             Checksum_Code();
@@ -1086,32 +1109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         case R.id.fragment2_button19:
                             textView2.setText("Power");
                             SW_Output = 0x00;
-                            if (F2_Button1.isEnabled()) {
-                                LastDelayTime = Max_Delay_Time;
-                            } else {
-                                f2.Unlock_Button_UI();
-                                F2_Button1.setEnabled(true);
-                                F2_Button2.setEnabled(true);
-                                F2_Button3.setEnabled(true);
-                                F2_Button4.setEnabled(true);
-                                F2_Button5.setEnabled(true);
-                                F2_Button6.setEnabled(true);
-                                F2_Button7.setEnabled(true);
-                                F2_Button8.setEnabled(true);
-                                F2_Button9.setEnabled(true);
-                                F2_Button10.setEnabled(true);
-                                F2_Button11.setEnabled(true);
-                                F2_Button12.setEnabled(true);
-                                F2_Button13.setEnabled(true);
-                                F2_Button14.setEnabled(true);
-                                F2_Button15.setEnabled(true);
-                                F2_Button16.setEnabled(true);
-                                //F2_Button17.setEnabled(true);
-                                F2_Button18.setEnabled(true);
-                                //F2_Button19.setEnabled(true);
-                                //F2_Button20.setEnabled(true);
-                                LastDelayTime = 0;
-                            }
+                            Button_Unlock();
                             break;
 //                        case R.id.fragment2_button20:
 //                            break;
@@ -1222,6 +1220,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
 
+    }
+
+    public void Reverse_BtnLock(){
+        if (F2_Button1.isEnabled()) {
+            F2_Button3.setEnabled(false);
+            F2_Button7.setEnabled(false);
+            F2_Button11.setEnabled(false);
+            F2_Button15.setEnabled(false);
+        }
+    }
+
+    public void Reverse_BtnUnLock(){
+        if (F2_Button1.isEnabled()) {
+            F2_Button3.setEnabled(true);
+            F2_Button7.setEnabled(true);
+            F2_Button11.setEnabled(true);
+            F2_Button15.setEnabled(true);
+        }
+    }
+
+    public void Button_Unlock(){
+        if (F2_Button1.isEnabled()) {
+            LastDelayTime = Max_Delay_Time;
+        } else {
+            f2.Unlock_Button_UI();
+            if(f2.Reverse_Flag == 1){
+                F2_Button3.setEnabled(false);
+                F2_Button7.setEnabled(false);
+                F2_Button11.setEnabled(false);
+                F2_Button15.setEnabled(false);
+            }
+            else{
+                F2_Button3.setEnabled(true);
+                F2_Button7.setEnabled(true);
+                F2_Button11.setEnabled(true);
+                F2_Button15.setEnabled(true);
+            }
+            F2_Button1.setEnabled(true);
+            F2_Button2.setEnabled(true);
+            F2_Button4.setEnabled(true);
+            F2_Button5.setEnabled(true);
+            F2_Button6.setEnabled(true);
+            F2_Button8.setEnabled(true);
+            F2_Button9.setEnabled(true);
+            F2_Button10.setEnabled(true);
+            F2_Button12.setEnabled(true);
+            F2_Button13.setEnabled(true);
+            F2_Button14.setEnabled(true);
+            F2_Button16.setEnabled(true);
+            //F2_Button17.setEnabled(true);
+            F2_Button18.setEnabled(true);
+            //F2_Button19.setEnabled(true);
+            //F2_Button20.setEnabled(true);
+            LastDelayTime = 0;
+        }
     }
 
     public void Get_Fragment1(View v)
