@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final Handler handler = new Handler();
     private int mDelayTime = 0;
     private int LastDelayTime = 0;
-    private final int Max_Delay_Time = 50;
+    private final int Max_Delay_Time = 111;      //Lock Time = 90ms * Max_Delay_Time    10s / 90ms = 111
 
     @Override
     protected void onDestroy() {
