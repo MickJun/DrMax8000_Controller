@@ -102,20 +102,22 @@
             </FrameLayout>
 
             <Button
-                android:id="@+id/fragment2_button3"
+                android:id="@+id/fragment2_button10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_flex_disable"
-                android:text="3" />
+                android:background= "@drawable/bisor_gui_eq_content_button_revtrend_disable"
+                android:text="10" />
 
             <Button
-                android:id="@+id/fragment2_button4"
+                android:id="@+id/fragment2_button9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_slidefoot_disable"
-                android:text="4" />
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltright_disable"
+                android:text="9" />
+
+
 
         </TableRow>
 
@@ -164,20 +166,20 @@
             </FrameLayout>
 
             <Button
-                android:id="@+id/fragment2_button7"
+                android:id="@+id/fragment2_button14"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_reflex_disable"
-                android:text="7" />
+                android:background= "@drawable/bisor_gui_eq_content_button_trend_disable"
+                android:text="14" />
 
             <Button
-                android:id="@+id/fragment2_button8"
+                android:id="@+id/fragment2_button13"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_slidehead_disable"
-                android:text="8" />
+                android:background= "@drawable/bisor_gui_eq_content_button_tiltleft_disable"
+                android:text="13" />
 
         </TableRow>
 
@@ -267,21 +269,6 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/fragment2_button9"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tiltright_disable"
-                android:text="9" />
-
-            <Button
-                android:id="@+id/fragment2_button10"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_revtrend_disable"
-                android:text="10" />
 
             <Button
                 android:id="@+id/fragment2_button11"
@@ -299,6 +286,21 @@
                 android:background= "@drawable/bisor_gui_eq_content_button_tableup_disable"
                 android:text="12" />
 
+            <Button
+                android:id="@+id/fragment2_button4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidefoot_disable"
+                android:text="4" />
+            <Button
+                android:id="@+id/fragment2_button3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_legup_disable"
+                android:text="3" />
+
         </TableRow>
 
         <TableRow
@@ -307,21 +309,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/fragment2_button13"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_tiltleft_disable"
-                android:text="13" />
 
-            <Button
-                android:id="@+id/fragment2_button14"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background= "@drawable/bisor_gui_eq_content_button_trend_disable"
-                android:text="14" />
 
             <Button
                 android:id="@+id/fragment2_button15"
@@ -338,6 +326,23 @@
                 android:layout_weight="1"
                 android:background= "@drawable/bisor_gui_eq_content_button_tabledw_disable"
                 android:text="16" />
+
+            <Button
+                android:id="@+id/fragment2_button8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_slidehead_disable"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/fragment2_button7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background= "@drawable/bisor_gui_eq_content_button_legdw_disable"
+                android:text="7" />
+
 
         </TableRow>
 

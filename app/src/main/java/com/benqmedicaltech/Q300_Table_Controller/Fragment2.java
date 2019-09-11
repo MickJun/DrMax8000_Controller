@@ -1,9 +1,7 @@
-package com.benqmedicaltech.fragment_test;
+package com.benqmedicaltech.Q300_Table_Controller;
 
 
-import android.bluetooth.BluetoothProfile;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 //import android.app.Fragment;
 import android.os.Handler;
@@ -14,11 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 
 /**
@@ -258,7 +252,7 @@ public class Fragment2 extends Fragment {
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_normal_press;
                 break;
             case R.id.fragment2_button3:
-                Press_Drawable = R.drawable.bisor_gui_eq_content_button_flex_press;
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_legup_press;
                 break;
             case R.id.fragment2_button4:
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_slidefoot_press;
@@ -275,7 +269,7 @@ public class Fragment2 extends Fragment {
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_reverse_press;
                 break;
             case R.id.fragment2_button7:
-                Press_Drawable = R.drawable.bisor_gui_eq_content_button_reflex_press;
+                Press_Drawable = R.drawable.bisor_gui_eq_content_button_legdw_press;
                 break;
             case R.id.fragment2_button8:
                 Press_Drawable = R.drawable.bisor_gui_eq_content_button_slidehead_press;
@@ -333,7 +327,7 @@ public class Fragment2 extends Fragment {
                 Release_Drawable = R.drawable.bisor_gui_eq_content_button_normal_normal;
                 break;
             case R.id.fragment2_button3:
-                Release_Drawable = R.drawable.bisor_gui_eq_content_button_flex_normal;
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_legup_normal;
                 break;
             case R.id.fragment2_button4:
                 Release_Drawable = R.drawable.bisor_gui_eq_content_button_slidefoot_normal;
@@ -350,7 +344,7 @@ public class Fragment2 extends Fragment {
                 Release_Drawable = R.drawable.bisor_gui_eq_content_button_reverse_normal;
                 break;
             case R.id.fragment2_button7:
-                Release_Drawable = R.drawable.bisor_gui_eq_content_button_reflex_normal;
+                Release_Drawable = R.drawable.bisor_gui_eq_content_button_legdw_normal;
                 break;
             case R.id.fragment2_button8:
                 Release_Drawable = R.drawable.bisor_gui_eq_content_button_slidehead_normal;
@@ -528,7 +522,7 @@ public class Fragment2 extends Fragment {
             {
                 MyString = MyString + "_Reverse";
                 if(Reverse_Flag == 0){
-                    ((MainActivity)this.getActivity()).Reverse_BtnLock();
+                    //((MainActivity)this.getActivity()).Reverse_BtnLock();
                     if(Button_Lock == 0){
                         Change_Photo_Flag = Function_unlock;
                     }
@@ -539,7 +533,7 @@ public class Fragment2 extends Fragment {
             {
                 MyString = MyString + "_Normal";
                 if(Reverse_Flag == 1){
-                    ((MainActivity)this.getActivity()).Reverse_BtnUnLock();
+                    //((MainActivity)this.getActivity()).Reverse_BtnUnLock();
                     if(Button_Lock == 0){
                         Change_Photo_Flag = Function_unlock;
                     }
@@ -591,11 +585,11 @@ public class Fragment2 extends Fragment {
             else if(Change_Photo_Flag == Function_lock) {
                 F2_Button1.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flunlockon_disable);
                 F2_Button2.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_normal_disable);
-                F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_disable);
+                F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legup_disable);
                 F2_Button4.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidefoot_disable);
                 F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockon_disable);
                 F2_Button6.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reverse_disable);
-                F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_disable);
+                F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legdw_disable);
                 F2_Button8.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidehead_disable);
                 F2_Button9.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_tiltright_disable);
                 F2_Button10.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_revtrend_disable);
@@ -624,18 +618,19 @@ public class Fragment2 extends Fragment {
                     F2_Button5.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_fllockoff_normal);
                 }
 
-                if(Reverse_Flag == 1){
-                    F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_disable);
-                    F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_disable);
-                    F2_Button11.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backup_disable);
-                    F2_Button15.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backdw_disable);
-                }
-                else{
+//                if(Reverse_Flag == 1){
+//                    F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legup_disable);
+//                    F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legdw_disable);
+//                    F2_Button11.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backup_disable);
+//                    F2_Button15.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backdw_disable);
+//                }
+//                else
+                {
 
-                    F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_reflex_normal);
+                    F2_Button7.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legdw_normal);
                     F2_Button11.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backup_normal);
                     F2_Button15.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_backdw_normal);
-                    F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_flex_normal);
+                    F2_Button3.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_legup_normal);
                 }
                 F2_Button2.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_normal_normal);
                 F2_Button4.setBackgroundResource(R.drawable.bisor_gui_eq_content_button_slidefoot_normal);

@@ -1,4 +1,4 @@
-package com.benqmedicaltech.fragment_test;
+package com.benqmedicaltech.Q300_Table_Controller;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
