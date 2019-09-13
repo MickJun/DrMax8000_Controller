@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.microchip.bluetoothsmartdiscover.DeviceCharacteristicActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView"
+            android:layout_above="@+id/characteristic_name"
+            android:layout_alignTop="@+id/characteristic_name"
+            android:layout_alignEnd="@+id/characteristic_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Characteristic Name"
+            android:id="@+id/characteristic_name"
+            android:linksClickable="false"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/characteristic_name"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="UUID:"
+            android:id="@+id/characteristic_uuid1"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/characteristic_uuid1"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Properties:"
+            android:id="@+id/characteristic_properties"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/characteristic_properties"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Notify/Indicate: -"
+            android:id="@+id/characteristic_notify"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView4" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView5"
+            android:layout_below="@+id/characteristic_notify"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Read"
+            android:id="@+id/characteristic_read_label"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView6"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView6"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/textView5"
+            android:layout_alignParentStart="true" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Notify/Indicate"
+            android:id="@+id/charcteristic_notify_switch"
+            android:checked="false"
+            android:layout_below="@+id/textView6"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView7"
+            android:layout_below="@+id/charcteristic_notify_switch"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/characteristic_read"
+            android:singleLine="false"
+            android:layout_below="@+id/textView7"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView7"
+            android:hint="Read or Notified Data..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView8"
+            android:layout_below="@+id/characteristic_read"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Read"
+            android:id="@+id/characteristic_read_button"
+            android:layout_below="@+id/textView8"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView9"
+            android:layout_below="@+id/characteristic_read_button"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Write"
+            android:id="@+id/characteristic_write_label"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/textView9"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold|italic"
+            android:layout_alignEnd="@+id/textView9" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView10"
+            android:layout_below="@+id/characteristic_write_label"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/characteristic_write"
+            android:layout_below="@+id/textView10"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView10"
+            android:hint="Enter Write Data..."
+            android:focusableInTouchMode="false"
+            android:focusable="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView11"
+            android:layout_below="@+id/characteristic_write"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Write"
+            android:id="@+id/characteristic_write_button"
+            android:layout_below="@+id/textView11"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView11"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:background="?android:attr/listDivider"
+            android:id="@+id/textView12"
+            android:layout_below="@+id/characteristic_write_button"
+            android:layout_alignParentStart="true"
+            android:layout_toEndOf="@id/textView12" />
+
+
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/keyboard_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/textView12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/characteristic_uuid"
+            android:layout_alignTop="@+id/characteristic_uuid1"
+            android:layout_alignEnd="@+id/textView2"
+            android:layout_toEndOf="@+id/characteristic_uuid1"
+            android:layout_alignBottom="@+id/characteristic_uuid1"
+            android:gravity="center_vertical"
+            android:textSize="12dp" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -439,7 +439,7 @@ public class BLEService extends Service {
      * @param enabled If true, enable notification.  False otherwise.
      */
     public void setCharacteristicIndication(BluetoothGattCharacteristic characteristic,
-                                              boolean enabled) {
+                                            boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             //Log.w(TAG, "BluetoothAdapter not initialized");
             return;
