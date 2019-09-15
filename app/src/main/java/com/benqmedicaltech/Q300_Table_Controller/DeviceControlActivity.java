@@ -252,8 +252,8 @@ public class DeviceControlActivity extends Activity {
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
 
-        getActionBar().setTitle(R.string.title_control);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setTitle(R.string.title_control);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BLEService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 

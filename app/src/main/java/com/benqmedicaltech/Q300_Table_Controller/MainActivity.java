@@ -1,42 +1,55 @@
 package com.benqmedicaltech.Q300_Table_Controller;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothSocket;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.inputmethodservice.KeyboardView;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Switch;
@@ -53,9 +66,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{    //
-
-
-
 
     //Bluetooth
     private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -74,8 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private ListView Fragment1_ListView ;
 //    private TextView Fragment1_TextView ;
 
+    private DeviceScanActivity mDeviceScanActivity = new DeviceScanActivity();
+
     // Get the default adapter
     private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 
     private final BluetoothProfile.ServiceListener mProfileListener = new BluetoothProfile.ServiceListener() {
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
@@ -130,110 +143,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
-
-    private void BT_Scan(){
-
-        //Bluetooth
-
-        Fragment1_TextView.setText("藍芽沒開拉，幹！");
-        if (mBluetoothAdapter == null) {
-            Fragment1_TextView.setText("您的裝置沒有支援藍芽");
-        }
-
-        int REQUEST_ENABLE_BT = 1; // need greater then 0
-
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            Fragment1_TextView.setText("藍芽沒開拉，幹！");
-        }
-
-        if (mBluetoothAdapter.isDiscovering()) {
-            mBluetoothAdapter.cancelDiscovery();
-            Fragment1_TextView.setText( "CancelDiscovery"); //(Fragment_TextView.getText() + "\n" + "cancelDiscovery")
-        }
-
-        //Querying paired devices
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        mBluetoothAdapter.startDiscovery();
-
-        BT_Devicelist.clear();
-        BT_Addrlist.clear();
-        if (pairedDevices.size() > 0) {
-            // There are paired devices. Get the name and address of each paired device.
-            for (BluetoothDevice device : pairedDevices) {
-                String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress(); // MAC address
-                BT_Devicelist.add(deviceName); //this adds an element to the list.
-                BT_Addrlist.add(deviceHardwareAddress);
-            }
-            //android.R.layout.simple_list_item_1 為內建樣式，還有其他樣式可自行研究
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
-            Fragment1_ListView.setAdapter(adapter);
-            Fragment1_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
-            //Fragment1_TextView.setText("pair bluetooth is over");
-            Fragment1_TextView.setText(BT_Devicelist.get(0));
-            F1_Button2.setEnabled(true);
-        }
-
-        mBluetoothAdapter.cancelDiscovery();
-
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
-
-        // Establish connection to the proxy.
-        mBluetoothAdapter.getProfileProxy(MainActivity.this, mProfileListener, BluetoothProfile.HEADSET);
-    }
-
-    private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
-                switch (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
-                    case BluetoothAdapter.STATE_OFF:
-                        //case BluetoothAdapter.STATE_TURNING_OFF:
-                        finish();
-                        break;
-
-                    case BluetoothAdapter.STATE_ON:
-                        //case BluetoothAdapter.STATE_TURNING_ON:
-                        break;
-                }
-            }
-        }
-    };
-    private void BT_Connecnting(){
-
-        if(mBluetoothAdapter.isDiscovering())mBluetoothAdapter.cancelDiscovery();
-
-        BluetoothDevice connDevices = mBluetoothAdapter.getRemoteDevice(BT_Addrlist.get(BT_Select_Point));
-
-
-        try {
-            BTSocket = connDevices.createRfcommSocketToServiceRecord(MY_UUID);
-            BTSocket.connect();
-
-            readThread mreadThread = new readThread();
-            mreadThread.start();
-            if(BTSocket.isConnected()){
-                F1_Button2.setText("DISCONNECT");
-//                foot2.setEnabled(true);
-//                foot3.setEnabled(true);
-                menu_function.setEnabled(true);
-                menu_test.setEnabled(true);
-                initFragment2();
-                SW_Output = 0;
-                if(mDelayTime == 0) {
-                    mDelayTime = 90;
-                    handler.postDelayed(runnable, mDelayTime);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
     //三个fragment
@@ -338,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             unregisterReceiver(mReceiver);
         }
+
         super.onDestroy();
     }
     @Override
@@ -352,33 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 什麼都不用寫
         }
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.iqor_logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //mDelayTime = 1000;
-        //handler.postDelayed(runnable,1000); //90ms timer
-
-        //透過下方程式碼，取得Activity中執行的個體。
-        //manager = getSupportFragmentManager();
-
-//        foot1.setOnClickListener(b);
-//        foot2.setOnClickListener(b);
-//        foot3.setOnClickListener(b);
-//        foot1.setText("LINK");
-//        foot2.setText("Function");
-//        foot3.setText("Data");
-        //第一次初始化首页默认显示第一个fragment
-        //initFragment3();
-        //initFragment2();
-        initFragment1();
-
-    }
 
 //    private TintImageView overflow;
 
@@ -1572,7 +1456,139 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         F3_Button4.setText("Level");
 
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void BT_Scan(){
+
+
+
+
+
+        //List<ScanResult> mScanResults = mDeviceScanActivity.GOGOScan();
+
+
+        /////////////////////////////////////////////////////////////////////
+        //Bluetooth
+
+//        Fragment1_TextView.setText("藍芽沒開拉，幹！");
+//        if (mBluetoothAdapter == null) {
+//            Fragment1_TextView.setText("您的裝置沒有支援藍芽");
+//        }
+//
+//        int REQUEST_ENABLE_BT = 1; // need greater then 0
+//
+//        if (!mBluetoothAdapter.isEnabled()) {
+//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//            Fragment1_TextView.setText("藍芽沒開拉，幹！");
+//        }
+//
+//        if (mBluetoothAdapter.isDiscovering()) {
+//            mBluetoothAdapter.cancelDiscovery();
+//            Fragment1_TextView.setText( "CancelDiscovery"); //(Fragment_TextView.getText() + "\n" + "cancelDiscovery")
+//        }
+
+        //Querying paired devices
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+//        mBluetoothAdapter.startDiscovery();
+
+        BT_Devicelist.clear();
+        BT_Addrlist.clear();
+        if (pairedDevices.size() > 0) {
+            // There are paired devices. Get the name and address of each paired device.
+            for (BluetoothDevice device : pairedDevices) {
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+                BT_Devicelist.add(deviceName); //this adds an element to the list.
+                BT_Addrlist.add(deviceHardwareAddress);
+            }
+            //android.R.layout.simple_list_item_1 為內建樣式，還有其他樣式可自行研究
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, BT_Devicelist);
+            Fragment1_ListView.setAdapter(adapter);
+            Fragment1_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
+            //Fragment1_TextView.setText("pair bluetooth is over");
+            Fragment1_TextView.setText(BT_Devicelist.get(0));
+            F1_Button2.setEnabled(true);
+        }
+
+//        mBluetoothAdapter.cancelDiscovery();
+
+        // Register for broadcasts when a device is discovered.
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mReceiver, filter);
+
+        // Establish connection to the proxy.
+        mBluetoothAdapter.getProfileProxy(MainActivity.this, mProfileListener, BluetoothProfile.HEADSET);
+    }
+
+    private void BT_Connecnting(){
+
+        if(mBluetoothAdapter.isDiscovering())mBluetoothAdapter.cancelDiscovery();
+
+        BluetoothDevice connDevices = mBluetoothAdapter.getRemoteDevice(BT_Addrlist.get(BT_Select_Point));
+
+
+        try {
+            BTSocket = connDevices.createRfcommSocketToServiceRecord(MY_UUID);
+            BTSocket.connect();
+
+            readThread mreadThread = new readThread();
+            mreadThread.start();
+            if(BTSocket.isConnected()){
+                F1_Button2.setText("DISCONNECT");
+//                foot2.setEnabled(true);
+//                foot3.setEnabled(true);
+                menu_function.setEnabled(true);
+                menu_test.setEnabled(true);
+                initFragment2();
+                SW_Output = 0;
+                if(mDelayTime == 0) {
+                    mDelayTime = 90;
+                    handler.postDelayed(runnable, mDelayTime);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.iqor_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        //mDeviceScanActivity = ((MickTest) getApplication()).getDeviceScanActivity();
+        //mDelayTime = 1000;
+        //handler.postDelayed(runnable,1000); //90ms timer
+
+        //透過下方程式碼，取得Activity中執行的個體。
+        //manager = getSupportFragmentManager();
+
+//        foot1.setOnClickListener(b);
+//        foot2.setOnClickListener(b);
+//        foot3.setOnClickListener(b);
+//        foot1.setText("LINK");
+//        foot2.setText("Function");
+//        foot3.setText("Data");
+        //第一次初始化首页默认显示第一个fragment
+        //initFragment3();
+        //initFragment2();
+        initFragment1();
+
+//        Intent intent = new Intent();
+//        intent.setClass(MainActivity.this, DeviceControlActivity.class);
+//        startActivity(intent);
+
+    }
 
 
 

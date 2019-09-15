@@ -52,7 +52,7 @@ public class BLEService extends Service {
     private int mConnectionState = STATE_DISCONNECTED;
     private Handler mHandler = null;
     public boolean serviceStatus = false;
-    private BluetoothDevice mDevice = null;
+    public BluetoothDevice mDevice = null;
     private boolean mBond = false;
 
     private static final int STATE_DISCONNECTED = 0;

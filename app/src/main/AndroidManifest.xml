@@ -2,23 +2,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.benqmedicaltech.Q300_Table_Controller">
 
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".MickTest"
         android:allowBackup="true"
         android:icon="@mipmap/iqor"
         android:label="Dr.Max 8000 Table APP"
         android:roundIcon="@mipmap/iqor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".DeviceCharacteristicActivity" />
+        <activity android:name=".DeviceControlActivity" />
+        <activity android:name=".DeviceSplashActivity" />
+        <activity android:name=".DeviceScanActivity" />
+        <activity
+            android:name=".Main2Activity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/IQOR_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -26,9 +42,3 @@
     </application>
 
 </manifest>
-    <!--android:label="@string/app_name"-->
-    <!--android:configChanges="orientation|keyboardHidden"-->
-    <!--android:screenOrientation="portrait"-->
-    <!--android:screenOrientation="landscape"-->
-    <!--android:icon="@drawable/bisor_gui_eq_sub_icon_table_normal"-->
-    <!--android:roundIcon="@drawable/bisor_gui_eq_sub_icon_table_normal"-->

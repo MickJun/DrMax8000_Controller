@@ -263,17 +263,17 @@ public class DeviceCharacteristicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_characteristic);
 
-        getActionBar().setTitle(R.string.title_characteristic);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setTitle(R.string.title_characteristic);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 
         Intent gattServiceIntent = new Intent(this, BLEService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-        final Intent intent = getIntent();
-        mCharacteristicIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_CHARACTERISTIC_INDEX)); //intent.getIntExtra(EXTRAS_CHARACTERISTIC_INDEX, 0);
-        mServiceIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_SERVICE_INDEX)); // + 2;
+//        final Intent intent = getIntent();
+//        mCharacteristicIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_CHARACTERISTIC_INDEX)); //intent.getIntExtra(EXTRAS_CHARACTERISTIC_INDEX, 0);
+//        mServiceIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_SERVICE_INDEX)); // + 2;
 
 
         Switch notifySwitch = (Switch) findViewById(R.id.charcteristic_notify_switch);
@@ -417,11 +417,11 @@ public class DeviceCharacteristicActivity extends Activity {
                 } else if (primaryCode == CodeAllRight) {
                     edittext.setSelection(edittext.length());
                 } else if (primaryCode == CodePrev) {
-                    View focusNew = edittext.focusSearch(View.FOCUS_BACKWARD);
-                    if (focusNew != null) focusNew.requestFocus();
+//                    View focusNew = edittext.focusSearch(View.FOCUS_BACKWARD);
+//                    if (focusNew != null) focusNew.requestFocus();
                 } else if (primaryCode == CodeNext) {
-                    View focusNew = edittext.focusSearch(View.FOCUS_FORWARD);
-                    if (focusNew != null) focusNew.requestFocus();
+//                    View focusNew = edittext.focusSearch(View.FOCUS_FORWARD);
+//                    if (focusNew != null) focusNew.requestFocus();
                 } else {// Insert character
                     editable.insert(start, Character.toString((char) primaryCode));
                 }
