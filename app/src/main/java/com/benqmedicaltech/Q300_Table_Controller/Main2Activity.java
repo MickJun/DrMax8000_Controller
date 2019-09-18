@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,206 +50,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
+
     private final static String TAG = Main2Activity.class.getSimpleName();
 
-    private BluetoothManager mBluetoothManager;
-    private BluetoothAdapter mBluetoothAdapter;
-    private String mBluetoothDeviceAddress;
-    private BluetoothGatt mBluetoothGatt;
-    private int mConnectionState = STATE_DISCONNECTED;
-    private Handler mHandler = null;
-    public boolean serviceStatus = false;
-    public BluetoothDevice mDevice = null;
-    private boolean mBond = false;
-
-    private static final int STATE_DISCONNECTED = 0;
-    private static final int STATE_CONNECTING = 1;
-    private static final int STATE_CONNECTED = 2;
-
-    public final static String ACTION_GATT_CONNECTED =
-            "com.microchip.bluetoothsmartdiscover.ACTION_GATT_CONNECTED";
-    public final static String ACTION_GATT_DISCONNECTED =
-            "com.microchip.bluetoothsmartdiscover.ACTION_GATT_DISCONNECTED";
-    public final static String ACTION_GATT_CONNECTING =
-            "com.microchip.bluetoothsmartdiscover.ACTION_GATT_CONNECTING";
-    public final static String ACTION_GATT_SERVICES_DISCOVERED =
-            "com.microchip.bluetoothsmartdiscover.ACTION_GATT_SERVICES_DISCOVERED";
-    public final static String ACTION_DATA_AVAILABLE =
-            "com.microchip.bluetoothsmartdiscover.ACTION_DATA_AVAILABLE";
-    public final static String ACTION_GATT_WRITE =
-            "com.microchip.bluetoothsmartdiscover.ACTION_GATT_WRITE";
-    public final static String EXTRA_DATA =
-            "com.microchip.bluetoothsmartdiscover.EXTRA_DATA";
-    public final static String ACTION_GATT_BONDED =
-            "com.microchip.bluetoothsmartmesh.ACTION_GATT_BONDED";
-
-    // Implements callback methods for GATT events that the app cares about.  For example,
-    // connection change and services discovered.
-    private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
-        @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            String intentAction;
-
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-
-                if (status == BluetoothGatt.GATT_SUCCESS) {
-                    intentAction = ACTION_GATT_CONNECTED;
-                    mConnectionState = STATE_CONNECTED;
-                    broadcastUpdate(intentAction);
-                    Log.i(TAG, "Connected to GATT server.");
-                    // Attempts to discover services after successful connection.
-                    Log.i(TAG, "Attempting to start service discovery:" +
-                            mBluetoothGatt.discoverServices());
-
-                    if (mDevice != null) {
-                        if (mDevice.getBondState() == BluetoothDevice.BOND_NONE && mBond == true) {
-                            mDevice.createBond();
-                        } else {
-                            mBluetoothGatt.discoverServices();
-                        }
-
-                    }
-
-                } else {
-                    Log.i(TAG, "onConnectionStateChange: " + status + " : " + newState);
-                    mHandler = new Handler(Looper.getMainLooper());
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            connect(mBluetoothDeviceAddress, mBond);
-                        }
-                    }, 1000);
-                }
-
-            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                intentAction = ACTION_GATT_DISCONNECTED;
-                mConnectionState = STATE_DISCONNECTED;
-                Log.i(TAG, "Disconnected from GATT server.");
-                broadcastUpdate(intentAction);
-                //close(); //JAY
-            } else if (newState == BluetoothProfile.STATE_CONNECTING) {
-                intentAction = ACTION_GATT_CONNECTING;
-                mConnectionState = STATE_CONNECTING;
-                Log.i(TAG, "Connecting to GATT server.");
-                broadcastUpdate(intentAction);
-            }
-        }
-
-        @Override
-        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
-            } else {
-                Log.w(TAG, "onServicesDiscovered received: " + status);
-            }
-        }
-
-        @Override
-        public void onCharacteristicRead(BluetoothGatt gatt,
-                                         BluetoothGattCharacteristic characteristic,
-                                         int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-            }
-        }
-
-        @Override
-        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0) {
-                    broadcastUpdate(ACTION_GATT_WRITE, characteristic);
-                }
-            }
-        }
-
-        @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt,
-                                            BluetoothGattCharacteristic characteristic) {
-            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-        }
-    };
-
-    private void broadcastUpdate(final String action) {
-        final Intent intent = new Intent(action);
-        sendBroadcast(intent);
-    }
-
-    private void broadcastUpdate(final String action,
-                                 final BluetoothGattCharacteristic characteristic) {
-        final Intent intent = new Intent(action);
-
-        {
-            // For all other profiles, writes the data formatted in HEX.
-            final byte[] data = characteristic.getValue();
-            if (data != null && data.length > 0) {
-                final StringBuilder stringBuilder = new StringBuilder(data.length);
-                for(byte byteChar : data)
-                    stringBuilder.append(String.format("%02X ", byteChar));
-                Log.d(TAG, String.format("Received data:)" + new String(data) + "\n" + stringBuilder.toString()));
-
-                if (BLEGattAttributes.lookup(characteristic.getService().getUuid().toString(), "Unknown Service").matches("Device Information"))
-                    intent.putExtra(EXTRA_DATA, stringBuilder.toString() + "\n" + new String(data));
-                else if (BLEGattAttributes.lookup(characteristic.getService().getUuid().toString(), "Unknown Service").matches("Battery"))
-                    intent.putExtra(EXTRA_DATA, stringBuilder.toString() + "\n" + Integer.valueOf(stringBuilder.toString().trim(), 16) +  "%");
-                else
-                    intent.putExtra(EXTRA_DATA, stringBuilder.toString());
-            }
-        }
-        sendBroadcast(intent);
-    }
-    /**
-     * Connects to the GATT server hosted on the Bluetooth LE device.
-     *
-     * @param address The device address of the destination device.
-     *
-     * @return Return true if the connection is initiated successfully. The connection result
-     *         is reported asynchronously through the
-     *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     *         callback.
-     */
-    public boolean connect(final String address, boolean bond) {
-        if (mBluetoothAdapter == null || address == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
-            return false;
-        }
-
-        mBond = bond;
-        mGattCallback.onConnectionStateChange(mBluetoothGatt, BluetoothGatt.GATT_SUCCESS, BluetoothProfile.STATE_CONNECTING);   //JAY
-
-        // Previously connected device.  Try to reconnect.
-        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
-                && mBluetoothGatt != null) {
-            Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
-            if (mBluetoothGatt.connect()) {
-                mConnectionState = STATE_CONNECTING;
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        mDevice = mBluetoothAdapter.getRemoteDevice(address);
-        if (mDevice == null) {
-            Log.w(TAG, "Device not found.  Unable to connect.");
-            return false;
-        }
-        // We want to directly connect to the device, so we are setting the autoConnect
-        // parameter to false.
-        mBluetoothGatt = mDevice.connectGatt(this, false, mGattCallback);
-        Log.d(TAG, "Trying to create a new connection.");
-        mBluetoothDeviceAddress = address;
-        mConnectionState = STATE_CONNECTING;
-        return true;
-    }
-
-
     public LeDeviceListAdapter mLeDeviceListAdapter;
-    //public BluetoothAdapter mBluetoothAdapter;
+    public BluetoothAdapter mBluetoothAdapter;
+    private BluetoothManager mBluetoothManager;
     private BluetoothLeScanner mBLEScanner;
     private ScanSettings settings;
     private List<ScanFilter> filters;
@@ -261,7 +74,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private List<ScanResult> mScanResults;
     private List<byte[]> mScanResultsDep;
 
-    //private Handler mHandler;
+    private Handler mHandler;
     private Runnable mRunnable;
     private ScanCallback mScanCallback;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
@@ -287,11 +100,28 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private int BT_Select_Point = 0;
 
     //connect
-    private BLEService mBleService ;
+    private BLEService mBleService  = new BLEService();
 
 
     private String mDeviceName;
     private String mDeviceAddress;
+
+    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
+    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
+    public static final String EXTRAS_SCAN_RESULT = "SCAN_RESULT";
+
+    public static String UUID_GAP = "00001800-0000-1000-8000-00805f9b34fb";
+    public static String UUID_GATT = "00001801-0000-1000-8000-00805f9b34fb";
+
+
+    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
+            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+    private boolean mConnected = false;
+    private boolean mConnecting = false;
+    private BluetoothGattCharacteristic mNotifyCharacteristic;
+    private ScanResult mScanResult;
+    private byte[] mScanResultDep;
+    private int skipIndex = 0;
 
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
@@ -339,6 +169,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+
         M2_TextView = this.findViewById(R.id.Main2_text);
         M2_TextView.setTextSize(25);
         M2_TextView.setText("Press SCAN Button");
@@ -375,9 +207,9 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
-        final BluetoothManager bluetoothManager =
+        mBluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = bluetoothManager.getAdapter();
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
 
         // Checks if Bluetooth is supported on the device.
         if (mBluetoothAdapter == null) {
@@ -401,22 +233,22 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         else
             mScanResults = new ArrayList<ScanResult>();
 
+        setLECallbacks();
         //setListAdapter(mLeDeviceListAdapter);
 
 
-        setLECallbacks();
 
-        mLeDeviceListAdapter = new LeDeviceListAdapter();
-        mRSSIs = new ArrayList<Integer>();
-        mAdvTimes = new ArrayList<Long>();
-        mpAdvTimes = new ArrayList<Long>();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            mScanResultsDep = new ArrayList<byte[]>();
-        else
-            mScanResults = new ArrayList<ScanResult>();
-
-
-        setLECallbacks();
+//        mLeDeviceListAdapter = new LeDeviceListAdapter();
+//        mRSSIs = new ArrayList<Integer>();
+//        mAdvTimes = new ArrayList<Long>();
+//        mpAdvTimes = new ArrayList<Long>();
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+//            mScanResultsDep = new ArrayList<byte[]>();
+//        else
+//            mScanResults = new ArrayList<ScanResult>();
+//
+//
+//        setLECallbacks();
 
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
@@ -438,7 +270,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 filters.add(filter);
             }
 
-            scanLeDevice(true);
+//            scanLeDevice(true);
         }
 
 
@@ -659,6 +491,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mGattUpdateReceiver != null) {
+            unregisterReceiver(mGattUpdateReceiver);
+        }
+        if (bluetoothReceiver != null) {
+            unregisterReceiver(bluetoothReceiver);
+        }
+
+        if (mBleService.serviceStatus) {
+            unbindService(mServiceConnection);
+        }
+        mBleService.close();
+        mBleService = null;
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -673,50 +523,126 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.Main2_button2:
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //final BluetoothDevice device = mLeDeviceListAdapter.getDevice(BT_Count.get(BT_Select_Point));
-                mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                //mBluetoothAdapter.stopLeScan(mLeScanCallback);
+
+                registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+
                 final BluetoothDevice device = BT_LeDevices.get(BT_Count.get(BT_Select_Point));
                 if (device == null) return;
 
                 mDeviceAddress = device.getAddress();
                 mDeviceName = device.getName();
-                //connect(device.getAddress(),true);
-                mBond = true;
-                mHandler = new Handler(Looper.getMainLooper());
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        connect(device.getAddress(), mBond);
-                    }
-                }, 1000);
 
-                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 //                mBleService.mDevice = device;
 //                mBleService.connect(device.getAddress(),true);
 
+//                final Intent intent = getIntent();
+//                mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+//                mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
-
-//                final Intent intent = new Intent(this, DeviceControlActivity.class);
-//                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-//                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
-//
 //                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-//                    intent.putExtra(DeviceControlActivity.EXTRAS_SCAN_RESULT, mScanResultsDep.get(BT_Select_Point));
+//                    mScanResultDep = intent.getByteArrayExtra(EXTRAS_SCAN_RESULT);
 //                else
-//                    intent.putExtra(DeviceControlActivity.EXTRAS_SCAN_RESULT, mScanResults.get(BT_Select_Point));
-//                if (mScanning) {
-//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
-//                    } else {
-//                        mBLEScanner.stopScan(mScanCallback);
-//                    }
-//                    mScanning = false;
-//                }
-//                startActivity(intent);
-                break;
-            case R.id.Main2_button3:
+//                    mScanResult = intent.getParcelableExtra(EXTRAS_SCAN_RESULT);
+                mScanResult = mScanResults.get(BT_Count.get(BT_Select_Point));
 
+                registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+
+                // Sets up UI references.
+//                ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
+//                if (mDeviceName != null && mDeviceName.length() > 0)
+//                    ((TextView) findViewById(R.id.device_name)).setText(mDeviceName);
+//                else
+//                    ((TextView) findViewById(R.id.device_name)).setText(R.string.unknown_device);
+
+//                mGattServicesList = (ExpandableListView) findViewById(R.id.gatt_services_list);
+//                mGattServicesListHeaderView = (LayoutInflater.from(mGattServicesList.getContext())).inflate(R.layout.list_header, null);
+//                mGattServicesList.setOnChildClickListener(servicesListClickListner);
+
+//                getActionBar().setTitle(R.string.title_control);
+//                getActionBar().setDisplayHomeAsUpEnabled(true);
+                Intent gattServiceIntent = new Intent(this, BLEService.class);
+                bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+                String advertisementData = "";
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    advertisementData = "(Detailed view not supported on this Android version!)\n";
+                    for (int i=0; i < mScanResultDep.length; i++)
+                        advertisementData += (int) mScanResultDep[i] + " ";
+
+                } else {
+
+                    if ((mScanResult.getScanRecord().getDeviceName() != null) && (!mScanResult.getScanRecord().getDeviceName().isEmpty()))
+                        advertisementData = advertisementData + "Device Name: " + mScanResult.getScanRecord().getDeviceName() + "\n";
+
+                    if ((mScanResult.getScanRecord().getManufacturerSpecificData() != null) && (mScanResult.getScanRecord().getManufacturerSpecificData().size() != 0)) {
+                        advertisementData = advertisementData + "Manufacturer Data: ";
+
+                        for (int i = 0; i < mScanResult.getScanRecord().getManufacturerSpecificData().size(); i++) {
+                            int key = mScanResult.getScanRecord().getManufacturerSpecificData().keyAt(i);
+                            byte[] data = (mScanResult.getScanRecord().getManufacturerSpecificData().get(key));
+                            for (int j = 0; j < data.length; j++) {
+                                advertisementData += (String.format("%02x ", ((int) data[j]) & 0xff));
+                            }
+
+                        }
+                        advertisementData = advertisementData + "\n";
+                    }
+
+                    if ((mScanResult.getScanRecord().getServiceData() != null) && (mScanResult.getScanRecord().getServiceData().size() != 0)) {
+                        advertisementData = advertisementData + "Service Data: ";
+                        Map<ParcelUuid, byte[]> serviceDatas = mScanResult.getScanRecord().getServiceData();
+
+                        for (Map.Entry<ParcelUuid, byte[]> serviceData : serviceDatas.entrySet()) {
+                            advertisementData = advertisementData + serviceData.getKey() + "-";
+                            byte[] data = serviceData.getValue();
+                            for (int j = 0; j < data.length; j++) {
+                                advertisementData += (String.format("%02x ", ((int) data[j]) & 0xff));
+                            }
+                        }
+                        advertisementData = advertisementData + "\n";
+                        //advertisementData = advertisementData + "Service Data: " + mScanResult.getScanRecord().getServiceData().toString().replace('{', ' ').replace('}', ' ') + "\n";
+                    }
+
+                    if ((mScanResult.getScanRecord().getServiceUuids() != null) && (mScanResult.getScanRecord().getServiceUuids().size() != 0))
+                        advertisementData = advertisementData + "Service UUIDs: " + mScanResult.getScanRecord().getServiceUuids().toString().replace('[', ' ').replace(']', ' ') + "\n";
+
+                    if (mScanResult.getScanRecord().getTxPowerLevel() != Integer.MIN_VALUE)
+                        advertisementData = advertisementData + "TX Power: " + mScanResult.getScanRecord().getTxPowerLevel() + "dBm\n";
+                }
+                if (advertisementData.isEmpty()) {
+                    advertisementData = "-";
+                }
+                M2_TextView.setText(advertisementData);
+
+                registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+
+
+
+                if(mBleService != null){
+                    mBleService = mBleService.getBLEService(mBluetoothAdapter,mBluetoothManager);
+                    //mBleService.connect(mDeviceAddress, false);
+//                    mBleService.connect(mDeviceAddress, true);
+                    mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBleService.connect(mDeviceAddress, false);
+                        }
+                    }, 1000);
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                break;
+            case R.id.Main2_button3: //list
                 //Querying paired devices
+
                 BT_Devicelist.clear();
                 BT_Addrlist.clear();
                 int x = 0;
@@ -737,6 +663,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 M2_ListView.setOnItemClickListener(onClickListView);       //指定事件 Method
                 //Fragment1_TextView.setText("pair bluetooth is over");
                 M2_TextView.setText(BT_Devicelist.get(0));
+
+
+
+                scanLeDevice(false);
+
                 break;
         }
     }
@@ -836,126 +767,25 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             mBleService = ((BLEService.LocalBinder) service).getService();
             if (!mBleService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
+                //Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
 
-//            String uuid = mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getUuid().toString();
-//            String charString = BLEGattAttributes.lookup(uuid, getResources().getString(R.string.unknown_characteristic));
-//
-//            String charProperties = "";
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-//                charProperties = charProperties.concat("Read ");
-//                ((Button) findViewById(R.id.characteristic_read_button)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_read_label)).setEnabled(true);
-//            } else {
-//                ((Button) findViewById(R.id.characteristic_read_button)).setEnabled(false);
-//                ((TextView) findViewById(R.id.characteristic_read_label)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0) {
-//                charProperties = charProperties.concat("Write ");
-//                ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
-//                ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
-//            } else {
-//                ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(false);
-//                ((EditText) findViewById(R.id.characteristic_write)).setEnabled(false);
-//                ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
-//                charProperties = charProperties.concat("WriteNoResponse ");
-//                ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
-//                ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
-//            } else {
-//                //((Button) findViewById(R.id.characteristic_write_button)).setEnabled(false);
-//                //((EditText) findViewById(R.id.characteristic_write)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE) > 0) {
-//                charProperties = charProperties.concat("SignedWrite ");
-//                ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
-//                ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
-//            } else {
-//                //((Button) findViewById(R.id.characteristic_write_button)).setEnabled(false);
-//                //((EditText) findViewById(R.id.characteristic_write)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-//                charProperties = charProperties.concat("Notify ");
-//                ((TextView) findViewById(R.id.characteristic_notify)).setText("Notify/Indicate: " + "No");
-//                ((TextView) findViewById(R.id.characteristic_notify)).setEnabled(true);
-//                ((Switch) findViewById(R.id.charcteristic_notify_switch)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_read_label)).setEnabled(true);
-//            } else {
-//                ((Switch) findViewById(R.id.charcteristic_notify_switch)).setEnabled(false);
-//                ((TextView) findViewById(R.id.characteristic_notify)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_INDICATE) > 0) {
-//                charProperties = charProperties.concat("Indicate ");
-//                ((TextView) findViewById(R.id.characteristic_notify)).setText("Notify/Indicate: " + "No");
-//                ((TextView) findViewById(R.id.characteristic_notify)).setEnabled(true);
-//                ((Switch) findViewById(R.id.charcteristic_notify_switch)).setEnabled(true);
-//                ((TextView) findViewById(R.id.characteristic_read_label)).setEnabled(true);
-//            } else {
-//                //((Switch) findViewById(R.id.charcteristic_notify_switch)).setEnabled(false);
-//            }
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0)
-//                charProperties = charProperties.concat("Broadcast ");
-//
-//            if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_EXTENDED_PROPS) > 0)
-//                charProperties = charProperties.concat("Extended ");
-//
-//
-//            if (charString.matches(getResources().getString(R.string.unknown_characteristic))) {
-//                ((TextView) findViewById(R.id.characteristic_uuid)).setText(/*"UUID:              "*/ " " + uuid);
-//                ((TextView) findViewById(R.id.characteristic_name)).setText(getResources().getString(R.string.unknown_characteristic) + " Characteristic");
-//            }
-//            else {
-//                if (charString.contains("Microchip"))
-//                    ((TextView) findViewById(R.id.characteristic_uuid)).setText(/*"UUID:              "*/ " " + uuid);
-//                else
-//                    ((TextView) findViewById(R.id.characteristic_uuid)).setText(/*"UUID:              "*/ " " + uuid.substring(4, 8));
-//                ((TextView) findViewById(R.id.characteristic_name)).setText(charString);
-//            }
-//
-//            ((TextView) findViewById(R.id.characteristic_properties)).setText("Properties: " + charProperties);
-//
-//            /*
-//            String charPermissions = "";
-//            int charPermission = mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getPermissions();
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_READ) > 0) {
-//                charPermissions += "Read ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_READ_ENCRYPTED) > 0) {
-//                charPermissions += "EncryptedRead ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_READ_ENCRYPTED_MITM) > 0) {
-//                charPermissions += "EncryptedMITMRead ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_WRITE) > 0) {
-//                charPermissions += "Write ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_WRITE_ENCRYPTED) > 0) {
-//                charPermissions += "EncryptedWrite ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_WRITE_ENCRYPTED_MITM) > 0) {
-//                charPermissions += "EncryptedMITMWrite ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_WRITE_SIGNED) > 0) {
-//                charPermissions += "SignedWrite ";
-//            }
-//            if ((charPermission & BluetoothGattCharacteristic.PERMISSION_WRITE_SIGNED_MITM) > 0) {
-//                charPermissions += "EncryptedMITMSignedWrite ";
-//            }
-//            ((TextView) findViewById(R.id.characteristic_permissions)).setText("Permissions: " + charPermissions);
-//            */
+            updateConnectionState(R.string.disconnected);
+            invalidateOptionsMenu();
 
+            /*
+            mHandler = new Handler(Looper.getMainLooper());
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    invalidateOptionsMenu();
+                }
+            }, 1000);
+            */
+
+            // Automatically connects to the device upon successful start-up initialization.
+            //mBleService.connect(mDeviceAddress);
         }
 
         @Override
@@ -964,9 +794,9 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
     };
 
-    private int skipIndex = 0;
-    private boolean mConnected = false;
-    private boolean mConnecting = false;
+//    private int skipIndex = 0;
+//    private boolean mConnected = false;
+//    private boolean mConnecting = false;
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -996,23 +826,12 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
             } else if (BLEService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
-                displayGattServices(getSupportedGattServices());
+                displayGattServices(mBleService.getSupportedGattServices());
             } else if (BLEService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BLEService.EXTRA_DATA));
             }
         }
     };
-    /**
-     * Retrieves a list of supported GATT services on the connected device. This should be
-     * invoked only after {@code BluetoothGatt#discoverServices()} completes successfully.
-     *
-     * @return A {@code List} of supported services.
-     */
-    public List<BluetoothGattService> getSupportedGattServices() {
-        if (mBluetoothGatt == null) return null;
-
-        return mBluetoothGatt.getServices();
-    }
     private void displayData(String data) {
 
         if (data != null) {
@@ -1023,7 +842,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (isBonded(mDeviceAddress)) {
+                if (mBleService.isBonded(mDeviceAddress)) {
                     M2_TextView.setText(getResources().getString(resourceId) + " - Bonded");
                 } else {
                     M2_TextView.setText(resourceId);
@@ -1031,35 +850,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-    public boolean isBonded(final String address) {
-        if (mBluetoothAdapter != null) {
-            if (mBluetoothAdapter.getRemoteDevice(address).getBondState() == BluetoothDevice.BOND_NONE) {
-                return false;
-            }
 
-            return true;
-        } else {
-            return false;
-        }
-    }
-    // Demonstrates how to iterate through the supported GATT Services/Characteristics.
-    // In this sample, we populate the data structure that is bound to the ExpandableListView
-    // on the UI.
+
+
+
+
 
     private ExpandableListView mGattServicesList;
     private View mGattServicesListHeaderView;
 
-    public static String UUID_GAP = "00001800-0000-1000-8000-00805f9b34fb";
-    public static String UUID_GATT = "00001801-0000-1000-8000-00805f9b34fb";
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
     private final String LIST_PROPERTIES = "PROPERTIES";
 
     private static final int REQUEST_DISCONNECT = 5;
     private static final int RESULT_DISCONNECT = 5;
-
-    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
-            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+//
+//    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
+//            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 
     private void clearUI() {
         mGattServicesList.removeHeaderView(mGattServicesListHeaderView);

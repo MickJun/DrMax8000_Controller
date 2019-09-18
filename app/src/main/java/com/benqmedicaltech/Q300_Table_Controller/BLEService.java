@@ -34,6 +34,9 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
+
+import com.benqmedicaltech.Q300_Table_Controller.BLEGattAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -52,7 +55,7 @@ public class BLEService extends Service {
     private int mConnectionState = STATE_DISCONNECTED;
     private Handler mHandler = null;
     public boolean serviceStatus = false;
-    public BluetoothDevice mDevice = null;
+    private BluetoothDevice mDevice = null;
     private boolean mBond = false;
 
     private static final int STATE_DISCONNECTED = 0;
@@ -81,21 +84,21 @@ public class BLEService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
                 //if (mDevice != null) {
-                    //if (mDevice.getBondState() != BluetoothDevice.BOND_NONE) {
-                        mBond = false;
-                        broadcastUpdate(ACTION_GATT_BONDED);
+                //if (mDevice.getBondState() != BluetoothDevice.BOND_NONE) {
+                mBond = false;
+                broadcastUpdate(ACTION_GATT_BONDED);
 
-                        if (mConnectionState == STATE_CONNECTED) {
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {}
+                if (mConnectionState == STATE_CONNECTED) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {}
 
-                            disconnect();
+                    disconnect();
 
-                            //mBluetoothGatt.discoverServices();
-                        }
+                    //mBluetoothGatt.discoverServices();
+                }
 
-                    //}
+                //}
                 //}
             }
         }
@@ -190,7 +193,7 @@ public class BLEService extends Service {
 
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
-        sendBroadcast(intent);
+//        sendBroadcast(intent);
     }
 
     private void broadcastUpdate(final String action,
@@ -214,7 +217,7 @@ public class BLEService extends Service {
                     intent.putExtra(EXTRA_DATA, stringBuilder.toString());
             }
         }
-        sendBroadcast(intent);
+//        sendBroadcast(intent);
     }
 
     public class LocalBinder extends Binder {
@@ -469,5 +472,21 @@ public class BLEService extends Service {
         if (mBluetoothGatt == null) return null;
 
         return mBluetoothGatt.getServices();
+    }
+
+    public BLEService getBLEService (BluetoothAdapter sendAdapter, BluetoothManager sendManager){
+        if (mBluetoothManager == null) {
+            mBluetoothManager = sendManager;
+            if (mBluetoothManager == null) {
+                Log.e(TAG, "Unable to initialize BluetoothManager.");
+            }
+        }
+
+        mBluetoothAdapter = sendAdapter;
+        //mBluetoothAdapter = mBluetoothManager.getAdapter();
+        if (mBluetoothAdapter == null) {
+            Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
+        }
+        return BLEService.this;
     }
 }
