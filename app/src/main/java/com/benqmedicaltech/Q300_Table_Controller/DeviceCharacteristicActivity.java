@@ -13,6 +13,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
 import android.os.IBinder;
 import android.text.Editable;
 import android.text.InputType;
@@ -258,8 +259,281 @@ public class DeviceCharacteristicActivity extends Activity {
         return mKeyboardView.getVisibility() == View.VISIBLE;
     }
 
+    //Mick//////////////////////////////////////////////////////////////////////////////////////////////////
+    private final byte Rev_Trend = 0x1;               //#define	Rev_Trend 			1
+    private final byte Trend = 0x2;                   //#define	Trend				2
+    private final byte Tilt_R = 0x3;                  //#define	Tilt_R				3
+    private final byte Tilt_L = 0x4;                  //#define	Tilt_L				4
+    private final byte Back_Up = 0x5;                 //#define	Back_Up				5
+    private final byte Back_Down = 0x6;               //#define	Back_Down			6
+    private final byte Table_Up = 0x7;                //#define	Table_Up			7
+    private final byte Table_Down = 0x8;              //#define	Table_Down			8
+    private final byte Slide_Foot = 0x9;              //#define	Slide_Foot			9
+    private final byte Slide_Head = 0xa;              //#define	Slide_Head			10
+    private final byte Leg_Up = 0xb;                  //#define	Leg_Up				11
+    private final byte Leg_Down = 0xc;                //#define	Leg_Down			12
+    private final byte Unlock = 0xd;                  //#define	Unlock				13
+    private final byte Lock = 0xe;                    //#define	Lock				14
+    private final byte Kidney_Up = 0xf;               //#define   Kidney_Up           15
+    private final byte Kidney_Down = 0x10;               //#define   Kidney_Down           16
+    private final byte Flex = 0x15;                   //#define	Flex				21
+    private final byte Reflex = 0x16;                 //#define	Reflex				22
+    private final byte Level = 0x17;                  //#define	Level				23
+    private final  byte Normal_Function = 0x21;                 //#define     Normal_Function                  33
+    private final byte Reverse_Function = 0x22;                 //#define     Reverse_Function                  34
+    private byte SW_Output = 0x00;
+    private byte Checksum = 0x00;
+    private final byte[] Output_First = new byte[8];
+    private final byte[] Output_Function = new byte[8];
+    private final byte[] Output_Checksum = new byte[8];
+    private final byte[] Output_Final = new byte[24];
+    private void Output_First_Set()
+    {
+        Output_First[0] = 0x55;
+        Output_First[1] = 0x0;
+        Output_First[2] = 0x55;
+        Output_First[3] = 0x0;
+        Output_First[4] = 0x55;
+        Output_First[5] = 0x0;
+        Output_First[6] = 0x55;
+        Output_First[7] = 0x0;
+    }
 
-    final byte[] Output_First = new byte[8];
+    private void Function_Code()
+    {
+        if ((SW_Output & 0x01) == 0x01)
+        {
+            Output_Function[7] = 0x00;
+        }
+        else
+        {
+            Output_Function[7] = 0x55;
+        }
+
+        if ((SW_Output & 0x02) == 0x02)
+        {
+            Output_Function[6] = 0x00;
+        }
+        else
+        {
+            Output_Function[6] = 0x55;
+        }
+
+        if ((SW_Output & 0x04) == 0x04)
+        {
+            Output_Function[5] = 0x00;
+        }
+        else
+        {
+            Output_Function[5] = 0x55;
+        }
+
+        if ((SW_Output & 0x08) == 0x08)
+        {
+            Output_Function[4] = 0x00;
+        }
+        else
+        {
+            Output_Function[4] = 0x55;
+        }
+
+        if ((SW_Output & 0x10) == 0x10)
+        {
+            Output_Function[3] = 0x00;
+        }
+        else
+        {
+            Output_Function[3] = 0x55;
+        }
+
+        if ((SW_Output & 0x20) == 0x20)
+        {
+            Output_Function[2] = 0x00;
+        }
+        else
+        {
+            Output_Function[2] = 0x55;
+        }
+
+        if ((SW_Output & 0x40) == 0x40)
+        {
+            Output_Function[1] = 0x00;
+        }
+        else
+        {
+            Output_Function[1] = 0x55;
+        }
+
+        if ((SW_Output & 0x80) == 0x80)
+        {
+            Output_Function[0] = 0x00;
+        }
+        else
+        {
+            Output_Function[0] = 0x55;
+        }
+    }
+
+    private void Checksum_Code()
+    {
+        Checksum = (byte)(0x55 + SW_Output - 0x01);
+        if ((Checksum & 0x01) == 0x01)
+        {
+            Output_Checksum[7] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[7] = 0x55;
+        }
+
+        if ((Checksum & 0x02) == 0x02)
+        {
+            Output_Checksum[6] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[6] = 0x55;
+        }
+
+        if ((Checksum & 0x04) == 0x04)
+        {
+            Output_Checksum[5] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[5] = 0x55;
+        }
+
+        if ((Checksum & 0x08) == 0x08)
+        {
+            Output_Checksum[4] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[4] = 0x55;
+        }
+
+        if ((Checksum & 0x10) == 0x10)
+        {
+            Output_Checksum[3] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[3] = 0x55;
+        }
+
+        if ((Checksum & 0x20) == 0x20)
+        {
+            Output_Checksum[2] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[2] = 0x55;
+        }
+
+        if ((Checksum & 0x40) == 0x40)
+        {
+            Output_Checksum[1] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[1] = 0x55;
+        }
+
+        if ((Checksum & 0x80) == 0x80)
+        {
+            Output_Checksum[0] = 0x0;
+        }
+        else
+        {
+            Output_Checksum[0] = 0x55;
+        }
+
+    }
+
+    private void Output_Mix(){
+
+        for(int i =0;i<8;i++){
+            Output_Final[i] = Output_First[i];
+//        }
+//        for(int i =0;i<8;i++){
+            Output_Final[i+8] = Output_Function[i];
+//        }
+//        for(int i =0;i<8;i++){
+            Output_Final[i+16] = Output_Checksum[i];
+        }
+
+    }
+    private void Table_Command_Send_Start(byte command){
+        SW_Output = command;
+//        if(f2.Reverse_Flag == 1) {
+//            switch (command){
+//                case  Slide_Foot:
+//                    SW_Output = Slide_Head;
+//                    break;
+//                case  Slide_Head:
+//                    SW_Output = Slide_Foot;
+//                    break;
+//                case  Tilt_L:
+//                    SW_Output = Tilt_R;
+//                    break;
+//                case  Tilt_R:
+//                    SW_Output = Tilt_L;
+//                    break;
+//                case  Trend:
+//                    SW_Output = Rev_Trend;
+//                    break;
+//                case  Rev_Trend:
+//                    SW_Output = Trend;
+//                    break;
+//                case  Back_Up:
+//                    SW_Output = Leg_Up;
+//                    break;
+//                case  Back_Down:
+//                    SW_Output = Leg_Down;
+//                    break;
+//                case  Leg_Up:
+//                    SW_Output = Back_Up;
+//                    break;
+//                case  Leg_Down:
+//                    SW_Output = Back_Down;
+//                    break;
+//            }
+//        }
+        Output_First_Set();
+        Function_Code();
+        Checksum_Code();
+        Output_Mix();
+//            mDelayTime = 90;
+//            handler.postDelayed(runnable,mDelayTime);
+
+    }
+    private final Handler handler = new Handler();
+    private int mDelayTime = 0;
+    private int LastDelayTime = 0;
+    private final int Max_Delay_Time = 111;      //Lock Time = 90ms * Max_Delay_Time    10s / 90ms = 111
+
+    private final Runnable runnable = new Runnable() {
+        public void run() {
+            //update
+            if(SW_Output != 0x00){
+                LastDelayTime = 0;
+                mBleService.writeCharacteristic(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), Output_Final);//value          //////////////////////////////////這邊傳拉
+            }
+            else
+            {
+                if(LastDelayTime < Max_Delay_Time)LastDelayTime++;
+            }
+            if(mDelayTime > 0){
+                handler.postDelayed(this,mDelayTime);
+            }
+
+        }
+    };
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -363,16 +637,68 @@ public class DeviceCharacteristicActivity extends Activity {
 //                                value[i / 2] = (byte) (0x0A + c - 0x41);
 //                        }
 //                    }
-                    Output_First[0] = 0x30;
-                    Output_First[1] = 0x31;
-                    Output_First[2] = 0x32;
-                    Output_First[3] = 0x33;
-                    Output_First[4] = 0x34;
-                    Output_First[5] = 0x35;
-                    Output_First[6] = 0x36;
-                    Output_First[7] = 0x37;
+                    char c = writeText.getText().toString().charAt(0);
+                    switch (c) {
+                        case 0x31:
+                            Table_Command_Send_Start(Rev_Trend);
+                            break;
+                        case 0x32:
+                            Table_Command_Send_Start(Trend);
+                            break;
+                        case 0x33:
+                            Table_Command_Send_Start(Tilt_R);
+                            break;
+                        case 0x34:
+                            Table_Command_Send_Start(Tilt_L);
+                            break;
+                        case 0x35:
+                            Table_Command_Send_Start(Back_Up);
+                            break;
+                        case 0x36:
+                            Table_Command_Send_Start(Back_Down);
+                            break;
+                        case 0x37:
+                            Table_Command_Send_Start(Table_Up);
+                            break;
+                        case 0x38:
+                            Table_Command_Send_Start(Table_Down);
+                            break;
+                        case 0x39:
+                            Table_Command_Send_Start(Slide_Foot);
+                            break;
+                        case 0x3a:
+                            Table_Command_Send_Start(Slide_Head);
+                            break;
+                        case 0x3b:
+                            Table_Command_Send_Start(Leg_Up);
+                            break;
+                        case 0x3c:
+                            Table_Command_Send_Start(Leg_Down);
+                            break;
+                        case 0x3d:
+                            Table_Command_Send_Start(Unlock);
+                            break;
+                        case 0x3e:
+                            Table_Command_Send_Start(Lock);
+                            break;
+                        case 0x47:
+                            Table_Command_Send_Start(Level);
+                            break;
+                        case 0x51:
+                            Table_Command_Send_Start(Normal_Function);
+                            break;
+                        case 0x52:
+                            Table_Command_Send_Start(Reverse_Function);
+                            break;
+                    }
+                    if(c == 0x30){
+                        mDelayTime = 0;
+                    }else{
+                        mDelayTime = 90;
+                        handler.postDelayed(runnable, mDelayTime);
+                    }
                     writeButton.setTextColor(Color.BLACK);
-                    mBleService.writeCharacteristic(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), Output_First);//value          //////////////////////////////////這邊傳拉
+//                    mBleService.writeCharacteristic(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), Output_Final);//value          //////////////////////////////////這邊傳拉
                 }
             }
         });
