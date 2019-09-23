@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.benqmedicaltech.Q300_Table_Controller.Main3Activity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Main3_button1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SCAN" />
+
+
+            <Button
+                android:id="@+id/Main3_button3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Update" />
+
+            <Button
+                android:id="@+id/Main3_button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CONNECT" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background= "@drawable/bisor_gui_report_content_textbox_w194_h50_normal"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp">
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <FrameLayout
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content">
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/Main3_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Main2"
+                    android:textSize="30sp" />
+
+                <FrameLayout
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent">
+                </FrameLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp">
+            </FrameLayout>
+        </LinearLayout>
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/j_cell3"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="39dp"-->
+<!--                android:layout_height="39dp"-->
+<!--                android:id="@+id/image_rssi"-->
+<!--                android:src="@drawable/rssi_strengthnil"-->
+<!--                android:layout_gravity="bottom|right"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="5dp" />-->
+
+<!--            <TextView android:id="@+id/device3_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:layout_gravity="bottom|right"-->
+<!--                android:hint="Name"-->
+<!--                android:layout_alignBottom="@+id/image_rssi"-->
+<!--                android:layout_toEndOf="@+id/image_rssi"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:src="@drawable/expander_ic_minimized"-->
+<!--                android:layout_gravity="bottom|right"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginRight="5dp" />-->
+
+<!--            <TextView android:id="@+id/device3_address"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Address"-->
+<!--                android:layout_below="@+id/device3_name"-->
+<!--                android:layout_toEndOf="@+id/image_rssi"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginBottom="5dp" />-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/imageView2"-->
+<!--                android:src="@drawable/rssi_icon"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_toStartOf="@+id/device3_rssi"-->
+<!--                android:layout_above="@+id/device3_address"-->
+<!--                android:layout_alignTop="@+id/device3_rssi" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/device3_rssi"-->
+<!--                android:hint="RSSI"-->
+<!--                android:gravity="bottom"-->
+<!--                android:layout_alignBottom="@+id/device3_name"-->
+<!--                android:layout_toStartOf="@+id/imageView"-->
+<!--                android:layout_marginRight="20dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/device3_interval"-->
+<!--                android:hint="AI"-->
+<!--                android:gravity="bottom"-->
+<!--                android:layout_alignBottom="@+id/device3_address"-->
+<!--                android:layout_alignStart="@+id/device3_rssi"-->
+<!--                android:layout_toStartOf="@+id/imageView" />-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/imageView3"-->
+<!--                android:src="@drawable/interval_icon"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_alignBottom="@+id/device3_interval"-->
+<!--                android:layout_alignTop="@+id/device3_interval"-->
+<!--                android:layout_toStartOf="@id/device3_interval" />-->
+
+<!--        </RelativeLayout>-->
+
+
+        <ListView
+            android:id="@+id/Main3_List"
+            android:layout_width="match_parent"
+            android:layout_height="319dp" />
+
+        <ExpandableListView android:id="@+id/M3_gatt_services_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -214,7 +214,7 @@ public class DeviceControlActivity extends Activity {
                     }
                     return false;
                 }
-    };
+            };
 
     private void clearUI() {
         mGattServicesList.removeHeaderView(mGattServicesListHeaderView);
@@ -252,8 +252,15 @@ public class DeviceControlActivity extends Activity {
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
 
-//        getActionBar().setTitle(R.string.title_control);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle(R.string.title_control);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //Mick add
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setLogo(R.drawable.iqor_logo);
+        getActionBar().setDisplayUseLogoEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        //Mick add
+
         Intent gattServiceIntent = new Intent(this, BLEService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
@@ -376,50 +383,51 @@ public class DeviceControlActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.gatt_services, menu);
-//
-//        if (mBleService != null) {
-//            menu.findItem(R.id.menu_more).setVisible(true);
-//            if (mBleService.isBonded(mDeviceAddress)) {
-//                menu.findItem(R.id.menu_bond).setVisible(false);
-//                menu.findItem(R.id.menu_unbond).setVisible(true);
-//            } else {
-//                menu.findItem(R.id.menu_unbond).setVisible(false);
-//                menu.findItem(R.id.menu_bond).setVisible(true);
-//            }
-//        } else {
-//            menu.findItem(R.id.menu_more).setVisible(false);
-//        }
-//
-//
-//        if (mConnected) {
-//            menu.findItem(R.id.menu_connect).setVisible(false);
-//            menu.findItem(R.id.menu_disconnect).setVisible(true);
-//            menu.findItem(R.id.menu_bond).setEnabled(false);
-//            menu.findItem(R.id.menu_unbond).setEnabled(false);
-//        } else {
-//            menu.findItem(R.id.menu_connect).setVisible(true);
-//            menu.findItem(R.id.menu_disconnect).setVisible(false);
-//            if (mConnecting) {
-//                // MBD
-//               // menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_indeterminate_progress);
-//                menu.findItem(R.id.menu_connect).setEnabled(false);
-//                menu.findItem(R.id.menu_bond).setEnabled(false);
-//                menu.findItem(R.id.menu_unbond).setEnabled(false);
-//            } else {
-//                // MBD
-//                //menu.findItem(R.id.menu_refresh).setActionView(null);
-//                menu.findItem(R.id.menu_connect).setEnabled(true);
-//                menu.findItem(R.id.menu_bond).setEnabled(true);
-//                menu.findItem(R.id.menu_unbond).setEnabled(true);
-//            }
-//            /*
-//            menu.findItem(R.id.menu_connect).setVisible(true);
-//            menu.findItem(R.id.menu_disconnect).setVisible(false);
-//            menu.findItem(R.id.menu_bond).setEnabled(true);
-//            menu.findItem(R.id.menu_unbond).setEnabled(true);
-//            */
-//        }
+        getMenuInflater().inflate(R.menu.gatt_services, menu);
+
+        if (mBleService != null) {
+            menu.findItem(R.id.menu_more).setVisible(true);
+            if (mBleService.isBonded(mDeviceAddress)) {
+                menu.findItem(R.id.menu_bond).setVisible(false);
+                menu.findItem(R.id.menu_unbond).setVisible(true);
+            } else {
+                menu.findItem(R.id.menu_unbond).setVisible(false);
+                menu.findItem(R.id.menu_bond).setVisible(true);
+            }
+        } else {
+            menu.findItem(R.id.menu_more).setVisible(false);
+        }
+
+
+        if (mConnected) {
+            menu.findItem(R.id.menu_connect).setVisible(false);
+            menu.findItem(R.id.menu_disconnect).setVisible(true);
+            menu.findItem(R.id.menu_bond).setEnabled(false);
+            menu.findItem(R.id.menu_unbond).setEnabled(false);
+        } else {
+            menu.findItem(R.id.menu_connect).setVisible(true);
+            menu.findItem(R.id.menu_disconnect).setVisible(false);
+            if (mConnecting) {
+                // MBD
+                // menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_indeterminate_progress);
+                menu.findItem(R.id.menu_connect).setEnabled(false);
+                menu.findItem(R.id.menu_bond).setEnabled(false);
+                menu.findItem(R.id.menu_unbond).setEnabled(false);
+            } else {
+                // MBD
+                //menu.findItem(R.id.menu_refresh).setActionView(null);
+                menu.findItem(R.id.menu_connect).setEnabled(true);
+                menu.findItem(R.id.menu_bond).setEnabled(true);
+                menu.findItem(R.id.menu_unbond).setEnabled(true);
+            }
+            /*
+            menu.findItem(R.id.menu_connect).setVisible(true);
+            menu.findItem(R.id.menu_disconnect).setVisible(false);
+            menu.findItem(R.id.menu_bond).setEnabled(true);
+            menu.findItem(R.id.menu_unbond).setEnabled(true);
+            */
+            super.onCreateOptionsMenu(menu);
+        }
 
 
 
@@ -452,23 +460,22 @@ public class DeviceControlActivity extends Activity {
 
         int id = item.getItemId();
 
-//        if (id == R.id.menu_connect ) {
-//            mBleService.connect(mDeviceAddress, false);
-//            return true;
-//        } else if (id == R.id.menu_disconnect ) {
-//
-//                mBleService.disconnect();
-//                return true;
-//        } else if (id == R.id.menu_bond ) {
-//
-//            mBleService.connect(mDeviceAddress, true);
-//            return true;
-//        }else if (id == R.id.menu_unbond ) {
-//
-//            mBleService.unBond(mDeviceAddress);
-//            return true;
-//        }else
-        if (id == android.R.id.home ) {
+        if (id == R.id.menu_connect ) {
+            mBleService.connect(mDeviceAddress, false);
+            return true;
+        } else if (id == R.id.menu_disconnect ) {
+
+            mBleService.disconnect();
+            return true;
+        } else if (id == R.id.menu_bond ) {
+
+            mBleService.connect(mDeviceAddress, true);
+            return true;
+        }else if (id == R.id.menu_unbond ) {
+
+            mBleService.unBond(mDeviceAddress);
+            return true;
+        }else if (id == android.R.id.home ) {
 
             onBackPressed();
             return true;

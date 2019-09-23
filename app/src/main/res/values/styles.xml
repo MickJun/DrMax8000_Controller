@@ -2,14 +2,15 @@
 
     <!-- Base application theme. -->
     <!--Android Gangverk:style/Theme.AppCompat.Light.DarkActionBar-->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+<!--20190922    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--    <style name="AppTheme" parent="android:Theme.Holo">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
 
-    <style name="IQOR_Theme" parent="AppTheme" />
+<!--    <style name="IQOR_Theme" parent="AppTheme" />-->
 
 
     <!--<style name="MyOverFlow.Dark" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">-->

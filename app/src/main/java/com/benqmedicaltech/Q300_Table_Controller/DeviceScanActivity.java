@@ -43,26 +43,28 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
  */
 public class DeviceScanActivity extends ListActivity {
-    public LeDeviceListAdapter mLeDeviceListAdapter;
-    public LeDeviceListAdapter mLeDeviceListAdapter_backup;
-    public BluetoothAdapter mBluetoothAdapter;
+    private LeDeviceListAdapter mLeDeviceListAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
     private BluetoothLeScanner mBLEScanner;
     private ScanSettings settings;
     private List<ScanFilter> filters;
@@ -91,7 +93,7 @@ public class DeviceScanActivity extends ListActivity {
             if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
                 switch (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
                     case BluetoothAdapter.STATE_OFF:
-                    //case BluetoothAdapter.STATE_TURNING_OFF:
+                        //case BluetoothAdapter.STATE_TURNING_OFF:
                         mBluetoothStatus = true;
                         new AlertDialog.Builder(context)
                                 .setTitle(R.string.app_name)
@@ -116,7 +118,7 @@ public class DeviceScanActivity extends ListActivity {
                         break;
 
                     case BluetoothAdapter.STATE_ON:
-                    //case BluetoothAdapter.STATE_TURNING_ON:
+                        //case BluetoothAdapter.STATE_TURNING_ON:
                         break;
                 }
             }
@@ -129,7 +131,11 @@ public class DeviceScanActivity extends ListActivity {
 
         Log.d("MBD", "(Build.VERSION.SDK_INT = " + (Build.VERSION.SDK_INT) );
         // MBD
-//        getActionBar().setTitle(R.string.smart_discovrey_title_devices);
+        getActionBar().setTitle(R.string.smart_discovrey_title_devices);
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setLogo(R.drawable.iqor_logo);
+        getActionBar().setDisplayUseLogoEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
@@ -165,45 +171,41 @@ public class DeviceScanActivity extends ListActivity {
         getListView().addHeaderView(, null, false);
         */
 
-        ((MickTest) getApplication()).setDeviceScanActivity(this);
-        Intent intent = new Intent();
-        intent.setClass(this, MainActivity.class);
-        startActivity(intent);
 
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case PERMISSION_REQUEST_COARSE_LOCATION: {
-//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Log.i("Permission", "Granted");
-//
-//                    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                    if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-//                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//                    }
-//                }
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //Log.i("Permission", "Granted");
+
+                    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                }
+                return;
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        if (!mScanning) {
-//            menu.findItem(R.id.menu_stop).setVisible(false);
-//            menu.findItem(R.id.menu_scan).setVisible(true);
-//            menu.findItem(R.id.menu_refresh).setActionView(null);
-//        } else {
-//            menu.findItem(R.id.menu_stop).setVisible(true);
-//            menu.findItem(R.id.menu_scan).setVisible(false);
-//            // MBD
-//           // menu.findItem(R.id.menu_refresh).setActionView(
-//                   // R.layout.actionbar_indeterminate_progress);
-//        }
+        getMenuInflater().inflate(R.menu.main, menu);
+        if (!mScanning) {
+            menu.findItem(R.id.menu_stop).setVisible(false);
+            menu.findItem(R.id.menu_scan).setVisible(true);
+            menu.findItem(R.id.menu_refresh).setActionView(null);
+        } else {
+            menu.findItem(R.id.menu_stop).setVisible(true);
+            menu.findItem(R.id.menu_scan).setVisible(false);
+            // MBD
+            // menu.findItem(R.id.menu_refresh).setActionView(
+            // R.layout.actionbar_indeterminate_progress);
+        }
         return true;
     }
 
@@ -227,21 +229,21 @@ public class DeviceScanActivity extends ListActivity {
         }*/
         int id = item.getItemId();
 
-//        if (id == R.id.menu_scan ) {
-//
-//            mLeDeviceListAdapter.clear();
-//            setListAdapter(mLeDeviceListAdapter);
-//            mRSSIs.clear();
-//            mAdvTimes.clear();
-//            mpAdvTimes.clear();
-//            scanLeDevice(true);
-//        } else if (id == R.id.menu_stop ) {
-//
-//            if (mHandler != null && mRunnable != null) {
-//                mHandler.removeCallbacks(mRunnable);
-//            }
-//            scanLeDevice(false);
-//        }
+        if (id == R.id.menu_scan ) {
+
+            mLeDeviceListAdapter.clear();
+            setListAdapter(mLeDeviceListAdapter);
+            mRSSIs.clear();
+            mAdvTimes.clear();
+            mpAdvTimes.clear();
+            scanLeDevice(true);
+        } else if (id == R.id.menu_stop ) {
+
+            if (mHandler != null && mRunnable != null) {
+                mHandler.removeCallbacks(mRunnable);
+            }
+            scanLeDevice(false);
+        }
         return true;
     }
 
@@ -262,7 +264,7 @@ public class DeviceScanActivity extends ListActivity {
         setListAdapter(mLeDeviceListAdapter);
 
         ((ListView) getListView()).setCacheColorHint(0);
-        ((ListView) getListView()).setBackgroundResource(R.drawable.ic_launcher_background);
+        ((ListView) getListView()).setBackgroundResource(R.drawable.backgroundimage);
 
         setLECallbacks();
 
@@ -276,10 +278,10 @@ public class DeviceScanActivity extends ListActivity {
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mBLEScanner = mBluetoothAdapter.getBluetoothLeScanner();
-//                settings = new ScanSettings.Builder() //
-//                        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) //
-//                        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES) //
-//                        .build();
+                settings = new ScanSettings.Builder() //
+                        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) //
+                        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES) //
+                        .build();
 
                 ScanFilter filter = new ScanFilter.Builder().setDeviceName(null).build();
                 filters = new ArrayList<ScanFilter>();
@@ -518,15 +520,14 @@ public class DeviceScanActivity extends ListActivity {
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
-
             BluetoothDevice device = mLeDevices.get(i);
             final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0)
                 viewHolder.deviceName.setText(deviceName);
-            else
+                else
                 viewHolder.deviceName.setText(R.string.unknown_device);
-            viewHolder.deviceAddress.setText(device.getAddress());
-            viewHolder.deviceRSSI.setText(/*"RSSI: " +*/ mRSSIs.get(i) + "dB");
+                viewHolder.deviceAddress.setText(device.getAddress());
+                viewHolder.deviceRSSI.setText(/*"RSSI: " +*/ mRSSIs.get(i) + "dB");
 
             Long advertisingInterval = mAdvTimes.get(i) - mpAdvTimes.get(i);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
@@ -541,23 +542,23 @@ public class DeviceScanActivity extends ListActivity {
             }
 
             int rssi = mRSSIs.get(i);
-//            if (rssi < -27 && rssi > -110) {
-//                if (rssi <= -27 && rssi > -60)
-//                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength100);
-//
-//                if (rssi <= -60 && rssi > -70)
-//                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength75);
-//
-//                if (rssi <= -70 && rssi > -80)
-//                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength50);
-//
-//                if (rssi <= -80 && rssi > -90)
-//                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength25);
-//
-//                if (rssi <= -90 && rssi > -110)
-//                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength0);
-//            } else
-//                ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strengthnil);
+            if (rssi < -27 && rssi > -110) {
+                if (rssi <= -27 && rssi > -60)
+                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength100);
+
+                if (rssi <= -60 && rssi > -70)
+                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength75);
+
+                if (rssi <= -70 && rssi > -80)
+                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength50);
+
+                if (rssi <= -80 && rssi > -90)
+                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength25);
+
+                if (rssi <= -90 && rssi > -110)
+                    ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strength0);
+            } else
+                ((ImageView) view.findViewById(R.id.image_rssi)).setImageResource(R.drawable.rssi_strengthnil);
 
             return view;
         }
@@ -593,7 +594,6 @@ public class DeviceScanActivity extends ListActivity {
                                     mLeDeviceListAdapter.notifyDataSetChanged();
                                 }
                             }));
-                            mLeDeviceListAdapter_backup = mLeDeviceListAdapter;
                         }
                     };
 
@@ -620,7 +620,7 @@ public class DeviceScanActivity extends ListActivity {
                             mLeDeviceListAdapter.notifyDataSetChanged();
                         }
                     }));
-                    mLeDeviceListAdapter_backup = mLeDeviceListAdapter;
+
                     //super.onScanResult(callbackType, result);
                 }
 
@@ -649,46 +649,4 @@ public class DeviceScanActivity extends ListActivity {
         TextView deviceRSSI;
         TextView deviceAdvInterval;
     }
-
-
-    private final ArrayList<String> BT_Devicelist = new ArrayList<>();
-    private final ArrayList<String> BT_Addrlist = new ArrayList<>();
-
-    public List<ScanResult> GOGOScan(){
-        mLeDeviceListAdapter.clear();
-        scanLeDevice(true);
-
-//        Set<BluetoothDevice> pairedDevices = mLeDeviceListAdapter.getDevice();
-
-        BT_Devicelist.clear();
-        BT_Addrlist.clear();
-//        for (int x : mLeDeviceListAdapter.) {
-//            String deviceName = mLeDeviceListAdapter.getItem(x)..getName();
-//            String deviceHardwareAddress = device.getAddress(); // MAC address
-//            BT_Devicelist.add(deviceName); //this adds an element to the list.
-//            BT_Addrlist.add(deviceHardwareAddress);
-//        }
-//        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-//            if (!mBluetoothAdapter.isEnabled() && !mBluetoothStatus) {
-//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-//            }
-//        } else {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                mBLEScanner = mBluetoothAdapter.getBluetoothLeScanner();
-//                settings = new ScanSettings.Builder() //
-//                        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) //
-//                        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES) //
-//                        .build();
-//
-//                ScanFilter filter = new ScanFilter.Builder().setDeviceName(null).build();
-//                filters = new ArrayList<ScanFilter>();
-//                filters.add(filter);
-//            }
-//            scanLeDevice(true);
-//        }
-        return mScanResults;
-    }
-
-
 }

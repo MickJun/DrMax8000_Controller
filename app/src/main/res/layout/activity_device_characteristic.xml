@@ -100,7 +100,7 @@
             android:text="Small Text"
             android:background="?android:attr/listDivider"
             android:id="@+id/textView5"
-            android:layout_below="@+id/characteristic_notify"
+            android:layout_below="@id/characteristic_notify"
             android:layout_alignParentStart="true" />
 
         <TextView

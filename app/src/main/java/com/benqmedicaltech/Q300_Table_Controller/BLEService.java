@@ -34,9 +34,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
-
-import com.benqmedicaltech.Q300_Table_Controller.BLEGattAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -193,7 +190,7 @@ public class BLEService extends Service {
 
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
-//        sendBroadcast(intent);
+        sendBroadcast(intent);
     }
 
     private void broadcastUpdate(final String action,
@@ -201,7 +198,7 @@ public class BLEService extends Service {
         final Intent intent = new Intent(action);
 
         {
-            // For all other profiles, writes the data formatted in HEX.
+            // For all other profiles, writes the data formatted in HEX.////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////就是這邊接收!!!
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 0) {
                 final StringBuilder stringBuilder = new StringBuilder(data.length);
@@ -217,7 +214,7 @@ public class BLEService extends Service {
                     intent.putExtra(EXTRA_DATA, stringBuilder.toString());
             }
         }
-//        sendBroadcast(intent);
+        sendBroadcast(intent);
     }
 
     public class LocalBinder extends Binder {
@@ -472,21 +469,5 @@ public class BLEService extends Service {
         if (mBluetoothGatt == null) return null;
 
         return mBluetoothGatt.getServices();
-    }
-
-    public BLEService getBLEService (BluetoothAdapter sendAdapter, BluetoothManager sendManager){
-        if (mBluetoothManager == null) {
-            mBluetoothManager = sendManager;
-            if (mBluetoothManager == null) {
-                Log.e(TAG, "Unable to initialize BluetoothManager.");
-            }
-        }
-
-        mBluetoothAdapter = sendAdapter;
-        //mBluetoothAdapter = mBluetoothManager.getAdapter();
-        if (mBluetoothAdapter == null) {
-            Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
-        }
-        return BLEService.this;
     }
 }

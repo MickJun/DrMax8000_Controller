@@ -624,7 +624,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
 
                 if(mBleService != null){
-                    mBleService = mBleService.getBLEService(mBluetoothAdapter,mBluetoothManager);
+                    //mBleService = mBleService.getBLEService(mBluetoothAdapter,mBluetoothManager);
                     //mBleService.connect(mDeviceAddress, false);
 //                    mBleService.connect(mDeviceAddress, true);
                     mHandler = new Handler(Looper.getMainLooper());

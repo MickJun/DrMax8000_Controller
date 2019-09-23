@@ -1,6 +1,5 @@
 package com.benqmedicaltech.Q300_Table_Controller;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
@@ -13,10 +12,12 @@ import android.graphics.Color;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
+import android.app.Activity;
 import android.os.IBinder;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -258,22 +259,23 @@ public class DeviceCharacteristicActivity extends Activity {
     }
 
 
+    final byte[] Output_First = new byte[8];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_characteristic);
 
-//        getActionBar().setTitle(R.string.title_characteristic);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle(R.string.title_characteristic);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 
         Intent gattServiceIntent = new Intent(this, BLEService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-//        final Intent intent = getIntent();
-//        mCharacteristicIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_CHARACTERISTIC_INDEX)); //intent.getIntExtra(EXTRAS_CHARACTERISTIC_INDEX, 0);
-//        mServiceIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_SERVICE_INDEX)); // + 2;
+        final Intent intent = getIntent();
+        mCharacteristicIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_CHARACTERISTIC_INDEX)); //intent.getIntExtra(EXTRAS_CHARACTERISTIC_INDEX, 0);
+        mServiceIndex = Integer.parseInt(intent.getStringExtra(EXTRAS_SERVICE_INDEX)); // + 2;
 
 
         Switch notifySwitch = (Switch) findViewById(R.id.charcteristic_notify_switch);
@@ -345,24 +347,32 @@ public class DeviceCharacteristicActivity extends Activity {
             public void onClick(View v) {
 
                 if (!writeText.getText().toString().isEmpty()) {
-                    byte[] value = new byte[writeText.getText().toString().length() / 2];
-                    for (int i = 0; i < writeText.getText().toString().length(); i++) {
-                        char c = writeText.getText().toString().charAt(i);
-                        if ((c >= '0') && (c <= '9')) {
-                            if (i % 2 == 1)
-                                value[i / 2] = (byte) ((value[i / 2] << 4) + (c - 0x30));
-                            else
-                                value[i / 2] = (byte) (c - 0x30);
-                        }
-                        if ((c >= 'A') && (c <= 'F')) {
-                            if (i % 2 == 1)
-                                value[i / 2] = (byte) ((value[i / 2] << 4) + (0x0A + c - 0x41));
-                            else
-                                value[i / 2] = (byte) (0x0A + c - 0x41);
-                        }
-                    }
+//                    byte[] value = new byte[writeText.getText().toString().length() / 2];
+//                    for (int i = 0; i < writeText.getText().toString().length(); i++) {
+//                        char c = writeText.getText().toString().charAt(i);
+//                        if ((c >= '0') && (c <= '9')) {
+//                            if (i % 2 == 1)
+//                                value[i / 2] = (byte) ((value[i / 2] << 4) + (c - 0x30));
+//                            else
+//                                value[i / 2] = (byte) (c - 0x30);
+//                        }
+//                        if ((c >= 'A') && (c <= 'F')) {
+//                            if (i % 2 == 1)
+//                                value[i / 2] = (byte) ((value[i / 2] << 4) + (0x0A + c - 0x41));
+//                            else
+//                                value[i / 2] = (byte) (0x0A + c - 0x41);
+//                        }
+//                    }
+                    Output_First[0] = 0x30;
+                    Output_First[1] = 0x31;
+                    Output_First[2] = 0x32;
+                    Output_First[3] = 0x33;
+                    Output_First[4] = 0x34;
+                    Output_First[5] = 0x35;
+                    Output_First[6] = 0x36;
+                    Output_First[7] = 0x37;
                     writeButton.setTextColor(Color.BLACK);
-                    mBleService.writeCharacteristic(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), value);
+                    mBleService.writeCharacteristic(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), Output_First);//value          //////////////////////////////////這邊傳拉
                 }
             }
         });
@@ -417,11 +427,11 @@ public class DeviceCharacteristicActivity extends Activity {
                 } else if (primaryCode == CodeAllRight) {
                     edittext.setSelection(edittext.length());
                 } else if (primaryCode == CodePrev) {
-//                    View focusNew = edittext.focusSearch(View.FOCUS_BACKWARD);
-//                    if (focusNew != null) focusNew.requestFocus();
+                    //View focusNew = edittext.focusSearch(View.FOCUS_BACKWARD);
+                    //if (focusNew != null) focusNew.requestFocus();
                 } else if (primaryCode == CodeNext) {
-//                    View focusNew = edittext.focusSearch(View.FOCUS_FORWARD);
-//                    if (focusNew != null) focusNew.requestFocus();
+                    //View focusNew = edittext.focusSearch(View.FOCUS_FORWARD);
+                    //if (focusNew != null) focusNew.requestFocus();
                 } else {// Insert character
                     editable.insert(start, Character.toString((char) primaryCode));
                 }
@@ -489,7 +499,7 @@ public class DeviceCharacteristicActivity extends Activity {
         try {
             if (mNotifyStatus &&
                     (((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) ||
-                    ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_INDICATE) > 0))) {
+                            ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_INDICATE) > 0))) {
 
                 if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_INDICATE) > 0) {
                     mBleService.setCharacteristicIndication(mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex), false);
