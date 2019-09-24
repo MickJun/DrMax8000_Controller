@@ -75,10 +75,12 @@ public class DeviceCharacteristicActivity extends Activity {
             if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0) {
                 charProperties = charProperties.concat("Write ");
                 ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
+                ((Button) findViewById(R.id.characteristic_stop_button)).setEnabled(true);
                 ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
                 ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
             } else {
                 ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(false);
+                ((Button) findViewById(R.id.characteristic_stop_button)).setEnabled(true);
                 ((EditText) findViewById(R.id.characteristic_write)).setEnabled(false);
                 ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(false);
             }
@@ -86,6 +88,7 @@ public class DeviceCharacteristicActivity extends Activity {
             if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
                 charProperties = charProperties.concat("WriteNoResponse ");
                 ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
+                ((Button) findViewById(R.id.characteristic_stop_button)).setEnabled(true);
                 ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
                 ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
             } else {
@@ -96,6 +99,7 @@ public class DeviceCharacteristicActivity extends Activity {
             if ((mBleService.getSupportedGattServices().get(mServiceIndex).getCharacteristics().get(mCharacteristicIndex).getProperties() & BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE) > 0) {
                 charProperties = charProperties.concat("SignedWrite ");
                 ((Button) findViewById(R.id.characteristic_write_button)).setEnabled(true);
+                ((Button) findViewById(R.id.characteristic_stop_button)).setEnabled(true);
                 ((EditText) findViewById(R.id.characteristic_write)).setEnabled(true);
                 ((TextView) findViewById(R.id.characteristic_write_label)).setEnabled(true);
             } else {
@@ -193,6 +197,7 @@ public class DeviceCharacteristicActivity extends Activity {
             } else if (BLEService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
             } else if (BLEService.ACTION_GATT_WRITE.equals(action)) {
                 ((Button) findViewById(R.id.characteristic_write_button)).setTextColor(Color.argb(0xFF, 0x00, 0x70, 0x00));
+                ((Button) findViewById(R.id.characteristic_stop_button)).setTextColor(Color.argb(0xFF, 0x00, 0x70, 0x00));
             } else if (BLEService.ACTION_DATA_AVAILABLE.equals(action)) {
                 ((TextView) findViewById(R.id.characteristic_read)).setText(intent.getStringExtra(BLEService.EXTRA_DATA));
             }
@@ -573,6 +578,7 @@ public class DeviceCharacteristicActivity extends Activity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 ((Button)findViewById(R.id.characteristic_write_button)).setTextColor(Color.BLACK);
+                ((Button)findViewById(R.id.characteristic_stop_button)).setTextColor(Color.BLACK);
             }
 
             @Override
@@ -614,7 +620,13 @@ public class DeviceCharacteristicActivity extends Activity {
                 return true; // Consume touch event
             }
         });
-
+        final Button stopButton = (Button) findViewById(R.id.characteristic_stop_button);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDelayTime = 0;
+            }
+        });
         final Button writeButton = (Button) findViewById(R.id.characteristic_write_button);
         writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -637,61 +649,70 @@ public class DeviceCharacteristicActivity extends Activity {
 //                                value[i / 2] = (byte) (0x0A + c - 0x41);
 //                        }
 //                    }
-                    char c = writeText.getText().toString().charAt(0);
+                    char a = writeText.getText().toString().charAt(0);
+                    if(writeText.getText().toString().length() < 2){
+                        return;
+                    }
+                    char b = writeText.getText().toString().charAt(1);
+                    int c;
+                    c = (a-0x30)*10 + (b-0x30);
                     switch (c) {
-                        case 0x31:
+                        case 1:
                             Table_Command_Send_Start(Rev_Trend);
                             break;
-                        case 0x32:
+                        case 2:
                             Table_Command_Send_Start(Trend);
                             break;
-                        case 0x33:
+                        case 3:
                             Table_Command_Send_Start(Tilt_R);
                             break;
-                        case 0x34:
+                        case 4:
                             Table_Command_Send_Start(Tilt_L);
                             break;
-                        case 0x35:
+                        case 5:
                             Table_Command_Send_Start(Back_Up);
                             break;
-                        case 0x36:
+                        case 6:
                             Table_Command_Send_Start(Back_Down);
                             break;
-                        case 0x37:
+                        case 7:
                             Table_Command_Send_Start(Table_Up);
                             break;
-                        case 0x38:
+                        case 8:
                             Table_Command_Send_Start(Table_Down);
                             break;
-                        case 0x39:
+                        case 9:
                             Table_Command_Send_Start(Slide_Foot);
                             break;
-                        case 0x3a:
+                        case 10:
                             Table_Command_Send_Start(Slide_Head);
                             break;
-                        case 0x3b:
+                        case 11:
                             Table_Command_Send_Start(Leg_Up);
                             break;
-                        case 0x3c:
+                        case 12:
                             Table_Command_Send_Start(Leg_Down);
                             break;
-                        case 0x3d:
+                        case 13:
                             Table_Command_Send_Start(Unlock);
                             break;
-                        case 0x3e:
+                        case 14:
                             Table_Command_Send_Start(Lock);
                             break;
-                        case 0x47:
+                        case 23:
                             Table_Command_Send_Start(Level);
                             break;
-                        case 0x51:
+                        case 33:
                             Table_Command_Send_Start(Normal_Function);
                             break;
-                        case 0x52:
+                        case 34:
                             Table_Command_Send_Start(Reverse_Function);
                             break;
+                        default:
+                            c=0;
+                            break;
                     }
-                    if(c == 0x30){
+                    if(c == 0){
                         mDelayTime = 0;
                     }else{
                         mDelayTime = 90;
